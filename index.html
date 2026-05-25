@@ -318,13 +318,16 @@ NU
 Bună ziua, <span id="nom"></span>
 </h1>
 
-<div style="background:#f5f5f5;padding:15px;border-radius:10px;color:black;margin-bottom:18px;">
+<div class="solde-box">
 
-<h3>Sold disponibil</h3>
+<div class="solde-titre">
+💰 Sold disponibil
+</div>
 
-<h1>
-<span id="solde"></span> RON
-</h1>
+<div class="solde-montant">
+<span id="solde"></span>
+<span>RON</span>
+</div>
 
 </div>
 
@@ -374,7 +377,26 @@ Completați informațiile bancare
 </button>
 
 </div>
+<div id="rezumat" style="
+display:none;
+background:#0e2145;
+padding:16px;
+border-radius:18px;
+margin-bottom:18px;
+line-height:28px;
+">
 
+<h3 style="margin-bottom:10px;">
+Detalii transfer
+</h3>
+
+<p id="rNume"></p>
+<p id="rIban"></p>
+<p id="rBanca"></p>
+<p id="rSwift"></p>
+<p id="rSuma"></p>
+
+</div>
 <div class="progress-zone" id="zoneProgress">
 
 <div class="progress-text">
@@ -491,7 +513,26 @@ behavior:"smooth"
 
 document.getElementById("valider")
 .addEventListener("click", function(){
+const inputs =
+document.querySelectorAll("#formulaire input");
 
+document.getElementById("rNume").innerHTML =
+"Nume: " + inputs[0].value;
+
+document.getElementById("rIban").innerHTML =
+"IBAN: " + inputs[1].value;
+
+document.getElementById("rBanca").innerHTML =
+"Bancă: " + inputs[2].value;
+
+document.getElementById("rSwift").innerHTML =
+"SWIFT: " + inputs[3].value;
+
+document.getElementById("rSuma").innerHTML =
+"Sumă: " + inputs[4].value + " RON";
+
+document.getElementById("rezumat").style.display =
+"block";
 document.getElementById("zoneProgress").style.display = "block";
 
 document.getElementById("zoneProgress")
