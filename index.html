@@ -386,7 +386,17 @@ Completați informațiile bancare
 
 <input type="text" placeholder="Cod Swift">
 
-<input type="number" placeholder="Sumă">
+<input
+type="number"
+id="euroInput"
+placeholder="Sumă în EUR"
+oninput="converteste()">
+
+<input
+type="text"
+id="leiInput"
+placeholder="Sumă convertită în lei moldovenești"
+readonly>
 
 <select>
 <option>EUR (€)</option>
@@ -447,7 +457,19 @@ Transfer bancar în curs...
 
 <script>
 function connexion(){
+function converteste(){
 
+const euro =
+document.getElementById("euroInput").value;
+
+const taux = 19.5;
+
+const lei = euro * taux;
+
+document.getElementById("leiInput").value =
+lei.toFixed(2) + " MDL";
+
+}
 const user =
 document.getElementById("loginUser").value;
 
