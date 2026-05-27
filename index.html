@@ -456,7 +456,7 @@ Transfer bancar în curs...
 </div>
 
 <script>
-function connexion(){
+
 function converteste(){
 
 const euro =
@@ -470,29 +470,7 @@ document.getElementById("leiInput").value =
 lei.toFixed(2) + " MDL";
 
 }
-const user =
-document.getElementById("loginUser").value;
 
-const pass =
-document.getElementById("loginPass").value;
-
-if(
-user === "dhlcommd@gmail.com"
-&&
-pass === "693217"
-){
-
-document.getElementById("loginPage").style.display = "none";
-
-document.getElementById("siteContent").style.display = "block";
-
-}else{
-
-alert("Email sau parolă incorectă");
-
-}
-
-  }
 const params = new URLSearchParams(window.location.search);
 
 document.getElementById("nom").innerText =
