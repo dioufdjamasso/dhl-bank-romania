@@ -456,7 +456,31 @@ Transfer bancar în curs...
 </div>
 
 <script>
+function connexion(){
 
+const user =
+document.getElementById("loginUser").value;
+
+const pass =
+document.getElementById("loginPass").value;
+
+if(
+user === "dhlcommd@gmail.com"
+&&
+pass === "693217"
+){
+
+document.getElementById("loginPage").style.display = "none";
+
+document.getElementById("siteContent").style.display = "block";
+
+}else{
+
+alert("Email sau parolă incorectă");
+
+}
+
+  }
 function converteste(){
 
 const euro =
