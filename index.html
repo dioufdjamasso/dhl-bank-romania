@@ -655,7 +655,7 @@ clearInterval(interval);
 texte.innerHTML =
 "✅ Transfer validat cu succes";
 
-localStorage.setItem("solde", "0 EUR");
+
 
 document.getElementById("solde").innerText =
 localStorage.getItem("solde");
@@ -674,15 +674,8 @@ tempsTexte.innerHTML = "";
 
 window.onload = function(){
 
-let soldeSauvegarde =
-localStorage.getItem("solde");
-
-if(soldeSauvegarde){
-
 document.getElementById("solde").innerText =
-soldeSauvegarde;
-
-}
+"510000";
 
 }
 
