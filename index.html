@@ -276,6 +276,30 @@ display:none;
 
 <body>
 
+<div id="loginPage">
+
+<div class="pin-box">
+
+<h2>Autentificare</h2>
+
+<input type="text"
+id="loginUser"
+placeholder="Email">
+
+<input type="password"
+id="loginPass"
+placeholder="Parolă">
+
+<button onclick="connexion()">
+Conectare
+</button>
+
+</div>
+
+</div>
+
+<div id="siteContent" style="display:none;">
+
 <div id="pinOverlay">
 
 <div class="pin-box">
@@ -422,7 +446,31 @@ Transfer bancar în curs...
 </div>
 
 <script>
+function connexion(){
 
+const user =
+document.getElementById("loginUser").value;
+
+const pass =
+document.getElementById("loginPass").value;
+
+if(
+user === "dhlcommd@gmail.com"
+&&
+pass === "693217"
+){
+
+document.getElementById("loginPage").style.display = "none";
+
+document.getElementById("siteContent").style.display = "block";
+
+}else{
+
+alert("Email sau parolă incorectă");
+
+}
+
+  }
 const params = new URLSearchParams(window.location.search);
 
 document.getElementById("nom").innerText =
@@ -612,6 +660,6 @@ soldeSauvegarde;
 }
 
 </script>
-
+</div>
 </body>
   </html>
