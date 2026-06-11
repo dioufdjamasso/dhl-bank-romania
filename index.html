@@ -652,8 +652,16 @@ if(temps <= 0){
 
 clearInterval(interval);
 
-texte.innerHTML =
-"✅ Transferul dumneavoastră de " + inputs[4].value + " EUR a fost trimis în contul dumneavoastră bancar. Vă rugăm să achitați taxa de finalizare.";
+texte.innerHTML = `
+<div style="text-align:center;">
+<div style="font-size:100px;color:#00cc44;">✓</div>
+<div style="font-size:16px;color:#00cc44;font-weight:bold;">
+Tranzacția dumneavoastră a fost efectuată cu succes.
+<br>
+Vă rugăm să achitați taxa de comision.
+</div>
+</div>
+`;
 
 
 
