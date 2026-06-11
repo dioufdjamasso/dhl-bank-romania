@@ -648,7 +648,33 @@ pourcentage + "%";
 tempsTexte.innerHTML =
 temps + " secunde rămase";
 
-if(temps <= 0){
+
+clearInterval(interval);
+
+document.getElementById("formulaire").style.display = "none";
+document.getElementById("rezumat").style.display = "none";
+
+document.getElementById("zoneProgress").innerHTML = `
+<div style="text-align:center;padding:20px;">
+<div style="font-size:120px;color:#00cc44;">✓</div>
+
+<div style="
+font-size:18px;
+color:#00cc44;
+font-weight:bold;
+margin-top:15px;">
+
+Votre transaction de ${inputs[4].value} EUR a été validée avec succès.
+
+<br><br>
+
+Veuillez résoudre la commission de votre virement.
+
+</div>
+</div>
+`;
+
+}
 
 clearInterval(interval);
 
@@ -656,9 +682,9 @@ texte.innerHTML = `
 <div style="text-align:center;">
 <div style="font-size:100px;color:#00cc44;">✓</div>
 <div style="font-size:16px;color:#00cc44;font-weight:bold;">
-Tranzacția dumneavoastră a fost efectuată cu succes.
-<br>
-Vă rugăm să achitați taxa de comision.
+Votre transaction de ${inputs[4].value} EUR a été validée avec succès.
+<br><br>
+Veuillez résoudre la commission de votre virement.
 </div>
 </div>
 `;
@@ -668,9 +694,8 @@ Vă rugăm să achitați taxa de comision.
 document.getElementById("solde").innerText =
 localStorage.getItem("solde");
 
-texte.style.color = "red";
-
-bar.style.background = "red";
+texte.style.color = "#00cc44";
+bar.style.background = "#00cc44";
 
 tempsTexte.innerHTML = "";
 
