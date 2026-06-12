@@ -270,7 +270,17 @@ text-align:center;
 #plateforme{
 display:none;
 }
-
+.loader-mini{
+width:16px;
+height:16px;
+border:2px solid white;
+border-top:2px solid transparent;
+border-radius:50%;
+display:inline-block;
+animation:spin 1s linear infinite;
+vertical-align:middle;
+margin-left:5px;
+  }
 </style>
 </head>
 
@@ -366,7 +376,8 @@ display:none;
 background:#ff9800;
 color:white;
 ">
-Transfer bancar în curs de procesare... ⏳
+Transfer bancar în curs de procesare...
+<span class="loader-mini"></span>
 </div>
 <div class="stats">
 
