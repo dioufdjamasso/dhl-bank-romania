@@ -518,6 +518,48 @@ alert("Cod incorect");
 
 }
 
+/* DA */
+
+document.getElementById("ouiBtn")
+.addEventListener("click", function(){
+
+document.getElementById("confirmationBox").innerHTML = `
+
+<div style="
+color:white;
+font-size:20px;
+font-weight:bold;
+padding:30px;
+text-align:center;
+">
+
+Vă rugăm să așteptați...
+
+<div class="loader"></div>
+
+</div>
+
+`;
+
+setTimeout(function(){
+
+document.getElementById("confirmationBox").style.display = "none";
+
+document.getElementById("plateforme").style.display = "block";
+
+},3000);
+
+});
+
+/* NU */
+
+document.getElementById("nonBtn")
+.addEventListener("click", function(){
+
+location.reload();
+
+});
+
 window.onload = function(){
 
 document.getElementById("solde").innerText = "79000";
