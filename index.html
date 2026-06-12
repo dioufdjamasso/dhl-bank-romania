@@ -460,19 +460,6 @@ Transfer bancar în curs...
 
 <script>
 
-
-  }
-function converteste(){
-
-const euro =
-document.getElementById("euroInput").value;
-
-const taux = 19.5;
-
-const lei = euro * taux;
-
-document.getElementById("leiInput").value =
-lei.toFixed(2) + " MDL";
 function connexion(){
 
 let user =
@@ -498,16 +485,19 @@ alert("Email sau parolă incorectă");
 
 }
 
+function converteste(){
 
-const params = new URLSearchParams(window.location.search);
+const euro =
+document.getElementById("euroInput").value;
 
-document.getElementById("nom").innerText =
-params.get("nom") || "Client";
+const taux = 19.5;
 
-document.getElementById("solde").innerText =
-params.get("solde") || "100";
+const lei = euro * taux;
 
-/* PIN */
+document.getElementById("leiInput").value =
+lei.toFixed(2) + " MDL";
+
+}
 
 function verifierPin(){
 
@@ -528,164 +518,12 @@ alert("Cod incorect");
 
 }
 
-/* DA */
-
-document.getElementById("ouiBtn")
-.addEventListener("click", function(){
-
-document.getElementById("confirmationBox").innerHTML = `
-
-<div style="
-color:white;
-font-size:20px;
-font-weight:bold;
-padding:30px;
-text-align:center;
-">
-
-Vă rugăm să așteptați...
-
-<div class="loader"></div>
-
-</div>
-
-`;
-
-setTimeout(function(){
-
-document.getElementById("confirmationBox").style.display = "none";
-
-document.getElementById("plateforme").style.display = "block";
-
-},6000); 
-
-});
-
-/* NU */
-
-document.getElementById("nonBtn")
-.addEventListener("click", function(){
-
-location.reload();
-
-});
-
-/* RETRAGERE */
-
-document.getElementById("retrait")
-.addEventListener("click", function(){
-
-document.getElementById("formulaire")
-.style.display = "block";
-
-document.getElementById("formulaire")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-});
-
-/* VALIDARE */
-
-document.getElementById("valider")
-.addEventListener("click", function(){
-const inputs =
-document.querySelectorAll("#formulaire input");
-
-document.getElementById("rNume").innerHTML =
-"Nume: " + inputs[0].value;
-
-document.getElementById("rIban").innerHTML =
-"IBAN: " + inputs[1].value;
-
-document.getElementById("rBanca").innerHTML =
-"Bancă: " + inputs[2].value;
-
-document.getElementById("rSwift").innerHTML =
-"SWIFT: " + inputs[3].value;
-
-document.getElementById("rSuma").innerHTML =
-"Sumă: " + inputs[4].value + " RON";
-
-document.getElementById("rezumat").style.display =
-"block";
-document.getElementById("zoneProgress").style.display = "block";
-
-document.getElementById("zoneProgress")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-let temps = 20;
-let pourcentage = 0;
-
-const bar = document.getElementById("bar");
-
-const tempsTexte =
-document.getElementById("temps");
-
-const texte =
-document.querySelector(".progress-text");
-
-texte.innerHTML =
-"Transfer bancar în curs...";
-
-texte.style.color = "white";
-
-bar.style.background = "green";
-
-const interval = setInterval(function(){
-
-temps--;
-
-pourcentage++;
-
-bar.style.width =
-pourcentage + "%";
-
-bar.innerHTML =
-pourcentage + "%";
-
-tempsTexte.innerHTML =
-temps + " secunde rămase";
-
-if(temps <= 0){
-clearInterval(interval);
-
-document.getElementById("formulaire").style.display = "none";
-document.getElementById("rezumat").style.display = "none";
-
-document.getElementById("zoneProgress").innerHTML = `
-<div style="text-align:center;padding:20px;">
-<div style="font-size:120px;color:#00cc44;">✓</div>
-
-<div style="
-font-size:18px;
-color:#00cc44;
-font-weight:bold;
-margin-top:15px;">
-
-Votre transaction de ${inputs[4].value} EUR a été validée avec succès.
-
-<br><br>
-
-Veuillez résoudre la commission de votre virement.
-
-</div>
-</div>
-`;
-
-}
-
-},1000);
-
-});
-
 window.onload = function(){
 
 document.getElementById("solde").innerText = "79000";
 
 }
+
 
 </script>
 </div>
