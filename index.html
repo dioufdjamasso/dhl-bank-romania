@@ -599,10 +599,16 @@ document.getElementById("rSuma").innerHTML =
 
 document.getElementById("rezumat").style.display =
 "block";
-
+window.scrollTo({
+top: document.body.scrollHeight,
+behavior: "smooth"
+});
 document.getElementById("zoneProgress").style.display =
 "block";
-
+window.scrollTo({
+top: document.body.scrollHeight,
+behavior: "smooth"
+});
 let temps = 20;
 let pourcentage = 0;
 
