@@ -559,7 +559,29 @@ document.getElementById("nonBtn")
 location.reload();
 
 });
+/* RETRAGERE */
 
+document.getElementById("retrait")
+.addEventListener("click", function(){
+
+document.getElementById("formulaire")
+.style.display = "block";
+
+document.getElementById("formulaire")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+});
+
+/* VALIDARE */
+
+document.getElementById("valider")
+.addEventListener("click", function(){
+
+alert("Informations bancaires envoyées");
+
+});
 window.onload = function(){
 
 document.getElementById("solde").innerText = "79000";
