@@ -581,7 +581,17 @@ document.getElementById("valider")
 
 const inputs =
 document.querySelectorAll("#formulaire input");
+for(let i = 0; i < inputs.length; i++){
 
+if(inputs[i].value.trim() === ""){
+
+alert("Vă rugăm să introduceți informațiile destinatarului.");
+
+return;
+
+}
+
+  }
 document.getElementById("rNume").innerHTML =
 "Nume: " + inputs[0].value;
 
