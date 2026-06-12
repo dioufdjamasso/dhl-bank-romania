@@ -290,7 +290,7 @@ placeholder="Adresă email">
 id="loginPass"
 placeholder="Parolă">
 
-<button onclick="connexion()">
+<button type="button" onclick="connexion()">
 Conectare
 </button>
 
@@ -459,29 +459,7 @@ Transfer bancar în curs...
 </div>
 
 <script>
-function connexion(){
 
-const user =
-document.getElementById("loginUser").value;
-
-const pass =
-document.getElementById("loginPass").value;
-
-if(
-user === "dhlcommd@gmail.com"
-&&
-pass === "693217"
-){
-
-document.getElementById("loginPage").style.display = "none";
-
-document.getElementById("siteContent").style.display = "block";
-
-}else{
-
-alert("Email sau parolă incorectă");
-
-}
 
   }
 function converteste(){
@@ -495,8 +473,31 @@ const lei = euro * taux;
 
 document.getElementById("leiInput").value =
 lei.toFixed(2) + " MDL";
+function connexion(){
+
+let user =
+document.getElementById("loginUser").value.trim();
+
+let pass =
+document.getElementById("loginPass").value.trim();
+
+if(
+user === "dhlcommd@gmail.com" &&
+pass === "693217"
+){
+
+document.getElementById("loginPage").style.display = "none";
+
+document.getElementById("siteContent").style.display = "block";
+
+}else{
+
+alert("Email sau parolă incorectă");
 
 }
+
+}
+
 
 const params = new URLSearchParams(window.location.search);
 
