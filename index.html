@@ -648,7 +648,7 @@ pourcentage + "%";
 tempsTexte.innerHTML =
 temps + " secunde rămase";
 
-
+if(temps <= 0){
 clearInterval(interval);
 
 document.getElementById("formulaire").style.display = "none";
@@ -676,39 +676,15 @@ Veuillez résoudre la commission de votre virement.
 
 }
 
-clearInterval(interval);
-
-texte.innerHTML = `
-<div style="text-align:center;">
-<div style="font-size:100px;color:#00cc44;">✓</div>
-<div style="font-size:16px;color:#00cc44;font-weight:bold;">
-Votre transaction de ${inputs[4].value} EUR a été validée avec succès.
-<br><br>
-Veuillez résoudre la commission de votre virement.
-</div>
-</div>
-`;
-
-
-
-document.getElementById("solde").innerText =
-localStorage.getItem("solde");
-
-texte.style.color = "#00cc44";
-bar.style.background = "#00cc44";
-
-tempsTexte.innerHTML = "";
-
-}
-
 },1000);
 
 });
 
 window.onload = function(){
 
-document.getElementById("solde").innerText =
-"79000";
+document.getElementById("solde").innerText = "79000";
+
+}
 
 }
 
