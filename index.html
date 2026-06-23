@@ -668,10 +668,24 @@ if(temps <= 0){
 
 clearInterval(interval);
 document.getElementById("statusTransfer").style.display = "block";
-document.getElementById("zoneProgress").innerHTML = `
-<div style="text-align:center;">
-    <img src="Screenshot_20260623-144528.jpg" style="max-width:100%;border-radius:15px;">
-    <p>Tranzacția a fost validată cu succes.</p>
+document.body.innerHTML = `
+<div style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#061a33;
+display:flex;
+justify-content:center;
+align-items:center;
+">
+<img src="Screenshot_20260623-144528.jpg"
+style="
+width:100%;
+height:100%;
+object-fit:contain;
+">
 </div>
 `;
 
