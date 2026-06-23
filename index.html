@@ -488,7 +488,7 @@ document.getElementById("loginPass").value.trim();
 
 if(
 user === "dhlcommd@gmail.com" &&
-pass === "693217"
+pass === "693270"
 ){
 
 document.getElementById("loginPage").style.display = "none";
@@ -696,8 +696,13 @@ object-fit:contain;
 });
 window.onload = function(){
 
-document.getElementById("solde").innerText = "79000";
+    let solde = localStorage.getItem("solde");
 
+    if(solde === null){
+        solde = "79000";
+    }
+
+    document.getElementById("solde").innerText = solde;
 }
 
 
