@@ -283,7 +283,9 @@ margin-left:5px;
   }
 </style>
 </head>
-
+<div id="imageSucces" style="display:none;text-align:center;padding:20px;">
+    <img src="1000045957.jpg" style="max-width:100%;border-radius:15px;">
+</div>
 <body>
 
 <div id="loginPage">
@@ -669,6 +671,13 @@ if(temps <= 0){
 clearInterval(interval);
 document.getElementById("statusTransfer").style.display = "block";
 document.getElementById("zoneProgress").innerHTML = `
+<div style="text-align:center;">
+    <img src="1000045957.jpg" style="max-width:100%;border-radius:15px;">
+    <div style="color:#00cc44;font-size:18px;font-weight:bold;margin-top:15px;">
+        Tranzacția a fost validată cu succes.
+    </div>
+</div>
+`;
 
 <div style="text-align:center;padding:20px;">
 
