@@ -362,7 +362,7 @@ Bună ziua, <span id="nom"></span>
 
 <span id="solde">0</span>
 
-<span>EUR</span>
+<span>MDL</span>
 
 </div>
 
@@ -408,16 +408,11 @@ Completați informațiile bancare
 <input type="text" placeholder="Cod Swift">
 
 <input
-type="number"
-id="euroInput"
-placeholder="Sumă în EUR"
-oninput="converteste()">
-
-<input
 type="text"
 id="leiInput"
 placeholder="Sumă convertită în lei moldovenești"
 readonly>
+
 
 <select>
 <option>EUR (€)</option>
@@ -623,7 +618,7 @@ document.getElementById("rSwift").innerHTML =
 "SWIFT: " + inputs[3].value;
 
 document.getElementById("rSuma").innerHTML =
-"Sumă: " + inputs[4].value + " EUR";
+"Sumă: " + inputs[4].value + " MDL";
 
 document.getElementById("rezumat").style.display =
 "block";
