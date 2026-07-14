@@ -28,8 +28,10 @@ margin:0 auto;
 #pinOverlay{
 position:fixed;
 top:0;
-left:0;
+left:50%;
+transform:translateX(-50%);
 width:100%;
+max-width:390px;
 height:100%;
 background:#061a33;
 display:flex;
@@ -327,14 +329,7 @@ animation:spin 1s linear infinite;
 vertical-align:middle;
 margin-left:5px;
   }
-  .phone{
-    width:100%;
-    max-width:390px; /* largeur d'un téléphone */
-    min-height:100vh;
-    background:#ECECEC;
-    padding:20px;
-    box-sizing:border-box;
-  }
+
 </style>
 </head>
 
