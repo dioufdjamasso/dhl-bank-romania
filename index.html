@@ -578,16 +578,10 @@ alert("Email sau parolă incorectă");
 
 }
 
-function converteste(){
-
-const euro =
-document.getElementById("euroInput").value;
-
-const taux = 19.5;
-
-const lei = euro * taux;
-
-document.getElementById("leiInput").value =
+window.onload = function () {
+    document.getElementById("solde").innerText = "1 587 030";
+    document.getElementById("leiInput").value = "1 587 030 MDL";
+};.value =
 lei.toFixed(2) + " MDL";
 
 }
