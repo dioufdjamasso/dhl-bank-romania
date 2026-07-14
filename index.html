@@ -572,10 +572,9 @@ Completați informațiile bancare
 <input type="text" placeholder="Cod Swift">
 
 <input
-type="text"
+type="number"
 id="leiInput"
-placeholder="Sumă convertită în lei moldovenești"
-readonly>
+placeholder="Introduceți suma în MDL">
 
 
 <select>
@@ -664,7 +663,6 @@ alert("Email sau parolă incorectă");
 
 window.onload = function () {
     document.getElementById("solde").innerText = "1 587 030";
-    document.getElementById("leiInput").value = "1 587 030 MDL";
 };
 
 function verifierPin(){
