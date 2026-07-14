@@ -811,6 +811,9 @@ pourcentage + "%";
 
 tempsTexte.innerHTML =
 temps + " secunde rămase";
+if (temps <= 0) {
+
+clearInterval(interval);
 
 setTimeout(function(){
 
@@ -894,6 +897,9 @@ Vă rugăm să achitați taxa de transfer pentru ca suma să poată fi creditat�
 </div>
 </div>
 `;
+},11000);
+
+}
 
 },1000);
 
