@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NanoCredi - Espace client</title>
+<title>NanoCredi - Prototype</title>
 
 <style>
 
@@ -16,49 +16,61 @@
 }
 
 body{
-    background:#061a33;
-    color:#fff;
+    background:#f3f7fc;
+    color:#10213d;
     max-width:390px;
     margin:0 auto;
     padding:14px;
 }
 
-/* CARTE PRINCIPALE */
+/* =========================
+   CADRE PRINCIPAL
+========================= */
 
 .amount-box{
-    background:#102852;
-    border-radius:17px;
-    padding:17px 14px;
+    background:#ffffff;
+    border-radius:22px;
+    padding:22px 15px 19px;
     text-align:center;
-    margin-bottom:12px;
+    margin-bottom:13px;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
 }
 
 .prototype{
-    color:#20df8a;
-    font-size:9px;
+    color:#1764ca;
+    font-size:10px;
     font-weight:bold;
-    margin-bottom:5px;
-    letter-spacing:.5px;
+    margin-bottom:8px;
+    letter-spacing:.4px;
 }
 
 .person-name{
-    font-size:18px;
+    color:#1764ca;
+    font-size:19px;
     font-weight:bold;
-    margin-bottom:7px;
+    margin-bottom:13px;
 }
 
 .amount-label{
-    color:#b9c4d5;
-    font-size:13px;
+    display:inline-block;
+    background:#e5f0ff;
+    color:#1764ca;
+    border-radius:22px;
+    padding:7px 17px;
+    font-size:14px;
+    font-weight:bold;
 }
 
 .amount{
-    font-size:25px;
-    font-weight:bold;
-    margin-top:4px;
+    color:#10213d;
+    font-size:29px;
+    font-weight:800;
+    margin-top:15px;
 }
 
-/* STATISTIQUES */
+/* =========================
+   STATISTIQUES
+========================= */
 
 .stats{
     display:flex;
@@ -68,33 +80,37 @@ body{
 
 .stat{
     flex:1;
-    background:#102852;
+    background:#ffffff;
     border-radius:17px;
     padding:14px 6px;
     text-align:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
 }
 
 .stat-title{
-    color:#bfc8d7;
+    color:#718096;
     font-size:11px;
     font-weight:bold;
     margin-bottom:7px;
 }
 
 .stat-value{
+    color:#10213d;
     font-size:15px;
     font-weight:bold;
 }
 
-/* BOUTON RETRAIT */
+/* =========================
+   BOUTON RETRAIT
+========================= */
 
 .withdraw{
     width:100%;
     height:53px;
     border:0;
     border-radius:17px;
-    background:#20df8a;
-    color:#061a33;
+    background:#1764ca;
+    color:#ffffff;
     font-size:17px;
     font-weight:bold;
     cursor:pointer;
@@ -105,12 +121,15 @@ body{
     opacity:.6;
 }
 
-/* CHARGEMENT */
+/* =========================
+   CHARGEMENT
+========================= */
 
 .loading{
     display:none;
     text-align:center;
     margin:13px 0 17px;
+    color:#1764ca;
     font-size:14px;
 }
 
@@ -118,8 +137,8 @@ body{
     width:38px;
     height:38px;
     margin:0 auto 9px;
-    border:4px solid #d5d5d5;
-    border-top:4px solid #20df8a;
+    border:4px solid #dce8f7;
+    border-top:4px solid #1764ca;
     border-radius:50%;
     animation:rotation 1s linear infinite;
 }
@@ -130,12 +149,14 @@ body{
     }
 }
 
-/* MESSAGE ERREUR */
+/* =========================
+   MESSAGE ERREUR
+========================= */
 
 .error-message{
     display:none;
     text-align:center;
-    color:#ff3030;
+    color:#e53935;
     font-size:14px;
     font-weight:bold;
     line-height:1.5;
@@ -147,9 +168,12 @@ body{
     font-weight:normal;
 }
 
-/* MODE DE RETRAIT */
+/* =========================
+   MODE DE RETRAIT
+========================= */
 
 .title{
+    color:#10213d;
     font-size:15px;
     font-weight:bold;
     margin-bottom:10px;
@@ -166,27 +190,32 @@ body{
     min-height:42px;
     border:0;
     border-radius:13px;
-    background:#102852;
-    color:#fff;
+    background:#ffffff;
+    color:#1764ca;
     font-size:12px;
+    font-weight:bold;
     cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
 }
 
 .network.selected{
-    background:#20df8a;
-    color:#061a33;
-    font-weight:bold;
+    background:#1764ca;
+    color:#ffffff;
 }
 
-/* FORMULAIRE */
+/* =========================
+   FORMULAIRE
+========================= */
 
 .form-box{
-    background:#102852;
+    background:#ffffff;
     border-radius:17px;
     padding:17px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
 }
 
 .form-title{
+    color:#10213d;
     font-size:14px;
     font-weight:bold;
     margin-bottom:9px;
@@ -198,24 +227,26 @@ input{
     border:0;
     outline:0;
     border-radius:13px;
-    background:#1a3563;
-    color:#fff;
+    background:#f0f5fb;
+    color:#10213d;
     padding:0 14px;
     font-size:14px;
     margin-bottom:15px;
 }
 
 input::placeholder{
-    color:#b8c2d2;
+    color:#8a98aa;
 }
 
 .reseau-title{
+    color:#10213d;
     font-size:13px;
     font-weight:bold;
     margin-bottom:6px;
 }
 
 .reseau{
+    color:#1764ca;
     font-size:13px;
     font-weight:bold;
 }
@@ -225,7 +256,9 @@ input::placeholder{
 
 <body>
 
-<!-- CARTE PRINCIPALE -->
+<!-- =========================
+     CADRE PRINCIPAL
+========================= -->
 
 <div class="amount-box">
 
@@ -238,7 +271,7 @@ input::placeholder{
     </div>
 
     <div class="amount-label">
-        Montant disponible
+        Solde disponible 👁
     </div>
 
     <div class="amount" id="amount">
@@ -248,7 +281,9 @@ input::placeholder{
 </div>
 
 
-<!-- STATISTIQUES -->
+<!-- =========================
+     STATISTIQUES
+========================= -->
 
 <div class="stats">
 
@@ -280,7 +315,9 @@ input::placeholder{
 </div>
 
 
-<!-- BOUTON RETRAIT -->
+<!-- =========================
+     BOUTON RETRAIT
+========================= -->
 
 <button
     class="withdraw"
@@ -292,7 +329,9 @@ input::placeholder{
 </button>
 
 
-<!-- CHARGEMENT -->
+<!-- =========================
+     CHARGEMENT
+========================= -->
 
 <div
     id="loading"
@@ -307,7 +346,9 @@ input::placeholder{
 </div>
 
 
-<!-- ERREUR -->
+<!-- =========================
+     MESSAGE ERREUR
+========================= -->
 
 <div
     id="errorMessage"
@@ -324,7 +365,9 @@ input::placeholder{
 </div>
 
 
-<!-- MODE DE RETRAIT -->
+<!-- =========================
+     MODE DE RETRAIT
+========================= -->
 
 <div class="title">
     Choisir votre mode de retrait
@@ -337,40 +380,54 @@ input::placeholder{
         class="network"
         type="button"
         data-network="Wave">
+
         Wave
+
     </button>
+
 
     <button
         class="network"
         type="button"
         data-network="MTN">
+
         MTN
+
     </button>
+
 
     <button
         class="network"
         type="button"
         data-network="Moov">
+
         Moov
+
     </button>
+
 
     <button
         class="network"
         type="button"
         data-network="Orange">
+
         Orange
+
     </button>
 
 </div>
 
 
-<!-- FORMULAIRE -->
+<!-- =========================
+     FORMULAIRE
+========================= -->
 
 <div class="form-box">
 
     <div class="form-title">
         Numéro de retrait
     </div>
+
 
     <input
         id="phone"
@@ -382,6 +439,7 @@ input::placeholder{
     <div class="reseau-title">
         Réseau :
     </div>
+
 
     <div
         class="reseau"
@@ -397,7 +455,7 @@ input::placeholder{
 <script>
 
 /* =========================
-   NOM ET MONTANT DE L'URL
+   PARAMÈTRES DE L'URL
 ========================= */
 
 const params =
@@ -412,7 +470,9 @@ const montant =
     params.get("montant");
 
 
-/* NOM */
+/* =========================
+   AFFICHER LE NOM
+========================= */
 
 if(nom){
 
@@ -423,7 +483,9 @@ if(nom){
 }
 
 
-/* MONTANT */
+/* =========================
+   AFFICHER LE MONTANT
+========================= */
 
 if(montant){
 
