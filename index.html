@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Retrait - Démonstration</title>
+<title>NanoCredi - Espace client</title>
 
 <style>
 
@@ -17,113 +17,109 @@
 
 body{
     background:#061a33;
-    color:white;
+    color:#fff;
     max-width:390px;
     margin:0 auto;
-    padding:20px;
+    padding:14px;
 }
 
-/* =========================
-   MONTANT EN HAUT
-========================= */
+/* CARTE PRINCIPALE */
 
 .amount-box{
     background:#102852;
-    border-radius:25px;
-    padding:24px 15px;
+    border-radius:17px;
+    padding:17px 14px;
     text-align:center;
-    margin-bottom:18px;
+    margin-bottom:12px;
 }
 
-.demo{
+.prototype{
     color:#20df8a;
-    font-size:13px;
+    font-size:9px;
     font-weight:bold;
-    margin-bottom:8px;
+    margin-bottom:5px;
+    letter-spacing:.5px;
+}
+
+.person-name{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:7px;
 }
 
 .amount-label{
     color:#b9c4d5;
-    font-size:17px;
-    margin-bottom:6px;
+    font-size:13px;
 }
 
 .amount{
-    font-size:31px;
+    font-size:25px;
     font-weight:bold;
+    margin-top:4px;
 }
 
-
-/* =========================
-   VUES / RETRAIT
-========================= */
+/* STATISTIQUES */
 
 .stats{
     display:flex;
-    gap:15px;
-    margin-bottom:28px;
+    gap:9px;
+    margin-bottom:13px;
 }
 
 .stat{
     flex:1;
     background:#102852;
-    border-radius:25px;
-    padding:28px 8px;
+    border-radius:17px;
+    padding:14px 6px;
     text-align:center;
 }
 
 .stat-title{
     color:#bfc8d7;
-    font-size:17px;
+    font-size:11px;
     font-weight:bold;
-    margin-bottom:12px;
+    margin-bottom:7px;
 }
 
 .stat-value{
-    font-size:21px;
+    font-size:15px;
     font-weight:bold;
 }
 
-
-/* =========================
-   BOUTON RETIRER
-========================= */
+/* BOUTON RETRAIT */
 
 .withdraw{
     width:100%;
-    height:100px;
-    border:none;
-    border-radius:32px;
+    height:53px;
+    border:0;
+    border-radius:17px;
     background:#20df8a;
     color:#061a33;
-    font-size:25px;
+    font-size:17px;
     font-weight:bold;
     cursor:pointer;
-    margin-bottom:30px;
+    margin-bottom:13px;
 }
 
 .withdraw:disabled{
-    cursor:not-allowed;
+    opacity:.6;
 }
 
-
-/* =========================
-   CHARGEMENT
-========================= */
+/* CHARGEMENT */
 
 .loading{
     display:none;
     text-align:center;
-    margin:25px 0;
-    font-size:18px;
+    margin:13px 0 17px;
+    font-size:14px;
 }
 
 .spinner{
-    width:55px;
-    height:55px;
-    margin:0 auto 15px;
-    border:6px solid #d5d5d5;
-    border-top:6px solid #20df8a;
+    width:38px;
+    height:38px;
+    margin:0 auto 9px;
+    border:4px solid #d5d5d5;
+    border-top:4px solid #20df8a;
     border-radius:50%;
     animation:rotation 1s linear infinite;
 }
@@ -134,81 +130,79 @@ body{
     }
 }
 
-
-/* =========================
-   MESSAGE D'ERREUR
-========================= */
+/* MESSAGE ERREUR */
 
 .error-message{
     display:none;
     text-align:center;
     color:#ff3030;
-    font-size:18px;
+    font-size:14px;
     font-weight:bold;
-    line-height:1.6;
-    margin-top:25px;
+    line-height:1.5;
+    margin:13px 0 17px;
 }
 
 .error-message span{
-    font-size:15px;
+    font-size:12px;
     font-weight:normal;
 }
 
-
-/* =========================
-   MODE DE RETRAIT
-========================= */
+/* MODE DE RETRAIT */
 
 .title{
-    font-size:19px;
-    margin-bottom:18px;
+    font-size:15px;
+    font-weight:bold;
+    margin-bottom:10px;
 }
 
 .networks{
-    display:flex;
-    gap:10px;
-    margin-bottom:30px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    margin-bottom:13px;
 }
 
 .network{
-    flex:1;
-    border:none;
-    border-radius:20px;
+    min-height:42px;
+    border:0;
+    border-radius:13px;
     background:#102852;
     color:#fff;
-    padding:18px 4px;
-    font-size:16px;
+    font-size:12px;
     cursor:pointer;
 }
 
+.network.selected{
+    background:#20df8a;
+    color:#061a33;
+    font-weight:bold;
+}
 
-/* =========================
-   FORMULAIRE
-========================= */
+/* FORMULAIRE */
 
 .form-box{
     background:#102852;
-    border-radius:25px;
-    padding:28px 30px;
+    border-radius:17px;
+    padding:17px;
 }
 
 .form-title{
-    font-size:18px;
+    font-size:14px;
     font-weight:bold;
-    margin-bottom:15px;
+    margin-bottom:9px;
 }
 
 input{
     width:100%;
-    height:58px;
-    border:none;
-    outline:none;
-    border-radius:18px;
+    height:45px;
+    border:0;
+    outline:0;
+    border-radius:13px;
     background:#1a3563;
     color:#fff;
-    padding:0 20px;
-    font-size:17px;
-    margin-bottom:25px;
+    padding:0 14px;
+    font-size:14px;
+    margin-bottom:15px;
 }
 
 input::placeholder{
@@ -216,56 +210,45 @@ input::placeholder{
 }
 
 .reseau-title{
-    font-size:18px;
+    font-size:13px;
     font-weight:bold;
-    margin-bottom:15px;
+    margin-bottom:6px;
 }
 
 .reseau{
-    font-size:17px;
-    font-weight:bold;
-}
-
-
-/* =========================
-   MESSAGE DEMO
-========================= */
-
-.demo-message{
-    text-align:center;
-    color:#ffcc00;
     font-size:13px;
-    margin-top:24px;
-    line-height:1.5;
+    font-weight:bold;
 }
 
 </style>
 </head>
 
-
 <body>
 
-
-<!-- MONTANT -->
+<!-- CARTE PRINCIPALE -->
 
 <div class="amount-box">
 
-    <div class="demo">
-        DÉMONSTRATION
+    <div class="prototype">
+        PROTOTYPE
+    </div>
+
+    <div class="person-name" id="personName">
+        Nom de la personne
     </div>
 
     <div class="amount-label">
         Montant disponible
     </div>
 
-    <div class="amount">
+    <div class="amount" id="amount">
         0 FCFA
     </div>
 
 </div>
 
 
-<!-- VUES / RETRAIT -->
+<!-- STATISTIQUES -->
 
 <div class="stats">
 
@@ -297,16 +280,23 @@ input::placeholder{
 </div>
 
 
-<!-- BOUTON RETIRER -->
+<!-- BOUTON RETRAIT -->
 
-<button class="withdraw" id="withdrawBtn">
+<button
+    class="withdraw"
+    id="withdrawBtn"
+    type="button">
+
     💸 RETIRER
+
 </button>
 
 
 <!-- CHARGEMENT -->
 
-<div id="loading" class="loading">
+<div
+    id="loading"
+    class="loading">
 
     <div class="spinner"></div>
 
@@ -317,11 +307,15 @@ input::placeholder{
 </div>
 
 
-<!-- MESSAGE D'ERREUR -->
+<!-- ERREUR -->
 
-<div id="errorMessage" class="error-message">
+<div
+    id="errorMessage"
+    class="error-message">
 
-    Retrait impossible<br>
+    Retrait impossible
+
+    <br>
 
     <span>
         Veuillez contacter votre responsable.
@@ -339,19 +333,31 @@ input::placeholder{
 
 <div class="networks">
 
-    <button class="network">
+    <button
+        class="network"
+        type="button"
+        data-network="Wave">
         Wave
     </button>
 
-    <button class="network">
+    <button
+        class="network"
+        type="button"
+        data-network="MTN">
         MTN
     </button>
 
-    <button class="network">
+    <button
+        class="network"
+        type="button"
+        data-network="Moov">
         Moov
     </button>
 
-    <button class="network">
+    <button
+        class="network"
+        type="button"
+        data-network="Orange">
         Orange
     </button>
 
@@ -363,73 +369,183 @@ input::placeholder{
 <div class="form-box">
 
     <div class="form-title">
-        Veuillez saisir numéro de retrait
+        Numéro de retrait
     </div>
 
-
     <input
+        id="phone"
         type="tel"
-        placeholder="Numéro de retrait"
-    >
+        inputmode="numeric"
+        placeholder="Numéro de retrait">
 
 
     <div class="reseau-title">
         Réseau :
     </div>
 
+    <div
+        class="reseau"
+        id="selectedNetwork">
 
-    <div class="reseau">
-        MTN
+        Aucun réseau sélectionné
+
     </div>
 
 </div>
 
 
-<div class="demo-message">
-
-    Interface de démonstration — aucun retrait réel.
-
-</div>
-
-
-<!-- JAVASCRIPT -->
-
 <script>
 
-const withdrawBtn = document.getElementById("withdrawBtn");
+/* =========================
+   NOM ET MONTANT DE L'URL
+========================= */
 
-const loading = document.getElementById("loading");
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
-const errorMessage = document.getElementById("errorMessage");
+const nom =
+    params.get("nom");
 
-
-withdrawBtn.addEventListener("click", function(){
-
-    withdrawBtn.disabled = true;
-
-    withdrawBtn.style.opacity = "0.6";
-
-    loading.style.display = "block";
-
-    errorMessage.style.display = "none";
+const montant =
+    params.get("montant");
 
 
-    setTimeout(function(){
+/* NOM */
 
-        loading.style.display = "none";
+if(nom){
 
-        errorMessage.style.display = "block";
+    document.getElementById(
+        "personName"
+    ).textContent = nom;
 
-        withdrawBtn.disabled = false;
+}
 
-        withdrawBtn.style.opacity = "1";
 
-    }, 4000);
+/* MONTANT */
 
-});
+if(montant){
+
+    const nombre =
+        Number(
+            montant.replace(/\s/g,"")
+        );
+
+    if(!isNaN(nombre)){
+
+        document.getElementById(
+            "amount"
+        ).textContent =
+            nombre.toLocaleString("fr-FR")
+            + " FCFA";
+
+    }
+
+}
+
+
+/* =========================
+   CHOIX DU RÉSEAU
+========================= */
+
+const networkButtons =
+    document.querySelectorAll(
+        ".network"
+    );
+
+const selectedNetwork =
+    document.getElementById(
+        "selectedNetwork"
+    );
+
+
+networkButtons.forEach(
+    function(button){
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                networkButtons.forEach(
+                    function(item){
+
+                        item.classList.remove(
+                            "selected"
+                        );
+
+                    }
+                );
+
+
+                button.classList.add(
+                    "selected"
+                );
+
+
+                selectedNetwork.textContent =
+                    button.dataset.network;
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================
+   BOUTON RETRAIT
+========================= */
+
+const withdrawBtn =
+    document.getElementById(
+        "withdrawBtn"
+    );
+
+const loading =
+    document.getElementById(
+        "loading"
+    );
+
+const errorMessage =
+    document.getElementById(
+        "errorMessage"
+    );
+
+
+withdrawBtn.addEventListener(
+    "click",
+    function(){
+
+        withdrawBtn.disabled = true;
+
+        loading.style.display =
+            "block";
+
+        errorMessage.style.display =
+            "none";
+
+
+        setTimeout(
+            function(){
+
+                loading.style.display =
+                    "none";
+
+                errorMessage.style.display =
+                    "block";
+
+                withdrawBtn.disabled =
+                    false;
+
+            },
+            4000
+        );
+
+    }
+);
 
 </script>
 
-
 </body>
-  </html>
+</html>
