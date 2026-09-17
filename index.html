@@ -3,587 +3,433 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Google TV — Inscription</title>
+
+<title>Retrait - Démonstration</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(135deg,#061a33,#0a568c,#0aa36b);
-  min-height:100vh;
-  color:#172033;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:18px
+    background:#061a33;
+    color:white;
+    max-width:390px;
+    margin:0 auto;
+    padding:20px;
 }
 
-.box{
-  width:100%;
-  max-width:480px;
-  background:#fff;
-  border-radius:26px;
-  overflow:hidden;
-  box-shadow:0 24px 70px #0005
+/* =========================
+   MONTANT EN HAUT
+========================= */
+
+.amount-box{
+    background:#102852;
+    border-radius:25px;
+    padding:24px 15px;
+    text-align:center;
+    margin-bottom:18px;
 }
 
-h1{
-  margin:0;
-  font-size:25px
+.demo{
+    color:#20df8a;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:8px;
 }
 
-.sub{
-  margin:8px 0 0;
-  opacity:.92;
-  font-size:14px
+.amount-label{
+    color:#b9c4d5;
+    font-size:17px;
+    margin-bottom:6px;
 }
 
-.form{
-  padding:25px
+.amount{
+    font-size:31px;
+    font-weight:bold;
 }
 
-.field{
-  margin-bottom:15px
+
+/* =========================
+   VUES / RETRAIT
+========================= */
+
+.stats{
+    display:flex;
+    gap:15px;
+    margin-bottom:28px;
 }
 
-label{
-  display:block;
-  font-weight:700;
-  font-size:14px;
-  margin-bottom:7px
+.stat{
+    flex:1;
+    background:#102852;
+    border-radius:25px;
+    padding:28px 8px;
+    text-align:center;
 }
 
-input,select{
-  width:100%;
-  padding:14px;
-  border:1px solid #d8e0e8;
-  border-radius:12px;
-  background:#f7f9fb;
-  font-size:15px;
-  outline:none
+.stat-title{
+    color:#bfc8d7;
+    font-size:17px;
+    font-weight:bold;
+    margin-bottom:12px;
 }
 
-input:focus,select:focus{
-  border-color:#0aa36b;
-  box-shadow:0 0 0 3px #0aa36b18
+.stat-value{
+    font-size:21px;
+    font-weight:bold;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px
+
+/* =========================
+   BOUTON RETIRER
+========================= */
+
+.withdraw{
+    width:100%;
+    height:100px;
+    border:none;
+    border-radius:32px;
+    background:#20df8a;
+    color:#061a33;
+    font-size:25px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-bottom:30px;
 }
 
-button{
-  width:100%;
-  border:0;
-  border-radius:13px;
-  padding:15px;
-  font-weight:800;
-  font-size:16px;
-  cursor:pointer
+.withdraw:disabled{
+    cursor:not-allowed;
 }
 
-.send{
-  background:linear-gradient(135deg,#075b32,#12ad70);
-  color:white;
-  box-shadow:0 9px 20px #075b3235
-}
 
-.note{
-  font-size:11px;
-  color:#707b89;
-  text-align:center;
-  line-height:1.5;
-  margin-top:14px
-}
+/* =========================
+   CHARGEMENT
+========================= */
 
-.process{
-  display:none;
-  padding:38px 25px;
-  text-align:center
+.loading{
+    display:none;
+    text-align:center;
+    margin:25px 0;
+    font-size:18px;
 }
 
 .spinner{
-  width:70px;
-  height:70px;
-  border:6px solid #e8f1ec;
-  border-top-color:#0aa36b;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-  margin:0 auto 22px
+    width:55px;
+    height:55px;
+    margin:0 auto 15px;
+    border:6px solid #d5d5d5;
+    border-top:6px solid #20df8a;
+    border-radius:50%;
+    animation:rotation 1s linear infinite;
 }
 
-@keyframes spin{
-  to{transform:rotate(360deg)}
+@keyframes rotation{
+    to{
+        transform:rotate(360deg);
+    }
 }
 
-.process h2{
-  font-size:24px;
-  margin:0 0 10px;
-  color:#075b32
+
+/* =========================
+   MESSAGE D'ERREUR
+========================= */
+
+.error-message{
+    display:none;
+    text-align:center;
+    color:#ff3030;
+    font-size:18px;
+    font-weight:bold;
+    line-height:1.6;
+    margin-top:25px;
 }
 
-.process p{
-  color:#5b6675;
-  line-height:1.5
+.error-message span{
+    font-size:15px;
+    font-weight:normal;
 }
 
-.progress{
-  height:9px;
-  background:#e8edf1;
-  border-radius:20px;
-  overflow:hidden;
-  margin:24px 0 8px
+
+/* =========================
+   MODE DE RETRAIT
+========================= */
+
+.title{
+    font-size:19px;
+    margin-bottom:18px;
 }
 
-.bar{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,#075b32,#12ad70);
-  transition:width 1s linear
+.networks{
+    display:flex;
+    gap:10px;
+    margin-bottom:30px;
 }
 
-.timer{
-  font-size:12px;
-  color:#75808d
+.network{
+    flex:1;
+    border:none;
+    border-radius:20px;
+    background:#102852;
+    color:#fff;
+    padding:18px 4px;
+    font-size:16px;
+    cursor:pointer;
 }
 
-.success{
-  display:none;
-  text-align:center;
-  padding:38px 25px
+
+/* =========================
+   FORMULAIRE
+========================= */
+
+.form-box{
+    background:#102852;
+    border-radius:25px;
+    padding:28px 30px;
 }
 
-.check{
-  width:88px;
-  height:88px;
-  border-radius:50%;
-  background:#e7f9ef;
-  color:#08a05f;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin:0 auto 18px;
-  font-size:48px;
-  font-weight:900;
-  box-shadow:0 0 0 10px #e7f9ef55
+.form-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:15px;
 }
 
-.success h2{
-  font-size:27px;
-  color:#08733f;
-  margin:0 0 12px
+input{
+    width:100%;
+    height:58px;
+    border:none;
+    outline:none;
+    border-radius:18px;
+    background:#1a3563;
+    color:#fff;
+    padding:0 20px;
+    font-size:17px;
+    margin-bottom:25px;
 }
 
-.success p{
-  color:#536070;
-  line-height:1.6;
-  margin:0
+input::placeholder{
+    color:#b8c2d2;
 }
 
-.ticker{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  background:#061a33;
-  color:#fff;
-  overflow:hidden;
-  white-space:nowrap;
-  padding:10px 0;
-  font-size:12px
+.reseau-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:15px;
 }
 
-.ticker span{
-  display:inline-block;
-  padding-left:100%;
-  animation:move 18s linear infinite
+.reseau{
+    font-size:17px;
+    font-weight:bold;
 }
 
-@keyframes move{
-  to{transform:translateX(-100%)}
+
+/* =========================
+   MESSAGE DEMO
+========================= */
+
+.demo-message{
+    text-align:center;
+    color:#ffcc00;
+    font-size:13px;
+    margin-top:24px;
+    line-height:1.5;
 }
 
-@media(max-width:420px){
-  .grid{
-    grid-template-columns:1fr
-  }
-}
-
-.header-screenshot{
-  width:100%;
-  padding:14px 14px 0;
-  background:#fff;
-  line-height:0
-}
-
-.header-screenshot img{
-  display:block;
-  width:100%;
-  height:185px;
-  object-fit:cover;
-  object-position:center top;
-  border-radius:18px;
-  box-shadow:0 8px 24px rgba(0,0,0,.14)
-}
 </style>
 </head>
 
+
 <body>
 
-<div class="box">
 
-  <div class="header-screenshot">
-    <img src="1000049740.jpg" alt="En-tête">
-  </div>
+<!-- MONTANT -->
 
-  <div class="form" id="form">
+<div class="amount-box">
 
-    <h1>Inscription Google TV</h1>
+    <div class="demo">
+        DÉMONSTRATION
+    </div>
 
-    <p class="sub">
-      Veuillez renseigner vos informations pour continuer.
-    </p>
+    <div class="amount-label">
+        Montant disponible
+    </div>
 
-    <form
-      id="registration"
-      action="https://formsubmit.co/europeennetvplateforme@gmail.com"
-      method="POST"
-      target="formsubmitFrame">
+    <div class="amount">
+        0 FCFA
+    </div>
 
-      <input
-        type="hidden"
-        name="_subject"
-        value="Nouvelle inscription — Google TV">
+</div>
 
-      <input
-        type="hidden"
-        name="_template"
-        value="table">
 
-      <input
-        type="hidden"
-        name="_captcha"
-        value="false">
+<!-- VUES / RETRAIT -->
 
-      <div class="grid">
+<div class="stats">
 
-        <div class="field">
-          <label>Nom</label>
-          <input
-            name="Nom"
-            required
-            placeholder="Votre nom">
+    <div class="stat">
+
+        <div class="stat-title">
+            Vues comptées
         </div>
 
-        <div class="field">
-          <label>Prénom</label>
-          <input
-            name="Prénom"
-            required
-            placeholder="Votre prénom">
+        <div class="stat-value">
+            162 vues
         </div>
 
-      </div>
+    </div>
 
-      <div class="grid">
 
-        <div class="field">
-          <label>Âge</label>
-          <input
-            name="Âge"
-            type="number"
-            min="18"
-            max="100"
-            required
-            placeholder="Votre âge">
+    <div class="stat">
+
+        <div class="stat-title">
+            Retrait
         </div>
 
-        <div class="field">
-          <label>Genre</label>
-
-          <select name="Genre" required>
-
-            <option value="">
-              Sélectionner
-            </option>
-
-            <option>Homme</option>
-            <option>Femme</option>
-            <option>Autre</option>
-            <option>Préfère ne pas préciser</option>
-
-          </select>
-
+        <div class="stat-value">
+            Disponible
         </div>
 
-      </div>
+    </div>
 
-      <div class="field">
-
-        <label>Pays de résidence</label>
-
-        <select name="Pays de résidence" required>
-
-          <option value="">
-            Sélectionner votre pays
-          </option>
-
-          <option>Bénin</option>
-          <option>Côte d’Ivoire</option>
-          <option>Mali</option>
-          <option>Sénégal</option>
-          <option>Burkina Faso</option>
-          <option>Cameroun</option>
-          <option>Ghana</option>
-
-        </select>
-
-      </div>
-
-      <div class="field">
-
-        <label>Ville</label>
-
-        <input
-          name="Ville"
-          required
-          placeholder="Votre ville">
-
-      </div>
-
-      <div class="field">
-
-        <label>Profession</label>
-
-        <input
-          name="Profession"
-          required
-          placeholder="Votre profession">
-
-      </div>
-
-      <button
-        type="submit"
-        class="send">
-        ENVOYER
-      </button>
-
-      <div class="note">
-        Les informations saisies sont transmises à l’adresse
-        de réception configurée pour ce formulaire.
-        Cette page ne constitue pas une validation officielle
-        de Google TV.
-      </div>
-
-    </form>
-
-    <iframe
-      name="formsubmitFrame"
-      style="display:none">
-    </iframe>
-
-  </div>
+</div>
 
 
-  <div class="process" id="process">
+<!-- BOUTON RETIRER -->
+
+<button class="withdraw" id="withdrawBtn">
+    💸 RETIRER
+</button>
+
+
+<!-- CHARGEMENT -->
+
+<div id="loading" class="loading">
 
     <div class="spinner"></div>
 
-    <h2 id="status">
-      Vérification des informations en cours…
-    </h2>
-
-    <p id="desc">
-      Veuillez patienter pendant le traitement de votre demande.
-    </p>
-
-    <div class="progress">
-      <div
-        class="bar"
-        id="bar">
-      </div>
+    <div>
+        Veuillez patienter...
     </div>
-
-    <div
-      class="timer"
-      id="timer">
-      Étape 1 sur 3
-    </div>
-
-  </div>
-
-
-  <div class="success" id="success">
-
-    <div class="check">
-      ✓
-    </div>
-
-    <h2>
-      INSCRIPTION TERMINÉE
-    </h2>
-
-    <p>
-      <strong>
-        Votre parcours d'inscription est terminé.
-      </strong>
-
-      <br><br>
-
-      Veuillez contacter votre leader ou l'organisateur
-      pour connaître les prochaines étapes et les conditions
-      applicables, notamment celles relatives aux retraits.
-    </p>
-
-  </div>
 
 </div>
 
 
-<div class="ticker">
+<!-- MESSAGE D'ERREUR -->
 
-  <span>
-    INFORMATION : les conditions de retrait et les éventuels
-    frais doivent être communiqués clairement et vérifiés
-    auprès de l'organisateur.
-  </span>
+<div id="errorMessage" class="error-message">
+
+    Retrait impossible<br>
+
+    <span>
+        Veuillez contacter votre responsable.
+    </span>
 
 </div>
 
+
+<!-- MODE DE RETRAIT -->
+
+<div class="title">
+    Choisir votre mode de retrait
+</div>
+
+
+<div class="networks">
+
+    <button class="network">
+        Wave
+    </button>
+
+    <button class="network">
+        MTN
+    </button>
+
+    <button class="network">
+        Moov
+    </button>
+
+    <button class="network">
+        Orange
+    </button>
+
+</div>
+
+
+<!-- FORMULAIRE -->
+
+<div class="form-box">
+
+    <div class="form-title">
+        Veuillez saisir numéro de retrait
+    </div>
+
+
+    <input
+        type="tel"
+        placeholder="Numéro de retrait"
+    >
+
+
+    <div class="reseau-title">
+        Réseau :
+    </div>
+
+
+    <div class="reseau">
+        MTN
+    </div>
+
+</div>
+
+
+<div class="demo-message">
+
+    Interface de démonstration — aucun retrait réel.
+
+</div>
+
+
+<!-- JAVASCRIPT -->
 
 <script>
 
-const form =
-  document.getElementById("form");
+const withdrawBtn = document.getElementById("withdrawBtn");
 
-const process =
-  document.getElementById("process");
+const loading = document.getElementById("loading");
 
-const success =
-  document.getElementById("success");
-
-const status =
-  document.getElementById("status");
-
-const desc =
-  document.getElementById("desc");
-
-const bar =
-  document.getElementById("bar");
-
-const timer =
-  document.getElementById("timer");
+const errorMessage = document.getElementById("errorMessage");
 
 
-document
-  .getElementById("registration")
-  .addEventListener("submit", e => {
+withdrawBtn.addEventListener("click", function(){
 
-    e.preventDefault();
+    withdrawBtn.disabled = true;
 
-    const f =
-      document.getElementById("registration");
+    withdrawBtn.style.opacity = "0.6";
 
-    f.submit();
+    loading.style.display = "block";
 
-    form.style.display = "none";
-
-    process.style.display = "block";
+    errorMessage.style.display = "none";
 
 
-    const start = Date.now();
+    setTimeout(function(){
 
-    const total = 12000;
+        loading.style.display = "none";
 
+        errorMessage.style.display = "block";
 
-    const steps = [
+        withdrawBtn.disabled = false;
 
-      [
-        0,
-        "Vérification des informations en cours…",
-        "Analyse des informations saisies."
-      ],
+        withdrawBtn.style.opacity = "1";
 
-      [
-        4000,
-        "Préparation de l'inscription en cours…",
-        "Votre demande passe à l'étape suivante."
-      ],
+    }, 4000);
 
-      [
-        8000,
-        "Monétisation en cours…",
-        "Finalisation de votre parcours d'inscription."
-      ]
-
-    ];
-
-
-    function tick(){
-
-      const elapsed =
-        Date.now() - start;
-
-
-      if(elapsed >= total){
-
-        process.style.display = "none";
-
-        success.style.display = "block";
-
-        return;
-      }
-
-
-      let s = steps[2];
-
-
-      if(elapsed < 4000){
-
-        s = steps[0];
-
-      }else if(elapsed < 8000){
-
-        s = steps[1];
-
-      }
-
-
-      status.textContent = s[1];
-
-      desc.textContent = s[2];
-
-
-      bar.style.width =
-        (elapsed / total * 100) + "%";
-
-
-      timer.textContent =
-        "Étape " +
-        (elapsed < 4000
-          ? 1
-          : elapsed < 8000
-          ? 2
-          : 3) +
-        " sur 3 • " +
-        Math.floor(elapsed / 1000) +
-        " s";
-
-
-      requestAnimationFrame(tick);
-
-    }
-
-
-    tick();
-
-  });
+});
 
 </script>
 
+
 </body>
-</html>
+  </html>
