@@ -8,6 +8,10 @@
 
 <style>
 
+/* =========================
+   BASE
+========================= */
+
 *{
     margin:0;
     padding:0;
@@ -16,57 +20,101 @@
 }
 
 body{
-    background:#f3f7fc;
-    color:#10213d;
+    background:#061a33;
+    color:#fff;
     max-width:390px;
     margin:0 auto;
     padding:14px;
 }
 
+
 /* =========================
-   CADRE PRINCIPAL
+   CARTE PRINCIPALE BLANCHE
 ========================= */
 
 .amount-box{
     background:#ffffff;
-    border-radius:22px;
-    padding:22px 15px 19px;
+    border-radius:24px;
+    padding:21px 13px 19px;
     text-align:center;
     margin-bottom:13px;
-    box-shadow:0 3px 15px rgba(0,0,0,.08);
+    box-shadow:0 4px 18px rgba(0,0,0,.15);
 }
 
 .prototype{
     color:#1764ca;
     font-size:10px;
     font-weight:bold;
-    margin-bottom:8px;
-    letter-spacing:.4px;
+    letter-spacing:.5px;
+    margin-bottom:7px;
 }
 
 .person-name{
     color:#1764ca;
     font-size:19px;
     font-weight:bold;
-    margin-bottom:13px;
+    margin-bottom:14px;
 }
 
 .amount-label{
-    display:inline-block;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
     background:#e5f0ff;
     color:#1764ca;
-    border-radius:22px;
-    padding:7px 17px;
-    font-size:14px;
+    border-radius:25px;
+    padding:8px 18px;
+    font-size:15px;
     font-weight:bold;
+}
+
+.eye{
+    font-size:16px;
 }
 
 .amount{
     color:#10213d;
-    font-size:29px;
+    font-size:30px;
     font-weight:800;
     margin-top:15px;
+    margin-bottom:23px;
 }
+
+
+/* =========================
+   BONUS / GAIN
+========================= */
+
+.bonus-gain{
+    display:flex;
+    gap:9px;
+    width:100%;
+}
+
+.bonus-box,
+.gain-box{
+    flex:1;
+    height:61px;
+    border:2px solid #b8d5fb;
+    border-radius:31px;
+    background:#e5f0ff;
+    color:#1764ca;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.box-icon{
+    font-size:24px;
+}
+
 
 /* =========================
    STATISTIQUES
@@ -80,25 +128,26 @@ body{
 
 .stat{
     flex:1;
-    background:#ffffff;
+    background:#102852;
     border-radius:17px;
     padding:14px 6px;
     text-align:center;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
+    border:1px solid #193867;
 }
 
 .stat-title{
-    color:#718096;
+    color:#b9c7dc;
     font-size:11px;
     font-weight:bold;
     margin-bottom:7px;
 }
 
 .stat-value{
-    color:#10213d;
+    color:#ffffff;
     font-size:15px;
     font-weight:bold;
 }
+
 
 /* =========================
    BOUTON RETRAIT
@@ -109,8 +158,8 @@ body{
     height:53px;
     border:0;
     border-radius:17px;
-    background:#1764ca;
-    color:#ffffff;
+    background:#20df8a;
+    color:#061a33;
     font-size:17px;
     font-weight:bold;
     cursor:pointer;
@@ -121,6 +170,7 @@ body{
     opacity:.6;
 }
 
+
 /* =========================
    CHARGEMENT
 ========================= */
@@ -129,7 +179,7 @@ body{
     display:none;
     text-align:center;
     margin:13px 0 17px;
-    color:#1764ca;
+    color:#ffffff;
     font-size:14px;
 }
 
@@ -137,17 +187,20 @@ body{
     width:38px;
     height:38px;
     margin:0 auto 9px;
-    border:4px solid #dce8f7;
-    border-top:4px solid #1764ca;
+    border:4px solid #365277;
+    border-top:4px solid #20df8a;
     border-radius:50%;
     animation:rotation 1s linear infinite;
 }
 
 @keyframes rotation{
+
     to{
         transform:rotate(360deg);
     }
+
 }
+
 
 /* =========================
    MESSAGE ERREUR
@@ -156,7 +209,7 @@ body{
 .error-message{
     display:none;
     text-align:center;
-    color:#e53935;
+    color:#ff4b4b;
     font-size:14px;
     font-weight:bold;
     line-height:1.5;
@@ -168,12 +221,13 @@ body{
     font-weight:normal;
 }
 
+
 /* =========================
    MODE DE RETRAIT
 ========================= */
 
 .title{
-    color:#10213d;
+    color:#ffffff;
     font-size:15px;
     font-weight:bold;
     margin-bottom:10px;
@@ -188,34 +242,39 @@ body{
 
 .network{
     min-height:42px;
-    border:0;
+    border:1px solid #193867;
     border-radius:13px;
-    background:#ffffff;
-    color:#1764ca;
+    background:#102852;
+    color:#ffffff;
     font-size:12px;
     font-weight:bold;
     cursor:pointer;
-    box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+.network:hover{
+    background:#173767;
 }
 
 .network.selected{
-    background:#1764ca;
-    color:#ffffff;
+    background:#20df8a;
+    color:#061a33;
+    border-color:#20df8a;
 }
+
 
 /* =========================
    FORMULAIRE
 ========================= */
 
 .form-box{
-    background:#ffffff;
+    background:#102852;
     border-radius:17px;
     padding:17px;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
+    border:1px solid #193867;
 }
 
 .form-title{
-    color:#10213d;
+    color:#ffffff;
     font-size:14px;
     font-weight:bold;
     margin-bottom:9px;
@@ -224,40 +283,69 @@ body{
 input{
     width:100%;
     height:45px;
-    border:0;
+    border:1px solid #28466f;
     outline:0;
     border-radius:13px;
-    background:#f0f5fb;
-    color:#10213d;
+    background:#1a3563;
+    color:#ffffff;
     padding:0 14px;
     font-size:14px;
     margin-bottom:15px;
 }
 
 input::placeholder{
-    color:#8a98aa;
+    color:#aebbd0;
 }
 
 .reseau-title{
-    color:#10213d;
+    color:#b9c7dc;
     font-size:13px;
     font-weight:bold;
     margin-bottom:6px;
 }
 
 .reseau{
-    color:#1764ca;
+    color:#20df8a;
     font-size:13px;
     font-weight:bold;
+}
+
+
+/* =========================
+   PETITS ÉCRANS
+========================= */
+
+@media(max-width:350px){
+
+    body{
+        padding:10px;
+    }
+
+    .amount{
+        font-size:26px;
+    }
+
+    .person-name{
+        font-size:17px;
+    }
+
+    .bonus-box,
+    .gain-box{
+        font-size:15px;
+        height:57px;
+    }
+
 }
 
 </style>
 </head>
 
+
 <body>
 
+
 <!-- =========================
-     CADRE PRINCIPAL
+     GRANDE CARTE BLANCHE
 ========================= -->
 
 <div class="amount-box">
@@ -266,16 +354,73 @@ input::placeholder{
         PROTOTYPE
     </div>
 
-    <div class="person-name" id="personName">
+
+    <div
+        class="person-name"
+        id="personName">
+
         Nom de la personne
+
     </div>
+
 
     <div class="amount-label">
-        Solde disponible 👁
+
+        <span>
+            Solde disponible
+        </span>
+
+        <span class="eye">
+            👁
+        </span>
+
     </div>
 
-    <div class="amount" id="amount">
+
+    <div
+        class="amount"
+        id="amount">
+
         0 FCFA
+
+    </div>
+
+
+    <!-- BONUS ET GAIN -->
+
+    <div class="bonus-gain">
+
+
+        <button
+            class="bonus-box"
+            type="button">
+
+            <span class="box-icon">
+                🎁
+            </span>
+
+            <span>
+                Bonus
+            </span>
+
+        </button>
+
+
+        <button
+            class="gain-box"
+            type="button">
+
+            <span class="box-icon">
+                👛
+            </span>
+
+            <span>
+                Gain
+            </span>
+
+        </button>
+
+
     </div>
 
 </div>
@@ -286,6 +431,7 @@ input::placeholder{
 ========================= -->
 
 <div class="stats">
+
 
     <div class="stat">
 
@@ -312,11 +458,12 @@ input::placeholder{
 
     </div>
 
+
 </div>
 
 
 <!-- =========================
-     BOUTON RETRAIT
+     RETIRER
 ========================= -->
 
 <button
@@ -347,7 +494,7 @@ input::placeholder{
 
 
 <!-- =========================
-     MESSAGE ERREUR
+     ERREUR
 ========================= -->
 
 <div
@@ -370,11 +517,14 @@ input::placeholder{
 ========================= -->
 
 <div class="title">
+
     Choisir votre mode de retrait
+
 </div>
 
 
 <div class="networks">
+
 
     <button
         class="network"
@@ -415,6 +565,7 @@ input::placeholder{
 
     </button>
 
+
 </div>
 
 
@@ -424,8 +575,11 @@ input::placeholder{
 
 <div class="form-box">
 
+
     <div class="form-title">
+
         Numéro de retrait
+
     </div>
 
 
@@ -437,7 +591,9 @@ input::placeholder{
 
 
     <div class="reseau-title">
+
         Réseau :
+
     </div>
 
 
@@ -448,6 +604,7 @@ input::placeholder{
         Aucun réseau sélectionné
 
     </div>
+
 
 </div>
 
@@ -463,15 +620,17 @@ const params =
         window.location.search
     );
 
+
 const nom =
     params.get("nom");
+
 
 const montant =
     params.get("montant");
 
 
 /* =========================
-   AFFICHER LE NOM
+   NOM
 ========================= */
 
 if(nom){
@@ -484,7 +643,7 @@ if(nom){
 
 
 /* =========================
-   AFFICHER LE MONTANT
+   MONTANT
 ========================= */
 
 if(montant){
@@ -493,6 +652,7 @@ if(montant){
         Number(
             montant.replace(/\s/g,"")
         );
+
 
     if(!isNaN(nombre)){
 
@@ -515,6 +675,7 @@ const networkButtons =
     document.querySelectorAll(
         ".network"
     );
+
 
 const selectedNetwork =
     document.getElementById(
@@ -564,10 +725,12 @@ const withdrawBtn =
         "withdrawBtn"
     );
 
+
 const loading =
     document.getElementById(
         "loading"
     );
+
 
 const errorMessage =
     document.getElementById(
@@ -581,8 +744,10 @@ withdrawBtn.addEventListener(
 
         withdrawBtn.disabled = true;
 
+
         loading.style.display =
             "block";
+
 
         errorMessage.style.display =
             "none";
@@ -594,8 +759,10 @@ withdrawBtn.addEventListener(
                 loading.style.display =
                     "none";
 
+
                 errorMessage.style.display =
                     "block";
+
 
                 withdrawBtn.disabled =
                     false;
@@ -609,5 +776,6 @@ withdrawBtn.addEventListener(
 
 </script>
 
+
 </body>
-</html>
+    </html>
