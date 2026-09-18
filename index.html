@@ -467,7 +467,7 @@ body{
 <body>
 
 <!-- =========================
-     NOTIFICATION
+     NOTIFICATION PROTOTYPE
 ========================= -->
 
 <div class="prototype-notification" id="prototypeNotification">
@@ -843,9 +843,6 @@ function afficherNotification(){
     const montantActuel =
         document.getElementById("amount").textContent;
 
-    const numero =
-        document.getElementById("phone").value.trim();
-
     const maintenant = new Date();
 
     const date =
@@ -861,15 +858,15 @@ function afficherNotification(){
         );
 
     document.getElementById("notificationText").innerHTML =
-        "Montant : <strong>" +
+        "Vous avez reçu <strong>" +
         montantActuel +
         "</strong><br>" +
-        "Numéro : " +
-        (numero || "Non renseigné") +
-        "<br>" +
+        "De Google TV (774886854)<br>" +
         date +
         " à " +
-        heure;
+        heure +
+        "<br>" +
+        "Nouveau solde :";
 
     const notification =
         document.getElementById("prototypeNotification");
@@ -880,7 +877,7 @@ function afficherNotification(){
 
         notification.classList.remove("show");
 
-    },2000);
+    },4000);
 
 }
 
@@ -915,9 +912,6 @@ const formBox =
 
 withdrawBtn.addEventListener("click",function(){
 
-    /* Notification immédiate */
-    afficherNotification();
-
     mainCard.style.display = "none";
 
     stats.style.display = "none";
@@ -941,6 +935,16 @@ withdrawBtn.addEventListener("click",function(){
 
         result.classList.add("show");
 
+        /*
+         * La notification apparaît seulement
+         * APRÈS l'affichage de "Transfert réussi !"
+         */
+        setTimeout(function(){
+
+            afficherNotification();
+
+        },300);
+
     },10000);
 
 });
@@ -948,4 +952,4 @@ withdrawBtn.addEventListener("click",function(){
 </script>
 
 </body>
-</html>
+    </html>
