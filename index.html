@@ -721,7 +721,7 @@ body{
 <script>
 
 /* =========================
-   NOM + MONTANT URL
+   PARAMÈTRES
 ========================= */
 
 const params = new URLSearchParams(window.location.search);
@@ -729,23 +729,134 @@ const params = new URLSearchParams(window.location.search);
 const nom = params.get("nom");
 const montant = params.get("montant");
 
-if(nom){
-    document.getElementById("personName").textContent = nom;
-}
+/*
+ * Numéro réservé au propriétaire du prototype.
+ * Ce numéro conserve toujours son montant.
+ */
+const MON_NUMERO = "98197883";
+
+
+/* =========================
+   MONTANT INITIAL
+========================= */
+
+let montantInitial = 0;
 
 if(montant){
 
     const nombre = Number(
-        montant.replace(/\s/g,"")
+        montant.replace(/\s/g,"").replace(/[^\d.-]/g,"")
     );
 
     if(!isNaN(nombre)){
-
-        document.getElementById("amount").textContent =
-            nombre.toLocaleString("fr-FR") + " FCFA";
-
+        montantInitial = nombre;
     }
 }
+
+
+/* =========================
+   NOM
+========================= */
+
+if(nom){
+    document.getElementById("personName").textContent = nom;
+}
+
+
+/* =========================
+   FONCTIONS SOLDE
+========================= */
+
+function normaliserNumero(numero){
+    return numero.replace(/\D/g,"");
+}
+
+
+/*
+ * Retourne la clé utilisée pour mémoriser
+ * le solde de chaque numéro.
+ */
+function getSoldeKey(numero){
+
+    return "prototype_solde_" +
+        normaliserNumero(numero);
+
+}
+
+
+/*
+ * Affiche le montant.
+ */
+function afficherMontant(valeur){
+
+    document.getElementById("amount").textContent =
+        Number(valeur).toLocaleString("fr-FR") +
+        " FCFA";
+
+}
+
+
+/*
+ * Quand le numéro est renseigné,
+ * on regarde son état enregistré.
+ */
+function actualiserSolde(numero){
+
+    const numeroNormalise =
+        normaliserNumero(numero);
+
+    if(!numeroNormalise){
+        afficherMontant(montantInitial);
+        return;
+    }
+
+
+    /*
+     * Ton numéro personnel conserve toujours
+     * le montant initial.
+     */
+    if(numeroNormalise === MON_NUMERO){
+
+        afficherMontant(montantInitial);
+
+        return;
+    }
+
+
+    /*
+     * Pour les autres numéros :
+     * si un solde a déjà été enregistré,
+     * on l'utilise.
+     */
+    const sauvegarde =
+        localStorage.getItem(
+            getSoldeKey(numeroNormalise)
+        );
+
+
+    if(sauvegarde !== null){
+
+        const valeur =
+            Number(sauvegarde);
+
+        afficherMontant(
+            isNaN(valeur) ? 0 : valeur
+        );
+
+    }else{
+
+        afficherMontant(montantInitial);
+
+    }
+
+}
+
+
+/* =========================
+   MONTANT AU DÉPART
+========================= */
+
+afficherMontant(montantInitial);
 
 
 /* =========================
@@ -824,6 +935,58 @@ accessCode.addEventListener("keydown",function(event){
 
 
 /* =========================
+   NUMÉRO DE TÉLÉPHONE
+========================= */
+
+const phone =
+    document.getElementById("phone");
+
+
+/*
+ * Restaurer le dernier numéro utilisé
+ * sur cet appareil.
+ */
+const dernierNumero =
+    localStorage.getItem("prototype_dernier_numero");
+
+
+if(dernierNumero){
+
+    phone.value = dernierNumero;
+
+    actualiserSolde(dernierNumero);
+
+}
+
+
+/*
+ * Lorsque le numéro change,
+ * le solde correspondant est affiché.
+ */
+phone.addEventListener("input",function(){
+
+    const numero =
+        phone.value.trim();
+
+    if(numero){
+
+        localStorage.setItem(
+            "prototype_dernier_numero",
+            numero
+        );
+
+        actualiserSolde(numero);
+
+    }else{
+
+        afficherMontant(montantInitial);
+
+    }
+
+});
+
+
+/* =========================
    RÉSEAU
 ========================= */
 
@@ -861,9 +1024,10 @@ function afficherNotification(){
         document.getElementById("amount").textContent;
 
     const numero =
-        document.getElementById("phone").value.trim();
+        phone.value.trim();
 
-    const maintenant = new Date();
+    const maintenant =
+        new Date();
 
     const date =
         maintenant.toLocaleDateString("fr-FR");
@@ -891,7 +1055,9 @@ function afficherNotification(){
         "Nouveau solde :";
 
     const notification =
-        document.getElementById("prototypeNotification");
+        document.getElementById(
+            "prototypeNotification"
+        );
 
     notification.classList.add("show");
 
@@ -932,9 +1098,6 @@ const networks =
 const formBox =
     document.getElementById("formBox");
 
-const phone =
-    document.getElementById("phone");
-
 const validationError =
     document.getElementById("validationError");
 
@@ -945,9 +1108,14 @@ const validationError =
 
 withdrawBtn.addEventListener("click",function(){
 
-    const numero = phone.value.trim();
+    const numero =
+        phone.value.trim();
 
-    const reseau = selectedNetwork.textContent.trim();
+    const numeroNormalise =
+        normaliserNumero(numero);
+
+    const reseau =
+        selectedNetwork.textContent.trim();
 
 
     /* Réseau obligatoire */
@@ -965,7 +1133,7 @@ withdrawBtn.addEventListener("click",function(){
 
     /* Numéro obligatoire */
 
-    if(numero === ""){
+    if(numeroNormalise === ""){
 
         validationError.textContent =
             "Veuillez saisir votre numéro de retrait avant de continuer.";
@@ -978,53 +1146,7 @@ withdrawBtn.addEventListener("click",function(){
     }
 
 
-    /* Tout est renseigné */
+    /* Mémoriser le numéro */
 
-    validationError.classList.remove("show");
-
-    mainCard.style.display = "none";
-
-    stats.style.display = "none";
-
-    withdrawBtn.style.display = "none";
-
-    withdrawTitle.style.display = "none";
-
-    networks.style.display = "none";
-
-    formBox.style.display = "none";
-
-    transferStatus.classList.add("show");
-
-
-    /* =========================
-       FIN DU TRAITEMENT
-    ========================= */
-
-    setTimeout(function(){
-
-        transferStatus.classList.remove("show");
-
-        result.classList.add("show");
-
-
-        /*
-         * La notification apparaît
-         * après "Transfert réussi !"
-         */
-
-        setTimeout(function(){
-
-            afficherNotification();
-
-        },300);
-
-
-    },10000);
-
-});
-
-</script>
-
-</body>
-    </html>
+    localStorage.setItem(
+       
