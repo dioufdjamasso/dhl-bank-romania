@@ -1298,6 +1298,100 @@ networkButtons.forEach(
 ========================= */
 
 function afficherNotification(){
+    const montantActuel = document.getElementById("amount").textContent;
+    const numero = phone.value.trim();
+    const maintenant = new Date();
 
-    const montantActuel =
+    const date = maintenant.toLocaleDateString("fr-FR");
+    const heure = maintenant.toLocaleTimeString("fr-FR", {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
+    document.getElementById("notificationText").innerHTML =
+        "Vous avez reçu <strong>" + montantActuel + "</strong><br>" +
+        "De Google TV (774886854)<br>" +
+        date + " à " + heure +
+        " sur votre numéro " + numero +
+        "<br>Nouveau solde :";
+
+    const notification =
+        document.getElementById("prototypeNotification");
+
+    notification.classList.add("show");
+
+    setTimeout(function(){
+        notification.classList.remove("show");
+    }, 4000);
+}
+
+const withdrawBtn = document.getElementById("withdrawBtn");
+const validationError = document.getElementById("validationError");
+const mainCard = document.getElementById("mainCard");
+const stats = document.getElementById("stats");
+const networks = document.getElementById("networks");
+const withdrawTitle = document.getElementById("withdrawTitle");
+const formBox = document.getElementById("formBox");
+const transferStatus = document.getElementById("transferStatus");
+const result = document.getElementById("result");
+
+withdrawBtn.onclick = function(){
+
+    validationError.classList.remove("show");
+    validationError.textContent = "";
+
+    const reseau = selectedNetwork.textContent.trim();
+    const numero = phone.value.trim();
+
+    if(!reseau || reseau === "Aucun réseau sélectionné"){
+        validationError.textContent =
+            "Veuillez sélectionner un réseau avant de continuer.";
+        validationError.classList.add("show");
+        return;
+    }
+
+    if(!numero){
+        validationError.textContent =
+            "Veuillez saisir votre numéro de retrait avant de continuer.";
+        validationError.classList.add("show");
+        phone.focus();
+        return;
+    }
+
+    localStorage.setItem("prototype_dernier_numero", numero);
+
+    const numeroNormalise = normaliserNumero(numero);
+
+    if(numeroNormalise !== MON_NUMERO){
+        localStorage.setItem(
+            getSoldeKey(numeroNormalise),
+            "0"
+        );
+    }
+
+    mainCard.style.display = "none";
+    stats.style.display = "none";
+    withdrawBtn.style.display = "none";
+    withdrawTitle.style.display = "none";
+    networks.style.display = "none";
+    formBox.style.display = "none";
+    validationError.style.display = "none";
+
+    transferStatus.classList.add("show");
+
+    setTimeout(function(){
+
+        transferStatus.classList.remove("show");
+        result.classList.add("show");
+
+        setTimeout(function(){
+            afficherNotification();
+        }, 300);
+
+    }, 10000);
+};
+</script>
+
+</body>
+</html>
     
