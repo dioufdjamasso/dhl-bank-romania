@@ -672,11 +672,17 @@ body{
 
 </div>
 
-<input
-    type="file"
-    id="faceFile"
-    class="hidden-file"
-    accept="image/*"
+<video
+    id="faceCamera"
+    autoplay
+    playsinline
+    style="display:none;width:100%;border-radius:14px;margin-top:10px;">
+</video>
+
+<canvas
+    id="faceCanvas"
+    style="display:none;">
+</canvas>
 >
 
         <!-- CARTE -->
