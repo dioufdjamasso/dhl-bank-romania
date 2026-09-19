@@ -26,24 +26,19 @@ body{
 
 .prototype-notification{
     position:fixed;
-    top:12px;
+    bottom:12px;
     left:50%;
     width:calc(100% - 24px);
     max-width:370px;
-
     background:#ffffff;
     color:#17243a;
-
     border-radius:18px;
     padding:16px 17px;
-
     box-shadow:0 10px 35px rgba(0,0,0,.35);
-
     z-index:50000;
 
-    transform:translate(-50%,-180%);
+    transform:translate(-50%,180%);
     opacity:0;
-
     visibility:hidden;
 
     transition:
@@ -435,14 +430,32 @@ body{
     display:block;
 }
 
-.transfer-spinner{
-    width:58px;
-    height:58px;
+.transfer-spinner-wrap{
+    position:relative;
+    width:82px;
+    height:82px;
     margin:0 auto 18px;
-    border:5px solid #365277;
-    border-top:5px solid #20df8a;
+}
+
+.transfer-spinner{
+    width:82px;
+    height:82px;
+    margin:0;
+    border:6px solid #365277;
+    border-top:6px solid #20df8a;
     border-radius:50%;
     animation:rotation 1s linear infinite;
+}
+
+.transfer-percent{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:18px;
+    font-weight:600;
 }
 
 .transfer-title{
@@ -1007,14 +1020,17 @@ body{
             PROTOTYPE
         </div>
 
-        <div class="transfer-spinner"></div>
+        <div class="transfer-spinner-wrap">
+    <div class="transfer-spinner"></div>
+    <div class="transfer-percent" id="transferPercent">0%</div>
+        </div>
 
         <div class="transfer-title">
             Transfert en cours...
         </div>
 
         <div class="transfer-text">
-            Simulation du traitement...
+    Veuillez patienter...
         </div>
 
     </div>
@@ -1928,96 +1944,73 @@ withdrawBtn.addEventListener(
         transferStatus.classList.add("show");
 
 
-        /* Traitement pendant 15 secondes */
 
-setTimeout(function(){
+/* 0% → 100% en 30 secondes */
+
+const transferPercent =
+    document.getElementById("transferPercent");
+
+const duree = 30000;
+const debut = performance.now();
+
+function progressionTransfert(maintenant){
+
+    const progression =
+        Math.min(
+            (maintenant - debut) / duree,
+            1
+        );
+
+    const pourcentage =
+        Math.floor(progression * 100);
+
+    if(transferPercent){
+        transferPercent.textContent =
+            pourcentage + "%";
+    }
+
+    if(progression < 1){
+        requestAnimationFrame(
+            progressionTransfert
+        );
+        return;
+    }
 
     transferStatus.classList.remove("show");
 
-    /* Afficher le résultat */
-
     result.classList.add("show");
-
-
-    /* Nouveau solde : 0 F */
-
-    localStorage.setItem(
-        getSoldeKey(numero),
-        "0"
-    );
-
-    actualiserSolde(numero);
-
-
-    /* Date et heure */
-
-    const maintenant =
-        new Date();
-
-    const date =
-        maintenant.toLocaleDateString(
-            "fr-FR"
-        );
-
-    const heure =
-        maintenant.toLocaleTimeString(
-            "fr-FR",
-            {
-                hour: "2-digit",
-                minute: "2-digit"
-            }
-        );
-
-
-    /* Notification PROTOTYPE */
 
     if(
         prototypeNotification &&
         notificationText
     ){
 
-        const montantElement =
-            document.getElementById("amount");
+        const maintenant =
+            new Date();
 
-        const montantAffiche =
-            montantElement
-                ? montantElement.textContent
-                : "0 F";
-
-
-        const idTransfert =
-            Math.floor(
-                100000000 +
-                Math.random() * 900000000
+        const date =
+            maintenant.toLocaleDateString(
+                "fr-FR"
             );
 
+        const heure =
+            maintenant.toLocaleTimeString(
+                "fr-FR",
+                {
+                    hour:"2-digit",
+                    minute:"2-digit"
+                }
+            );
 
         notificationText.innerHTML =
             "<strong>PROTOTYPE</strong><br><br>" +
-
-            "Vous avez reçu " +
-            "<strong>" +
-            montantAffiche +
-            "</strong>" +
-            " de Google TV sur votre numéro." +
-
+            "Transfert terminé." +
             "<br><br>" +
-
-            "ID du transfert : " +
-            "<span class='notification-id'>" +
-            idTransfert +
-            "</span>" +
-
-            "<br><br>" +
-
             "<span class='notification-date'>" +
             date +
             " à " +
             heure +
             "</span>";
-
-
-        /* Afficher immédiatement */
 
         prototypeNotification.classList.remove("show");
 
@@ -2025,22 +2018,14 @@ setTimeout(function(){
 
         prototypeNotification.classList.add("show");
 
-
-        /* Cacher après 5 secondes */
-
         setTimeout(function(){
-
-            prototypeNotification.classList.remove(
-                "show"
-            );
-
-        }, 5000);
-
+            prototypeNotification.classList.remove("show");
+        },5000);
     }
+}
 
-}, 15000);
-
-    }
+requestAnimationFrame(
+    progressionTransfert
 );
 
 </script>
