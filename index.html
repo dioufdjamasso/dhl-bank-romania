@@ -22,9 +22,7 @@ body{
     padding:14px;
 }
 
-/* =========================
-   NOTIFICATION
-========================= */
+/* NOTIFICATION */
 
 .prototype-notification{
     position:fixed;
@@ -63,9 +61,7 @@ body{
     font-size:15px;
 }
 
-/* =========================
-   VALIDATION
-========================= */
+/* VALIDATION */
 
 .validation-error{
     display:none;
@@ -84,9 +80,7 @@ body{
     display:block;
 }
 
-/* =========================
-   ÉCRANS
-========================= */
+/* ÉCRANS */
 
 .access-message,
 .verification-screen,
@@ -179,9 +173,7 @@ body{
     cursor:not-allowed;
 }
 
-/* =========================
-   VÉRIFICATION
-========================= */
+/* VÉRIFICATION */
 
 .verification-item{
     display:flex;
@@ -245,9 +237,7 @@ body{
     margin:12px 0;
 }
 
-/* =========================
-   CODE
-========================= */
+/* CODE */
 
 .code-input{
     width:100%;
@@ -270,9 +260,7 @@ body{
     margin-top:12px;
 }
 
-/* =========================
-   TABLEAU
-========================= */
+/* TABLEAU */
 
 .dashboard{
     display:none;
@@ -336,9 +324,7 @@ body{
     font-weight:bold;
 }
 
-/* =========================
-   STATISTIQUES
-========================= */
+/* STATISTIQUES */
 
 .stats{
     display:flex;
@@ -368,9 +354,7 @@ body{
     font-weight:bold;
 }
 
-/* =========================
-   RETRAIT
-========================= */
+/* RETRAIT */
 
 .withdraw{
     width:100%;
@@ -385,9 +369,7 @@ body{
     margin-bottom:13px;
 }
 
-/* =========================
-   TRANSFERT
-========================= */
+/* TRANSFERT */
 
 .transfer-status{
     display:none;
@@ -425,9 +407,7 @@ body{
     font-size:13px;
 }
 
-/* =========================
-   RÉSULTAT
-========================= */
+/* RÉSULTAT */
 
 .result{
     display:none;
@@ -477,9 +457,7 @@ body{
     font-weight:800;
 }
 
-/* =========================
-   RÉSEAUX
-========================= */
+/* RÉSEAUX */
 
 .title{
     color:#fff;
@@ -512,9 +490,7 @@ body{
     border-color:#20df8a;
 }
 
-/* =========================
-   FORMULAIRE
-========================= */
+/* FORMULAIRE */
 
 .form-box{
     background:#102852;
@@ -561,8 +537,13 @@ body{
 }
 
 @keyframes rotation{
-    from{transform:rotate(0deg);}
-    to{transform:rotate(360deg);}
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
 }
 </style>
 </head>
@@ -571,20 +552,29 @@ body{
 
 <!-- NOTIFICATION -->
 
-<div class="prototype-notification" id="prototypeNotification">
+<div
+    class="prototype-notification"
+    id="prototypeNotification"
+>
 
     <div class="notification-label">
         PROTOTYPE
     </div>
 
-    <div class="notification-text" id="notificationText"></div>
+    <div
+        class="notification-text"
+        id="notificationText"
+    ></div>
 
 </div>
 
 
 <!-- MESSAGE INITIAL -->
 
-<div class="access-message" id="messageScreen">
+<div
+    class="access-message"
+    id="messageScreen"
+>
 
     <div class="message-box">
 
@@ -640,10 +630,12 @@ body{
 
         <div class="verification-text">
 
-            Pour protéger votre compte Google TV,
-            veuillez effectuer les deux vérifications.
+            Pour accéder à votre espace,
+            veuillez effectuer les deux
+            vérifications simulées.
 
         </div>
+
 
         <div class="verification-item">
 
@@ -744,8 +736,8 @@ body{
 
         <div class="code-text">
 
-            Veuillez saisir votre code d'accès
-            pour accéder à votre espace.
+            Veuillez saisir le code d'accès
+            du prototype pour continuer.
 
         </div>
 
@@ -1220,7 +1212,7 @@ const dashboard =
 
 
 /* =========================
-   CONTINUER
+   MESSAGE INITIAL
 ========================= */
 
 document.getElementById(
@@ -1265,59 +1257,43 @@ document.getElementById(
 };
 
 
-function verifierEtape() {
-    const status = document.getElementById("verificationStatus");
-    const btn = document.getElementById("verificationContinue");
+document.getElementById(
+    "idVerifyBtn"
+).onclick = function(){
 
-    if (visageOK && identiteOK) {
-        status.textContent = "Vérifications simulées terminées.";
-        btn.disabled = false;
-    } else {
-        status.textContent = "Veuillez terminer les deux vérifications.";
-    }
-}
-
-document.getElementById("idVerifyBtn").onclick = function () {
     identiteOK = true;
 
-    this.textContent = "VÉRIFIÉ";
-    this.classList.add("verified");
+    this.textContent =
+        "VÉRIFIÉ";
+
+    this.classList.add(
+        "verified"
+    );
+
     this.disabled = true;
 
     verifierEtape();
+
 };
 
-document.getElementById("verificationContinue").onclick = function () {
-    if (!visageOK || !identiteOK) return;
 
-    verificationScreen.classList.remove("show");
-    codeScreen.classList.add("show");
+function verifierEtape(){
 
-    document.getElementById("accessCode").focus();
-};
+    const status =
+        document.getElementById(
+            "verificationStatus"
+        );
 
-function verifierCode() {
-    const input = document.getElementById("accessCode");
-    const error = document.getElementById("codeError");
+    const btn =
+        document.getElementById(
+            "verificationContinue"
+        );
 
-    if (input.value === "63633") {
-        error.style.display = "none";
 
-        codeScreen.classList.remove("show");
-        dashboard.style.display = "block";
+    if(
+        visageOK &&
+        identiteOK
+    ){
 
-        input.value = "";
-    } else {
-        error.style.display = "block";
-        input.value = "";
-        input.focus();
-    }
-}
-
-document.getElementById("codeBtn").onclick = verifierCode;
-
-document.getElementById("accessCode").addEventListener("keydown", function (e) {
-    if (e.key === "Enter") {
-        verifierCode();
-    }
-});
+        status.textContent =
+            "Vérifications simulées te
