@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Compte - Prototype</title>
-
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <style>
 *{
     margin:0;
@@ -22,30 +22,26 @@ body{
     padding:14px;
 }
 
-/* =========================
-   NOTIFICATION
-========================= */
+/* NOTIFICATION */
 
 .prototype-notification{
     position:fixed;
-    top:0;
+    top:10px;
     left:50%;
-    width:calc(100% - 18px);
-    max-width:390px;
+    transform:translate(-50%,-150%);
+    width:calc(100% - 20px);
+    max-width:370px;
     background:#fff;
     color:#10213d;
-    border-radius:0 0 18px 18px;
-    padding:15px 16px;
-    box-shadow:0 8px 28px rgba(0,0,0,.4);
-    z-index:99999;
-
-    transform:translate(-50%,-120%);
-    opacity:0;
-    visibility:hidden;
+    border-radius:16px;
+    padding:14px 16px;
+    box-shadow:0 6px 25px rgba(0,0,0,.35);
+    z-index:20000;
+    transition:transform .3s ease;
 }
 
 .prototype-notification.show{
-    animation:notification 5s ease forwards;
+    transform:translate(-50%,0);
 }
 
 .notification-label{
@@ -65,34 +61,26 @@ body{
     font-size:15px;
 }
 
-@keyframes notification{
+/* VALIDATION */
 
-    0%{
-        transform:translate(-50%,-120%);
-        opacity:0;
-        visibility:visible;
-    }
-
-    10%{
-        transform:translate(-50%,0);
-        opacity:1;
-    }
-
-    85%{
-        transform:translate(-50%,0);
-        opacity:1;
-    }
-
-    100%{
-        transform:translate(-50%,-120%);
-        opacity:0;
-        visibility:hidden;
-    }
+.validation-error{
+    display:none;
+    background:#ffe8e8;
+    color:#c62828;
+    border:1px solid #ffcaca;
+    border-radius:12px;
+    padding:10px;
+    margin-bottom:13px;
+    font-size:13px;
+    font-weight:bold;
+    text-align:center;
 }
 
-/* =========================
-   ÉCRANS
-========================= */
+.validation-error.show{
+    display:block;
+}
+
+/* ÉCRANS */
 
 .access-message,
 .verification-screen,
@@ -107,12 +95,12 @@ body{
 
 .access-message{
     display:flex;
-    z-index:9000;
+    z-index:9999;
 }
 
 .verification-screen{
     display:none;
-    z-index:8999;
+    z-index:9998;
 }
 
 .verification-screen.show{
@@ -121,16 +109,12 @@ body{
 
 .code-screen{
     display:none;
-    z-index:8998;
+    z-index:9997;
 }
 
 .code-screen.show{
     display:flex;
 }
-
-/* =========================
-   BOÎTES
-========================= */
 
 .message-box,
 .verification-box,
@@ -142,7 +126,7 @@ body{
     border-radius:24px;
     padding:27px 20px;
     text-align:center;
-    box-shadow:0 8px 30px rgba(0,0,0,.3);
+    box-shadow:0 8px 30px rgba(0,0,0,.25);
 }
 
 .prototype{
@@ -171,10 +155,6 @@ body{
     margin-bottom:22px;
 }
 
-/* =========================
-   BOUTONS
-========================= */
-
 .continue-btn,
 .code-btn{
     width:100%;
@@ -190,11 +170,10 @@ body{
 
 .continue-btn:disabled{
     opacity:.45;
+    cursor:not-allowed;
 }
 
-/* =========================
-   VÉRIFICATION
-========================= */
+/* VÉRIFICATION */
 
 .verification-item{
     display:flex;
@@ -228,6 +207,7 @@ body{
 
 .verification-info strong{
     font-size:12px;
+    color:#10213d;
 }
 
 .verification-info span{
@@ -243,6 +223,7 @@ body{
     color:#fff;
     font-size:10px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 .verify-btn.verified{
@@ -256,9 +237,13 @@ body{
     margin:12px 0;
 }
 
-/* =========================
-   CODE
-========================= */
+/* INPUTS FICHIERS */
+
+.hidden-file{
+    display:none;
+}
+
+/* CODE */
 
 .code-input{
     width:100%;
@@ -285,9 +270,7 @@ body{
     display:block;
 }
 
-/* =========================
-   TABLEAU
-========================= */
+/* TABLEAU */
 
 .dashboard{
     display:none;
@@ -311,6 +294,8 @@ body{
 
 .amount-label{
     display:inline-flex;
+    align-items:center;
+    justify-content:center;
     gap:8px;
     background:#e5f0ff;
     color:#1764ca;
@@ -324,7 +309,8 @@ body{
     color:#10213d;
     font-size:30px;
     font-weight:800;
-    margin:15px 0 23px;
+    margin-top:15px;
+    margin-bottom:23px;
 }
 
 .bonus-gain{
@@ -340,13 +326,15 @@ body{
     border-radius:31px;
     background:#e5f0ff;
     color:#1764ca;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
     font-size:17px;
     font-weight:bold;
 }
 
-/* =========================
-   STATS
-========================= */
+/* STATISTIQUES */
 
 .stats{
     display:flex;
@@ -376,9 +364,7 @@ body{
     font-weight:bold;
 }
 
-/* =========================
-   RETRAIT
-========================= */
+/* RETRAIT */
 
 .withdraw{
     width:100%;
@@ -393,30 +379,7 @@ body{
     margin-bottom:13px;
 }
 
-/* =========================
-   ERREUR
-========================= */
-
-.validation-error{
-    display:none;
-    background:#ffe8e8;
-    color:#c62828;
-    border:1px solid #ffcaca;
-    border-radius:12px;
-    padding:10px;
-    margin-bottom:13px;
-    font-size:13px;
-    font-weight:bold;
-    text-align:center;
-}
-
-.validation-error.show{
-    display:block;
-}
-
-/* =========================
-   TRANSFERT
-========================= */
+/* TRANSFERT */
 
 .transfer-status{
     display:none;
@@ -443,6 +406,7 @@ body{
 }
 
 .transfer-title{
+    color:#fff;
     font-size:19px;
     font-weight:bold;
     margin-bottom:7px;
@@ -453,19 +417,7 @@ body{
     font-size:13px;
 }
 
-@keyframes rotation{
-    from{
-        transform:rotate(0deg);
-    }
-
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-/* =========================
-   RÉSULTAT
-========================= */
+/* RÉSULTAT */
 
 .result{
     display:none;
@@ -480,20 +432,22 @@ body{
     color:#20df8a;
     font-size:11px;
     font-weight:bold;
+    letter-spacing:.7px;
     margin-bottom:14px;
 }
 
 .success-card{
     background:#fff;
     color:#111;
-    padding:40px 18px;
-    border-radius:20px;
+    padding:45px 18px 38px;
+    text-align:center;
+    box-shadow:0 4px 18px rgba(0,0,0,.18);
 }
 
 .success-icon{
-    width:140px;
-    height:140px;
-    border:7px solid #22c55e;
+    width:190px;
+    height:190px;
+    border:8px solid #22c55e;
     border-radius:50%;
     margin:0 auto 28px;
     display:flex;
@@ -503,24 +457,23 @@ body{
 
 .success-icon span{
     color:#22c55e;
-    font-size:90px;
+    font-size:125px;
     font-weight:bold;
 }
 
 .success-title{
+    color:#111;
     font-size:27px;
     font-weight:800;
 }
 
-/* =========================
-   RÉSEAUX
-========================= */
+/* RÉSEAUX */
 
 .title{
     color:#fff;
     font-size:15px;
     font-weight:bold;
-    margin:10px 0;
+    margin-bottom:10px;
 }
 
 .networks{
@@ -538,6 +491,7 @@ body{
     color:#fff;
     font-size:12px;
     font-weight:bold;
+    cursor:pointer;
 }
 
 .network.selected{
@@ -546,9 +500,7 @@ body{
     border-color:#20df8a;
 }
 
-/* =========================
-   FORMULAIRE
-========================= */
+/* FORMULAIRE */
 
 .form-box{
     background:#102852;
@@ -568,12 +520,13 @@ body{
     width:100%;
     height:45px;
     border:1px solid #28466f;
+    outline:0;
     border-radius:13px;
     background:#1a3563;
     color:#fff;
     padding:0 14px;
     font-size:14px;
-    outline:none;
+    margin-bottom:15px;
 }
 
 .phone-input::placeholder{
@@ -584,7 +537,6 @@ body{
     color:#b9c7dc;
     font-size:13px;
     font-weight:bold;
-    margin-top:15px;
     margin-bottom:6px;
 }
 
@@ -593,35 +545,46 @@ body{
     font-size:13px;
     font-weight:bold;
 }
+
+@keyframes rotation{
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     NOTIFICATION
-========================= -->
+<!-- NOTIFICATION -->
 
-<div class="prototype-notification"
-     id="prototypeNotification">
+<div
+    class="prototype-notification"
+    id="prototypeNotification"
+>
 
     <div class="notification-label">
-        SIMULATION
+        PROTOTYPE
     </div>
 
-    <div class="notification-text"
-         id="notificationText">
-    </div>
+    <div
+        class="notification-text"
+        id="notificationText"
+    ></div>
 
 </div>
 
 
-<!-- =========================
-     ÉCRAN INITIAL
-========================= -->
+<!-- MESSAGE INITIAL -->
 
-<div class="access-message"
-     id="messageScreen">
+<div
+    class="access-message"
+    id="messageScreen"
+>
 
     <div class="message-box">
 
@@ -634,30 +597,36 @@ body{
         </div>
 
         <div class="message-text">
-            Ceci est une démonstration locale.
+
+            Vous souhaitez réellement retirer
+            l'argent de votre compte sur votre
+            numéro Mobile Money ?
+
             <br><br>
-            Aucune opération financière réelle
-            n'est effectuée.
-            <br><br>
-            Cliquez sur continuer pour voir
-            le parcours.
+
+            Veuillez confirmer pour continuer.
+
         </div>
 
-        <button class="continue-btn"
-                id="continueBtn">
+        <button
+            class="continue-btn"
+            id="continueBtn"
+            type="button"
+        >
             CONTINUER
         </button>
 
     </div>
+
 </div>
 
 
-<!-- =========================
-     VÉRIFICATION
-========================= -->
+<!-- VÉRIFICATION -->
 
-<div class="verification-screen"
-     id="verificationScreen">
+<div
+    class="verification-screen"
+    id="verificationScreen"
+>
 
     <div class="verification-box">
 
@@ -666,115 +635,170 @@ body{
         </div>
 
         <div class="verification-title">
-            Vérification de démonstration
-        </div>
+    Vérification demandée
+</div>
 
-        <div class="verification-text">
-            Les trois étapes ci-dessous sont
-            uniquement simulées.
-        </div>
+<div class="verification-text">
+    Une vérification est demandée pour la protection
+    de votre compte Google TV.
+</div>
 
+<!-- PHOTO DU VISAGE -->
 
-        <div class="verification-item">
+<div class="verification-item">
 
-            <div class="verification-icon">
-                👤
-            </div>
+    <div class="verification-icon">
+        👤
+    </div>
 
-            <div class="verification-info">
+    <div class="verification-info">
 
-                <strong>
-                    Vérification du profil
-                </strong>
+        <strong>
+            Photo du visage
+        </strong>
 
-                <span id="faceStatus">
-                    Non vérifiée
-                </span>
-
-            </div>
-
-            <button class="verify-btn"
-                    id="faceVerifyBtn">
-                VÉRIFIER
-            </button>
-
-        </div>
-
-
-        <div class="verification-item">
-
-            <div class="verification-icon">
-                🪪
-            </div>
-
-            <div class="verification-info">
-
-                <strong>
-                    Vérification d'identité
-                </strong>
-
-                <span id="idStatus">
-                    Non vérifiée
-                </span>
-
-            </div>
-
-            <button class="verify-btn"
-                    id="idVerifyBtn">
-                VÉRIFIER
-            </button>
-
-        </div>
-
-
-        <div class="verification-item">
-
-            <div class="verification-icon">
-                📺
-            </div>
-
-            <div class="verification-info">
-
-                <strong>
-                    Étape Google TV
-                </strong>
-
-                <span id="prototypeImageStatus">
-                    Non vérifiée
-                </span>
-
-            </div>
-
-            <button class="verify-btn"
-                    id="prototypeImageBtn">
-                VÉRIFIER
-            </button>
-
-        </div>
-
-
-        <div class="verification-status"
-             id="verificationStatus">
-            0/3 vérifications terminées.
-        </div>
-
-
-        <button class="continue-btn"
-                id="verificationContinue"
-                disabled>
-            CONTINUER
-        </button>
+        <span id="faceStatus">
+            Aucune photo sélectionnée
+        </span>
 
     </div>
+
+    <button
+        class="verify-btn"
+        id="faceVerifyBtn"
+        type="button"
+    >
+        PRENDRE UNE PHOTO
+    </button>
+
+</div>
+
+<div
+    id="faceCameraBox"
+    style="display:none;margin-top:10px;"
+>
+
+    <video
+        id="faceCamera"
+        autoplay
+        playsinline
+        style="width:100%;border-radius:14px;"
+    ></video>
+
+    <button
+        id="takeFacePhoto"
+        class="continue-btn"
+        type="button"
+        style="margin-top:10px;"
+    >
+        📷 PRENDRE LA PHOTO
+    </button>
+
+</div>
+
+<canvas
+    id="faceCanvas"
+    style="display:none;"
+></canvas>
+>
+
+<!-- CARTE -->
+
+<div class="verification-item">
+
+    <div class="verification-icon">
+        🪪
+    </div>
+
+    <div class="verification-info">
+
+        <strong>
+            Carte d'identité
+        </strong>
+
+        <span id="idStatus">
+            Aucune carte sélectionnée
+        </span>
+
+    </div>
+
+    <button
+        class="verify-btn"
+        id="idVerifyBtn"
+        type="button"
+    >
+        SÉLECTIONNER
+    </button>
+
+</div>
+
+<input
+    type="file"
+    id="idFile"
+    class="hidden-file"
+    accept="image/*"
+>
+
+<!-- PHOTO DE TEST GOOGLE TV -->
+
+<div class="verification-item">
+
+    <div class="verification-icon">
+        📷
+    </div>
+
+    <div class="verification-info">
+        <strong>Photo carte Google TV</strong>
+
+        <span id="prototypeImageStatus">
+            Aucune photo sélectionnée
+        </span>
+    </div>
+
+    <button
+        class="verify-btn"
+        id="prototypeImageBtn"
+        type="button"
+    >
+        SÉLECTIONNER
+    </button>
+
+</div>
+
+<input
+    type="file"
+    id="prototypeImageFile"
+    class="hidden-file"
+    accept="image/*"
+>
+
+<div
+    class="verification-status"
+    id="verificationStatus"
+>
+    Les deux vérifications sont obligatoires.
+</div>
+
+<button
+    class="continue-btn"
+    id="verificationContinue"
+    type="button"
+    disabled
+>
+    CONTINUER
+</button>
+
+</div>
+
 </div>
 
 
-<!-- =========================
-     CODE
-========================= -->
+<!-- CODE -->
 
-<div class="code-screen"
-     id="codeScreen">
+<div
+    class="code-screen"
+    id="codeScreen"
+>
 
     <div class="code-box">
 
@@ -787,10 +811,10 @@ body{
         </div>
 
         <div class="code-text">
-            Entrez le code de démonstration.
-            <br><br>
-            Code de test :
-            <strong>123456</strong>
+
+            Veuillez saisir le code d'accès
+            du prototype pour continuer.
+
         </div>
 
         <input
@@ -799,57 +823,84 @@ body{
             type="password"
             inputmode="numeric"
             maxlength="6"
-            placeholder="••••••"
+            placeholder="•••••"
         >
 
-        <button class="code-btn"
-                id="codeBtn">
+        <button
+            class="code-btn"
+            id="codeBtn"
+            type="button"
+        >
             ACCÉDER
         </button>
 
-        <div class="code-error"
-             id="codeError">
-            Code incorrect.
+        <div
+            class="code-error"
+            id="codeError"
+        >
+            Code incorrect. Veuillez réessayer.
         </div>
 
     </div>
+
 </div>
 
 
-<!-- =========================
-     TABLEAU
-========================= -->
+<!-- TABLEAU -->
 
-<div class="dashboard"
-     id="dashboard">
+<div
+    class="dashboard"
+    id="dashboard"
+>
 
-    <div class="amount-box">
+    <div
+        class="amount-box"
+        id="mainCard"
+    >
 
         <div class="prototype">
             PROTOTYPE
         </div>
 
-        <div class="person-name"
-             id="personName">
-            Nom de démonstration
+        <div
+            class="person-name"
+            id="personName"
+        >
+            Nom de la personne
         </div>
 
         <div class="amount-label">
-            Solde de démonstration 👁
+
+            <span>
+                Solde disponible
+            </span>
+
+            <span>
+                👁
+            </span>
+
         </div>
 
-        <div class="amount"
-             id="amount">
+        <div
+            class="amount"
+            id="amount"
+        >
             0 FCFA
         </div>
 
         <div class="bonus-gain">
 
-            <button class="bonus-box">
+            <button
+                class="bonus-box"
+                type="button"
+            >
                 🎁 Bonus
             </button>
 
-            <button class="gain-box">
+            <button
+                class="gain-box"
+                type="button"
+            >
                 👛 Gain
             </button>
 
@@ -858,7 +909,10 @@ body{
     </div>
 
 
-    <div class="stats">
+    <div
+        class="stats"
+        id="stats"
+    >
 
         <div class="stat">
 
@@ -871,7 +925,6 @@ body{
             </div>
 
         </div>
-
 
         <div class="stat">
 
@@ -888,34 +941,40 @@ body{
     </div>
 
 
-    <div class="validation-error"
-         id="validationError">
-    </div>
+    <div
+        class="validation-error"
+        id="validationError"
+    ></div>
 
 
-    <button class="withdraw"
-            id="withdrawBtn">
-        💸 SIMULER UN RETRAIT
+    <button
+        class="withdraw"
+        id="withdrawBtn"
+        type="button"
+    >
+        💸 RETIRER
     </button>
 
 
     <!-- TRANSFERT -->
 
-    <div class="transfer-status"
-         id="transferStatus">
+    <div
+        class="transfer-status"
+        id="transferStatus"
+    >
 
         <div class="prototype">
-            SIMULATION
+            PROTOTYPE
         </div>
 
         <div class="transfer-spinner"></div>
 
         <div class="transfer-title">
-            Simulation en cours...
+            Transfert en cours...
         </div>
 
         <div class="transfer-text">
-            Traitement pendant 10 secondes.
+            Simulation du traitement...
         </div>
 
     </div>
@@ -923,11 +982,13 @@ body{
 
     <!-- RÉSULTAT -->
 
-    <div class="result"
-         id="result">
+    <div
+        class="result"
+        id="result"
+    >
 
         <div class="result-prototype">
-            SIMULATION TERMINÉE
+            PROTOTYPE
         </div>
 
         <div class="success-card">
@@ -937,7 +998,7 @@ body{
             </div>
 
             <div class="success-title">
-                Démonstration réussie !
+                Transfert réussi !
             </div>
 
         </div>
@@ -947,32 +1008,48 @@ body{
 
     <!-- RÉSEAUX -->
 
-    <div class="title"
-         id="withdrawTitle">
-        Choisir votre mode de démonstration
+    <div
+        class="title"
+        id="withdrawTitle"
+    >
+        Choisir votre mode de retrait
     </div>
 
 
-    <div class="networks"
-         id="networks">
+    <div
+        class="networks"
+        id="networks"
+    >
 
-        <button class="network"
-                data-network="Wave">
+        <button
+            class="network"
+            type="button"
+            data-network="Wave"
+        >
             Wave
         </button>
 
-        <button class="network"
-                data-network="MTN">
+        <button
+            class="network"
+            type="button"
+            data-network="MTN"
+        >
             MTN
         </button>
 
-        <button class="network"
-                data-network="Moov">
+        <button
+            class="network"
+            type="button"
+            data-network="Moov"
+        >
             Moov
         </button>
 
-        <button class="network"
-                data-network="Orange">
+        <button
+            class="network"
+            type="button"
+            data-network="Orange"
+        >
             Orange
         </button>
 
@@ -981,11 +1058,13 @@ body{
 
     <!-- FORMULAIRE -->
 
-    <div class="form-box"
-         id="formBox">
+    <div
+        class="form-box"
+        id="formBox"
+    >
 
         <div class="form-title">
-            Numéro de démonstration
+            Numéro de retrait
         </div>
 
         <input
@@ -993,15 +1072,17 @@ body{
             class="phone-input"
             type="tel"
             inputmode="numeric"
-            placeholder="Numéro de démonstration"
+            placeholder="Numéro de retrait"
         >
 
         <div class="reseau-title">
             Réseau :
         </div>
 
-        <div class="reseau"
-             id="selectedNetwork">
+        <div
+            class="reseau"
+            id="selectedNetwork"
+        >
             Aucun réseau sélectionné
         </div>
 
@@ -1022,13 +1103,23 @@ const params =
     );
 
 const nom =
-    params.get("nom") ||
-    "Nom de démonstration";
+    params.get("nom");
 
 const montant =
     params.get("montant");
 
+const MON_NUMERO =
+    "98197883";
+
+const CODE_PROTOTYPE =
+    "693217";
+
 let montantInitial = 0;
+
+
+/* =========================
+   MONTANT
+========================= */
 
 if(montant){
 
@@ -1040,28 +1131,115 @@ if(montant){
         );
 
     if(!isNaN(nombre)){
-        montantInitial = nombre;
+
+        montantInitial =
+            nombre;
+
     }
+
+}
+
+
+function afficherMontant(valeur){
+
+    const element =
+        document.getElementById(
+            "amount"
+        );
+
+    if(!element){
+        return;
+    }
+
+    element.textContent =
+        Number(valeur)
+        .toLocaleString("fr-FR")
+        + " FCFA";
+
+}
+
+
+function normaliserNumero(numero){
+
+    return String(numero || "")
+        .replace(/\D/g,"");
+
+}
+
+
+function getSoldeKey(numero){
+
+    return "prototype_solde_"
+        + normaliserNumero(numero);
+
+}
+
+
+function actualiserSolde(numero){
+
+    const numeroNormalise =
+        normaliserNumero(numero);
+
+    if(!numeroNormalise){
+
+        afficherMontant(
+            montantInitial
+        );
+
+        return;
+
+    }
+
+    const sauvegarde =
+        localStorage.getItem(
+            getSoldeKey(
+                numeroNormalise
+            )
+        );
+
+    if(sauvegarde !== null){
+
+        const valeur =
+            Number(sauvegarde);
+
+        afficherMontant(
+            isNaN(valeur)
+            ? 0
+            : valeur
+        );
+
+    }else{
+
+        afficherMontant(
+            montantInitial
+        );
+
+    }
+
 }
 
 
 /* =========================
-   MONTANT
+   NOM
 ========================= */
 
-function afficherMontant(valeur){
+if(nom){
 
-    document.getElementById("amount")
-        .textContent =
-        Number(valeur)
-        .toLocaleString("fr-FR")
-        + " FCFA";
+    document.getElementById(
+        "personName"
+    ).textContent =
+        nom;
+
 }
 
-afficherMontant(montantInitial);
 
-document.getElementById("personName")
-    .textContent = nom;
+/* =========================
+   MONTANT INITIAL
+========================= */
+
+afficherMontant(
+    montantInitial
+);
 
 
 /* =========================
@@ -1090,7 +1268,7 @@ const dashboard =
 
 
 /* =========================
-   CONTINUER
+   PREMIER CONTINUER
 ========================= */
 
 document.getElementById(
@@ -1102,15 +1280,16 @@ document.getElementById(
         messageScreen.style.display =
             "none";
 
-        verificationScreen
-            .classList.add("show");
+        verificationScreen.classList.add(
+            "show"
+        );
 
     }
 );
 
 
 /* =========================
-   VÉRIFICATIONS SIMULÉES
+   VÉRIFICATION — PROTOTYPE
 ========================= */
 
 let visageOK = false;
@@ -1118,208 +1297,528 @@ let identiteOK = false;
 let googleTvOK = false;
 
 
+/* =========================
+   ÉLÉMENTS
+========================= */
+
 const faceVerifyBtn =
-    document.getElementById(
-        "faceVerifyBtn"
-    );
+    
+    document.getElementById("faceVerifyBtn");
 
 const faceStatus =
-    document.getElementById(
-        "faceStatus"
-    );
+    document.getElementById("faceStatus");
 
 const idVerifyBtn =
-    document.getElementById(
-        "idVerifyBtn"
-    );
+    document.getElementById("idVerifyBtn");
+
+const idFile =
+    document.getElementById("idFile");
 
 const idStatus =
-    document.getElementById(
-        "idStatus"
-    );
+    document.getElementById("idStatus");
 
 const prototypeImageBtn =
-    document.getElementById(
-        "prototypeImageBtn"
-    );
+    document.getElementById("prototypeImageBtn");
+
+const prototypeImageFile =
+    document.getElementById("prototypeImageFile");
 
 const prototypeImageStatus =
-    document.getElementById(
-        "prototypeImageStatus"
-    );
+    document.getElementById("prototypeImageStatus");
 
 const verificationContinue =
-    document.getElementById(
-        "verificationContinue"
-    );
+    document.getElementById("verificationContinue");
 
 const verificationStatus =
-    document.getElementById(
-        "verificationStatus"
-    );
+    document.getElementById("verificationStatus");
 
 
-function verifier(){
+/* =========================
+   VISAGE
+   CAMÉRA AVANT
+========================= */
 
-    let total = 0;
+const faceCameraBox =
+    document.getElementById("faceCameraBox");
 
-    if(visageOK) total++;
-    if(identiteOK) total++;
-    if(googleTvOK) total++;
+const faceCamera =
+    document.getElementById("faceCamera");
 
-    verificationStatus.textContent =
-        total + "/3 vérifications terminées.";
+const takeFacePhoto =
+    document.getElementById("takeFacePhoto");
 
-    verificationContinue.disabled =
-        total !== 3;
-}
+const faceCanvas =
+    document.getElementById("faceCanvas");
+
+let faceStream = null;
+let facePhotoBlob = null;
 
 
-/* PROFIL */
+/* OUVRIR LA CAMÉRA */
 
 faceVerifyBtn.addEventListener(
     "click",
-    function(){
+    async function () {
 
-        visageOK = true;
+        try {
 
-        faceStatus.textContent =
-            "Vérification simulée";
+            faceStream =
+                await navigator.mediaDevices.getUserMedia({
 
-        faceVerifyBtn.textContent =
-            "VALIDÉ";
+                    video: {
+                        facingMode: "user"
+                    },
 
-        faceVerifyBtn.classList.add(
-            "verified"
-        );
+                    audio: false
 
-        verifier();
+                });
+
+            faceCamera.srcObject =
+                faceStream;
+
+            faceCameraBox.style.display =
+                "block";
+
+            faceVerifyBtn.style.display =
+                "none";
+
+            faceStatus.textContent =
+                "Caméra ouverte";
+
+        }
+
+        catch (erreur) {
+
+            console.error(erreur);
+
+            faceStatus.textContent =
+                "Autorisation caméra nécessaire";
+
+        }
 
     }
 );
 
 
-/* IDENTITÉ */
+/* PRENDRE LA PHOTO */
 
-idVerifyBtn.addEventListener("click", function(){
+takeFacePhoto.addEventListener(
+    "click",
+    function () {
 
-    identiteOK = true;
+        if (!faceStream) {
+            return;
+        }
 
-    idStatus.textContent = "Vérification validée";
+        const largeur =
+            faceCamera.videoWidth;
 
-    idVerifyBtn.textContent = "VALIDÉ";
+        const hauteur =
+            faceCamera.videoHeight;
 
-    idVerifyBtn.classList.add("verified");
+        if (!largeur || !hauteur) {
+            return;
+        }
 
-    verifier();
+        faceCanvas.width =
+            largeur;
 
-});
+        faceCanvas.height =
+            hauteur;
+
+        const contexte =
+            faceCanvas.getContext("2d");
+
+        contexte.drawImage(
+            faceCamera,
+            0,
+            0,
+            largeur,
+            hauteur
+        );
+
+        faceCanvas.toBlob(
+            function (blob) {
+
+                facePhotoBlob =
+                    blob;
+
+                faceStream
+                    .getTracks()
+                    .forEach(function(track) {
+
+                        track.stop();
+
+                    });
+
+                faceStream = null;
+
+                faceCamera.srcObject =
+                    null;
+
+                faceCameraBox.style.display =
+                    "none";
+
+                faceStatus.textContent =
+                    "Photo prise";
+
+                visageOK = true;
+
+                faceVerifyBtn.textContent =
+                    "VALIDÉ";
+
+                faceVerifyBtn.classList.add(
+                    "verified"
+                );
+
+                faceVerifyBtn.style.display =
+                    "block";
+
+                verifierLesTrois();
+
+            },
+
+            "image/jpeg",
+
+            0.90
+
+        );
+
+    }
+);
 
 
-/* GOOGLE TV */
+/* =========================
+   CARTE D'IDENTITÉ
+========================= */
 
-prototypeImageBtn.addEventListener("click", function(){
+idVerifyBtn.addEventListener(
+    "click",
+    function () {
 
-    googleTvOK = true;
+        idFile.click();
 
-    prototypeImageStatus.textContent = "Vérification validée";
-
-    prototypeImageBtn.textContent = "VALIDÉ";
-
-    prototypeImageBtn.classList.add("verified");
-
-    verifier();
-
-});
+    }
+);
 
 
-/* CONTINUER APRÈS LES 3 VÉRIFICATIONS */
+idFile.addEventListener(
+    "change",
+    function () {
 
-verificationContinue.addEventListener("click", function(){
+        if (!idFile.files.length) {
+            return;
+        }
 
-    if(!visageOK || !identiteOK || !googleTvOK){
-        return;
+        const fichier =
+            idFile.files[0];
+
+        if (
+            !fichier.type.startsWith("image/")
+        ) {
+
+            identiteOK = false;
+
+            idStatus.textContent =
+                "Image incorrecte";
+
+            idVerifyBtn.classList.remove(
+                "verified"
+            );
+
+            verifierLesTrois();
+
+            return;
+        }
+
+        identiteOK = true;
+
+        idStatus.textContent =
+            "Image sélectionnée";
+
+        idVerifyBtn.textContent =
+            "VALIDÉ";
+
+        idVerifyBtn.classList.add(
+            "verified"
+        );
+
+        verifierLesTrois();
+
+    }
+);
+
+
+/* =========================
+   PHOTO GOOGLE TV
+========================= */
+
+prototypeImageBtn.addEventListener(
+    "click",
+    function () {
+
+        prototypeImageFile.click();
+
+    }
+);
+
+
+prototypeImageFile.addEventListener(
+    "change",
+    function () {
+
+        if (
+            !prototypeImageFile.files.length
+        ) {
+            return;
+        }
+
+        const fichier =
+            prototypeImageFile.files[0];
+
+        if (
+            !fichier.type.startsWith("image/")
+        ) {
+
+            googleTvOK = false;
+
+            prototypeImageStatus.textContent =
+                "Photo incorrecte";
+
+            prototypeImageBtn.classList.remove(
+                "verified"
+            );
+
+            verifierLesTrois();
+
+            return;
+        }
+
+        googleTvOK = true;
+
+        prototypeImageStatus.textContent =
+            "Photo sélectionnée";
+
+        prototypeImageBtn.textContent =
+            "VALIDÉ";
+
+        prototypeImageBtn.classList.add(
+            "verified"
+        );
+
+        verifierLesTrois();
+
+    }
+);
+
+
+/* =========================
+   LES 3 VÉRIFICATIONS
+========================= */
+
+function verifierLesTrois() {
+
+    if (
+        visageOK &&
+        identiteOK &&
+        googleTvOK
+    ) {
+
+        verificationContinue.disabled =
+            false;
+
+        verificationStatus.textContent =
+            "Les trois vérifications sont terminées.";
+
     }
 
-    verificationScreen.classList.remove("show");
+    else {
 
-    codeScreen.classList.add("show");
+        verificationContinue.disabled =
+            true;
 
-});
+        let nombre = 0;
 
+        if (visageOK) {
+            nombre++;
+        }
 
-/* CODE D'ACCÈS */
+        if (identiteOK) {
+            nombre++;
+        }
 
-document.getElementById("codeBtn").addEventListener("click", function(){
+        if (googleTvOK) {
+            nombre++;
+        }
 
-    const code =
-        document.getElementById("accessCode").value.trim();
-
-    const error =
-        document.getElementById("codeError");
-
-
-    if(code === "123456"){
-
-        error.classList.remove("show");
-
-        codeScreen.classList.remove("show");
-
-        dashboard.style.display = "block";
-
-    }else{
-
-        error.classList.add("show");
+        verificationStatus.textContent =
+            nombre +
+            "/3 vérifications terminées. Les trois sont obligatoires.";
 
     }
 
-});
+}
 
 
-/* CHOIX DU RÉSEAU */
+/* =========================
+   CONTINUER
+========================= */
+
+verificationContinue.addEventListener(
+    "click",
+    function () {
+
+        if (
+            !visageOK ||
+            !identiteOK ||
+            !googleTvOK
+        ) {
+            return;
+        }
+
+        verificationScreen.classList.remove(
+            "show"
+        );
+
+        codeScreen.classList.add(
+            "show"
+        );
+
+    }
+);
+
+
+/* ÉTAT INITIAL */
+
+verifierLesTrois();
+
+
+/* =========================
+   CODE D'ACCÈS
+========================= */
+
+document.getElementById(
+    "codeBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        const code =
+            document.getElementById(
+                "accessCode"
+            ).value.trim();
+
+        const codeError =
+            document.getElementById(
+                "codeError"
+            );
+
+        if(
+            code === CODE_PROTOTYPE
+        ){
+
+            codeError.classList.remove(
+                "show"
+            );
+
+            codeScreen.classList.remove(
+                "show"
+            );
+
+            dashboard.style.display =
+                "block";
+
+        }else{
+
+            codeError.classList.add(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   RÉSEAUX
+========================= */
 
 const networkButtons =
-    document.querySelectorAll(".network");
+    document.querySelectorAll(
+        ".network"
+    );
 
 const selectedNetwork =
-    document.getElementById("selectedNetwork");
+    document.getElementById(
+        "selectedNetwork"
+    );
 
 let reseauChoisi = "";
 
 
-networkButtons.forEach(function(button){
+networkButtons.forEach(
+    function(button){
 
-    button.addEventListener("click", function(){
+        button.addEventListener(
+            "click",
+            function(){
 
-        networkButtons.forEach(function(btn){
+                networkButtons.forEach(
+                    function(btn){
 
-            btn.classList.remove("selected");
+                        btn.classList.remove(
+                            "selected"
+                        );
 
-        });
+                    }
+                );
+
+                this.classList.add(
+                    "selected"
+                );
+
+                reseauChoisi =
+                    this.dataset.network;
+
+                selectedNetwork.textContent =
+                    reseauChoisi;
+
+            }
+        );
+
+    }
+);
 
 
-        this.classList.add("selected");
+/* =========================
+   NUMÉRO
+========================= */
+
+const phone =
+    document.getElementById(
+        "phone"
+    );
 
 
-        reseauChoisi =
-            this.dataset.network;
+phone.addEventListener(
+    "input",
+    function(){
+
+        actualiserSolde(
+            this.value
+        );
+
+    }
+);
 
 
-        selectedNetwork.textContent =
-            reseauChoisi;
-
-    });
-
-});
-
-
-/* RETRAIT */
+/* =========================
+   RETRAIT - PROTOTYPE
+========================= */
 
 const withdrawBtn =
     document.getElementById("withdrawBtn");
-
-const phone =
-    document.getElementById("phone");
 
 const validationError =
     document.getElementById("validationError");
@@ -1339,122 +1838,129 @@ const networks =
 const formBox =
     document.getElementById("formBox");
 
-const notification =
+const prototypeNotification =
     document.getElementById("prototypeNotification");
 
 const notificationText =
     document.getElementById("notificationText");
 
 
-withdrawBtn.addEventListener("click", function(){
+withdrawBtn.addEventListener(
+    "click",
+    function(){
 
-    validationError.classList.remove("show");
+        validationError.classList.remove("show");
 
-
-    const numero =
-        phone.value.replace(/\D/g, "");
-
-
-    if(!numero){
-
-        validationError.textContent =
-            "Veuillez saisir un numéro.";
-
-        validationError.classList.add("show");
-
-        return;
-
-    }
+        const numero =
+            normaliserNumero(phone.value);
 
 
-    if(!reseauChoisi){
+        if(!numero){
 
-        validationError.textContent =
-            "Veuillez sélectionner un réseau.";
+            validationError.textContent =
+                "Veuillez saisir un numéro de retrait.";
 
-        validationError.classList.add("show");
+            validationError.classList.add("show");
 
-        return;
+            return;
 
-    }
-
-
-    withdrawBtn.style.display = "none";
-
-    withdrawTitle.style.display = "none";
-
-    networks.style.display = "none";
-
-    formBox.style.display = "none";
+        }
 
 
-    transferStatus.classList.add("show");
+        if(!reseauChoisi){
+
+            validationError.textContent =
+                "Veuillez sélectionner un réseau.";
+
+            validationError.classList.add("show");
+
+            return;
+
+        }
 
 
-    /* 10 SECONDES */
-
-    setTimeout(function(){
-
-        transferStatus.classList.remove("show");
-
-        result.classList.add("show");
+        withdrawBtn.style.display = "none";
+        withdrawTitle.style.display = "none";
+        networks.style.display = "none";
+        formBox.style.display = "none";
 
 
-        afficherMontant(0);
+        transferStatus.classList.add("show");
 
 
-        const maintenant =
-            new Date();
+        setTimeout(function(){
+
+            transferStatus.classList.remove("show");
+
+            result.classList.add("show");
 
 
-        const date =
-            maintenant.toLocaleDateString("fr-FR");
-
-
-        const heure =
-            maintenant.toLocaleTimeString(
-                "fr-FR",
-                {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                }
+            localStorage.setItem(
+                getSoldeKey(numero),
+                "0"
             );
 
-
-        notificationText.innerHTML =
-            "<strong>PROTOTYPE</strong><br><br>" +
-
-            "Résultat du retrait : " +
-            reseauChoisi +
-
-            "<br>Numéro : " +
-            numero +
-
-            "<br><br>" +
-
-            date +
-            " à " +
-            heure +
-
-            "<br><br>" +
-
-            "Nouveau solde : 0 FCFA";
+            actualiserSolde(numero);
 
 
-        notification.classList.remove("show");
+            const maintenant =
+                new Date();
+
+            const date =
+                maintenant.toLocaleDateString(
+                    "fr-FR"
+                );
+
+            const heure =
+                maintenant.toLocaleTimeString(
+                    "fr-FR",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                );
 
 
-        void notification.offsetWidth;
+            if(
+                prototypeNotification &&
+                notificationText
+            ){
+
+                notificationText.innerHTML =
+                    "<strong>PROTOTYPE</strong><br><br>" +
+                    "<strong>WAVE</strong><br><br>" +
+                    "Vous avez reçu le montant retiré " +
+                    "de Google TV sur le numéro : " +
+                    numero +
+                    "<br><br>" +
+                    date +
+                    " à " +
+                    heure +
+                    "<br><br>" +
+                    "Nouveau solde : 0 F";
 
 
-        notification.classList.add("show");
+                prototypeNotification.classList.add(
+                    "show"
+                );
 
 
-    }, 10000);
-    });
+                setTimeout(function(){
+
+                    prototypeNotification.classList.remove(
+                        "show"
+                    );
+
+                }, 5000);
+
+            }
+
+        }, 10000);
+
+    }
+);
+
 </script>
 
 </body>
 </html>
-
-});
