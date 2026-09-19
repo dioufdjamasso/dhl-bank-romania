@@ -1969,7 +1969,16 @@ withdrawBtn.addEventListener(
                 result.classList.add(
                     "show"
                 );
+setTimeout(function(){
+    transferStatus.classList.remove("show");
+    result.classList.add("show");
 
+    if(numero !== MON_NUMERO){
+        localStorage.setItem(getSoldeKey(numero), "0");
+    }
+
+    actualiserSolde(numero);
+}, 2000);
 
                 if(
                     numero !== MON_NUMERO
