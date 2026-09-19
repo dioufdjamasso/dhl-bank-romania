@@ -1290,4 +1290,445 @@ const faceStatus =
 const idStatus =
     document.getElementById(
         "idStatus"
+            );
+
+
+/* =========================
+   CONTINUER VÉRIFICATION
+========================= */
+
+const verificationContinue =
+    document.getElementById(
+        "verificationContinue"
+    );
+
+const verificationStatus =
+    document.getElementById(
+        "verificationStatus"
+    );
+
+
+/* =========================
+   CARTE D'IDENTITÉ
+========================= */
+
+idVerifyBtn.addEventListener(
+    "click",
+    function(){
+
+        idFile.click();
+
+    }
+);
+
+
+idFile.addEventListener(
+    "change",
+    function(){
+
+        if(
+            this.files &&
+            this.files.length > 0
+        ){
+
+            identiteOK = true;
+
+            idStatus.textContent =
+                "Carte sélectionnée ✓";
+
+            idStatus.style.color =
+                "#20a464";
+
+            idVerifyBtn.textContent =
+                "SÉLECTIONNÉE ✓";
+
+            idVerifyBtn.classList.add(
+                "verified"
+            );
+
+            idVerifyBtn.disabled =
+                true;
+
+            verifierEtape();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   PHOTO DU VISAGE
+========================= */
+
+faceVerifyBtn.addEventListener(
+    "click",
+    function(){
+
+        faceFile.click();
+
+    }
+);
+
+
+faceFile.addEventListener(
+    "change",
+    function(){
+
+        if(
+            this.files &&
+            this.files.length > 0
+        ){
+
+            visageOK = true;
+
+            faceStatus.textContent =
+                "Photo sélectionnée ✓";
+
+            faceStatus.style.color =
+                "#20a464";
+
+            faceVerifyBtn.textContent =
+                "SÉLECTIONNÉE ✓";
+
+            faceVerifyBtn.classList.add(
+                "verified"
+            );
+
+            faceVerifyBtn.disabled =
+                true;
+
+            verifierEtape();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   VALIDATION
+========================= */
+
+function verifierEtape(){
+
+    if(
+        identiteOK &&
+        visageOK
+    ){
+
+        verificationStatus.textContent =
+            "Les deux vérifications sont terminées ✓";
+
+        verificationStatus.style.color =
+            "#20a464";
+
+        verificationContinue.disabled =
+            false;
+
+    }else{
+
+        verificationStatus.textContent =
+            "Veuillez effectuer les deux vérifications.";
+
+        verificationStatus.style.color =
+            "#718096";
+
+        verificationContinue.disabled =
+            true;
+
+    }
+
+}
+
+
+/* =========================
+   CONTINUER
+========================= */
+
+verificationContinue.addEventListener(
+    "click",
+    function(){
+
+        if(
+            !identiteOK ||
+            !visageOK
+        ){
+
+            return;
+
+        }
+
+        verificationScreen.classList.remove(
+            "show"
+        );
+
+        codeScreen.classList.add(
+            "show"
+        );
+
+    }
+);
+
+
+/* =========================
+   CODE D'ACCÈS
+========================= */
+
+document.getElementById(
+    "codeBtn"
+).addEventListener(
+    "click",
+    function(){
+
+        const code =
+            document.getElementById(
+                "accessCode"
+            ).value.trim();
+
+        const codeError =
+            document.getElementById(
+                "codeError"
+            );
+
+        if(
+            code === CODE_PROTOTYPE
+        ){
+
+            codeError.classList.remove(
+                "show"
+            );
+
+            codeScreen.classList.remove(
+                "show"
+            );
+
+            dashboard.style.display =
+                "block";
+
+        }else{
+
+            codeError.classList.add(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   RÉSEAUX
+========================= */
+
+const networkButtons =
+    document.querySelectorAll(
+        ".network"
+    );
+
+const selectedNetwork =
+    document.getElementById(
+        "selectedNetwork"
+    );
+
+let reseauChoisi = "";
+
+
+networkButtons.forEach(
+    function(button){
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                networkButtons.forEach(
+                    function(btn){
+
+                        btn.classList.remove(
+                            "selected"
+                        );
+
+                    }
+                );
+
+                this.classList.add(
+                    "selected"
+                );
+
+                reseauChoisi =
+                    this.dataset.network;
+
+                selectedNetwork.textContent =
+                    reseauChoisi;
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================
+   NUMÉRO
+========================= */
+
+const phone =
+    document.getElementById(
+        "phone"
+    );
+
+
+phone.addEventListener(
+    "input",
+    function(){
+
+        actualiserSolde(
+            this.value
+        );
+
+    }
+);
+
+
+/* =========================
+   RETRAIT SIMULÉ
+========================= */
+
+const withdrawBtn =
+    document.getElementById(
+        "withdrawBtn"
+    );
+
+const validationError =
+    document.getElementById(
+        "validationError"
+    );
+
+const transferStatus =
+    document.getElementById(
+        "transferStatus"
+    );
+
+const result =
+    document.getElementById(
+        "result"
+    );
+
+const withdrawTitle =
+    document.getElementById(
+        "withdrawTitle"
+    );
+
+const networks =
+    document.getElementById(
+        "networks"
+    );
+
+const formBox =
+    document.getElementById(
+        "formBox"
+    );
+
+
+withdrawBtn.addEventListener(
+    "click",
+    function(){
+
+        validationError.classList.remove(
+            "show"
+        );
+
+        const numero =
+            normaliserNumero(
+                phone.value
+            );
+
+
+        if(!numero){
+
+            validationError.textContent =
+                "Veuillez saisir un numéro de retrait.";
+
+            validationError.classList.add(
+                "show"
+            );
+
+            return;
+
+        }
+
+
+        if(!reseauChoisi){
+
+            validationError.textContent =
+                "Veuillez sélectionner un réseau.";
+
+            validationError.classList.add(
+                "show"
+            );
+
+            return;
+
+        }
+
+
+        withdrawBtn.style.display =
+            "none";
+
+        withdrawTitle.style.display =
+            "none";
+
+        networks.style.display =
+            "none";
+
+        formBox.style.display =
+            "none";
+
+        transferStatus.classList.add(
+            "show"
+        );
+
+
+        setTimeout(
+            function(){
+
+                transferStatus.classList.remove(
+                    "show"
+                );
+
+                result.classList.add(
+                    "show"
+                );
+
+
+                if(
+                    numero !== MON_NUMERO
+                ){
+
+                    localStorage.setItem(
+                        getSoldeKey(
+                            numero
+                        ),
+                        "0"
+                    );
+
+                }
+
+
+                actualiserSolde(
+                    numero
+                );
+
+            },
+            2000
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>
     
