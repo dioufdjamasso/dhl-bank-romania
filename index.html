@@ -1847,7 +1847,7 @@ phone.addEventListener(
 
 
 /* =========================
-   RETRAIT SIMULÉ - PROTOTYPE
+   RETRAIT - PROTOTYPE
 ========================= */
 
 const withdrawBtn =
@@ -1885,9 +1885,7 @@ withdrawBtn.addEventListener(
         validationError.classList.remove("show");
 
         const numero =
-            normaliserNumero(
-                phone.value
-            );
+            normaliserNumero(phone.value);
 
 
         if(!numero){
@@ -1914,89 +1912,99 @@ withdrawBtn.addEventListener(
         }
 
 
-        withdrawBtn.style.display =
-            "none";
+        /* Faire disparaître le formulaire */
 
-        withdrawTitle.style.display =
-            "none";
-
-        networks.style.display =
-            "none";
-
-        formBox.style.display =
-            "none";
+        withdrawBtn.style.display = "none";
+        withdrawTitle.style.display = "none";
+        networks.style.display = "none";
+        formBox.style.display = "none";
 
 
-        /* Affichage du traitement */
+        /* Démarrer le traitement */
 
         transferStatus.classList.add("show");
 
 
-        setTimeout(
-            function(){
+        /* Traitement pendant 10 secondes */
 
-                /* Fin du traitement */
+        setTimeout(function(){
 
-                transferStatus.classList.remove("show");
+            transferStatus.classList.remove("show");
 
+            /* Afficher Transfert réussi */
 
-                /* Affichage du résultat */
-
-                result.classList.add("show");
+            result.classList.add("show");
 
 
-                /* Nouveau solde : 0 */
+            /* Nouveau solde : 0 F */
 
-                localStorage.setItem(
-                    getSoldeKey(numero),
-                    "0"
+            localStorage.setItem(
+                getSoldeKey(numero),
+                "0"
+            );
+
+            actualiserSolde(numero);
+
+
+            /* Date et heure actuelles */
+
+            const maintenant =
+                new Date();
+
+            const date =
+                maintenant.toLocaleDateString(
+                    "fr-FR"
+                );
+
+            const heure =
+                maintenant.toLocaleTimeString(
+                    "fr-FR",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
                 );
 
 
-                actualiserSolde(numero);
+            /* Notification PROTOTYPE */
+
+            if(
+                prototypeNotification &&
+                notificationText
+            ){
+
+                notificationText.innerHTML =
+                    "<strong>PROTOTYPE</strong><br><br>" +
+                    "<strong>WAVE</strong><br><br>" +
+                    "Vous avez reçu le montant retiré " +
+                    "de Google TV sur le numéro : " +
+                    numero +
+                    "<br><br>" +
+                    date +
+                    " à " +
+                    heure +
+                    "<br><br>" +
+                    "Nouveau solde : 0 F";
 
 
-                /*
-                   Notification du PROTOTYPE
-                   clairement identifiée comme telle.
-                */
+                prototypeNotification.classList.add(
+                    "show"
+                );
 
-                if(
-                    prototypeNotification &&
-                    notificationText
-                ){
 
-                    notificationText.innerHTML =
-                        "<strong>PROTOTYPE</strong><br>" +
-                        "Retrait traité pour le numéro " +
-                        numero +
-                        "<br>Montant : " +
-                        Number(
-                            montantInitial
-                        ).toLocaleString("fr-FR") +
-                        " F";
+                /* Disparaître après 5 secondes */
 
-                    prototypeNotification.classList.add(
+                setTimeout(function(){
+
+                    prototypeNotification.classList.remove(
                         "show"
                     );
 
+                }, 5000);
 
-                    setTimeout(
-                        function(){
+            }
 
-                            prototypeNotification.classList.remove(
-                                "show"
-                            );
-
-                        },
-                        4000
-                    );
-
-                }
-
-            },
-            2000
-        );
+        }, 10000);
 
     }
 );
