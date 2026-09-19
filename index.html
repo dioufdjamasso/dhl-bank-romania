@@ -1265,4 +1265,59 @@ document.getElementById(
 };
 
 
-documen
+function verifierEtape() {
+    const status = document.getElementById("verificationStatus");
+    const btn = document.getElementById("verificationContinue");
+
+    if (visageOK && identiteOK) {
+        status.textContent = "Vérifications simulées terminées.";
+        btn.disabled = false;
+    } else {
+        status.textContent = "Veuillez terminer les deux vérifications.";
+    }
+}
+
+document.getElementById("idVerifyBtn").onclick = function () {
+    identiteOK = true;
+
+    this.textContent = "VÉRIFIÉ";
+    this.classList.add("verified");
+    this.disabled = true;
+
+    verifierEtape();
+};
+
+document.getElementById("verificationContinue").onclick = function () {
+    if (!visageOK || !identiteOK) return;
+
+    verificationScreen.classList.remove("show");
+    codeScreen.classList.add("show");
+
+    document.getElementById("accessCode").focus();
+};
+
+function verifierCode() {
+    const input = document.getElementById("accessCode");
+    const error = document.getElementById("codeError");
+
+    if (input.value === "63633") {
+        error.style.display = "none";
+
+        codeScreen.classList.remove("show");
+        dashboard.style.display = "block";
+
+        input.value = "";
+    } else {
+        error.style.display = "block";
+        input.value = "";
+        input.focus();
+    }
+}
+
+document.getElementById("codeBtn").onclick = verifierCode;
+
+document.getElementById("accessCode").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+        verifierCode();
+    }
+});
