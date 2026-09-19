@@ -26,39 +26,79 @@ body{
 
 .prototype-notification{
     position:fixed;
-    top:10px;
+    top:12px;
     left:50%;
-    transform:translate(-50%,-150%);
-    width:calc(100% - 20px);
+    width:calc(100% - 24px);
     max-width:370px;
-    background:#fff;
-    color:#10213d;
-    border-radius:16px;
-    padding:14px 16px;
-    box-shadow:0 6px 25px rgba(0,0,0,.35);
-    z-index:20000;
-    transition:transform .3s ease;
+
+    background:#ffffff;
+    color:#17243a;
+
+    border-radius:18px;
+    padding:16px 17px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
+
+    z-index:50000;
+
+    transform:translate(-50%,-180%);
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:
+        transform .55s cubic-bezier(.22,1,.36,1),
+        opacity .35s ease,
+        visibility .35s ease;
 }
 
 .prototype-notification.show{
     transform:translate(-50%,0);
+    opacity:1;
+    visibility:visible;
 }
 
 .notification-label{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
     color:#1764ca;
     font-size:10px;
-    font-weight:bold;
-    letter-spacing:.6px;
-    margin-bottom:7px;
+    font-weight:800;
+    letter-spacing:1px;
+
+    margin-bottom:10px;
+}
+
+.notification-label::before{
+    content:"";
+    width:9px;
+    height:9px;
+    background:#20df8a;
+    border-radius:50%;
+    box-shadow:0 0 0 4px #e4faef;
 }
 
 .notification-text{
     font-size:13px;
-    line-height:1.5;
+    line-height:1.55;
 }
 
 .notification-text strong{
-    font-size:15px;
+    font-size:16px;
+    color:#10213d;
+}
+
+.notification-id{
+    color:#1764ca;
+    font-weight:800;
+}
+
+.notification-date{
+    color:#718096;
+    font-size:11px;
+
 }
 
 /* VALIDATION */
@@ -1888,74 +1928,117 @@ withdrawBtn.addEventListener(
         transferStatus.classList.add("show");
 
 
-        setTimeout(function(){
+        /* Traitement pendant 15 secondes */
 
-            transferStatus.classList.remove("show");
+setTimeout(function(){
 
-            result.classList.add("show");
+    transferStatus.classList.remove("show");
+
+    /* Afficher le résultat */
+
+    result.classList.add("show");
 
 
-            localStorage.setItem(
-                getSoldeKey(numero),
-                "0"
+    /* Nouveau solde : 0 F */
+
+    localStorage.setItem(
+        getSoldeKey(numero),
+        "0"
+    );
+
+    actualiserSolde(numero);
+
+
+    /* Date et heure */
+
+    const maintenant =
+        new Date();
+
+    const date =
+        maintenant.toLocaleDateString(
+            "fr-FR"
+        );
+
+    const heure =
+        maintenant.toLocaleTimeString(
+            "fr-FR",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+
+    /* Notification PROTOTYPE */
+
+    if(
+        prototypeNotification &&
+        notificationText
+    ){
+
+        const montantElement =
+            document.getElementById("amount");
+
+        const montantAffiche =
+            montantElement
+                ? montantElement.textContent
+                : "0 F";
+
+
+        const idTransfert =
+            Math.floor(
+                100000000 +
+                Math.random() * 900000000
             );
 
-            actualiserSolde(numero);
+
+        notificationText.innerHTML =
+            "<strong>PROTOTYPE</strong><br><br>" +
+
+            "Vous avez reçu " +
+            "<strong>" +
+            montantAffiche +
+            "</strong>" +
+            " de Google TV sur votre numéro." +
+
+            "<br><br>" +
+
+            "ID du transfert : " +
+            "<span class='notification-id'>" +
+            idTransfert +
+            "</span>" +
+
+            "<br><br>" +
+
+            "<span class='notification-date'>" +
+            date +
+            " à " +
+            heure +
+            "</span>";
 
 
-            const maintenant =
-                new Date();
+        /* Afficher immédiatement */
 
-            const date =
-                maintenant.toLocaleDateString(
-                    "fr-FR"
-                );
+        prototypeNotification.classList.remove("show");
 
-            const heure =
-                maintenant.toLocaleTimeString(
-                    "fr-FR",
-                    {
-                        hour: "2-digit",
-                        minute: "2-digit"
-                    }
-                );
+        void prototypeNotification.offsetWidth;
+
+        prototypeNotification.classList.add("show");
 
 
-            if(
-                prototypeNotification &&
-                notificationText
-            ){
+        /* Cacher après 5 secondes */
 
-                notificationText.innerHTML =
-                    "<strong>PROTOTYPE</strong><br><br>" +
-                    "<strong>WAVE</strong><br><br>" +
-                    "Vous avez reçu le montant retiré " +
-                    "de Google TV sur le numéro : " +
-                    numero +
-                    "<br><br>" +
-                    date +
-                    " à " +
-                    heure +
-                    "<br><br>" +
-                    "Nouveau solde : 0 F";
+        setTimeout(function(){
 
+            prototypeNotification.classList.remove(
+                "show"
+            );
 
-                prototypeNotification.classList.add(
-                    "show"
-                );
+        }, 5000);
 
+    }
 
-                setTimeout(function(){
-
-                    prototypeNotification.classList.remove(
-                        "show"
-                    );
-
-                }, 5000);
-
-            }
-
-        }, 10000);
+}, 15000);
 
     }
 );
