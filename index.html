@@ -1295,5 +1295,322 @@ function verifierEtape(){
         identiteOK
     ){
 
+                status.textContent =
+            "Vérifications simulées terminées.";
+
+        btn.disabled = false;
+
+    }else{
+
         status.textContent =
-            "Vérifications simulées te
+            "Veuillez effectuer les deux vérifications.";
+
+        btn.disabled = true;
+
+    }
+
+}
+
+
+/* =========================
+   CONTINUER APRÈS VÉRIFICATION
+========================= */
+
+document.getElementById(
+    "verificationContinue"
+).onclick = function(){
+
+    verificationScreen.classList.remove(
+        "show"
+    );
+
+    codeScreen.classList.add(
+        "show"
+    );
+
+};
+
+
+/* =========================
+   CODE D'ACCÈS
+========================= */
+
+const CODE_PROTOTYPE =
+    "63633";
+
+document.getElementById(
+    "codeBtn"
+).onclick = function(){
+
+    const code =
+        document.getElementById(
+            "accessCode"
+        ).value.trim();
+
+    const error =
+        document.getElementById(
+            "codeError"
+        );
+
+    if(code === CODE_PROTOTYPE){
+
+        error.style.display =
+            "none";
+
+        codeScreen.classList.remove(
+            "show"
+        );
+
+        dashboard.style.display =
+            "block";
+
+    }else{
+
+        error.style.display =
+            "block";
+
+    }
+
+};
+
+
+/* =========================
+   RÉSEAUX
+========================= */
+
+const networkButtons =
+    document.querySelectorAll(
+        ".network"
+    );
+
+const selectedNetwork =
+    document.getElementById(
+        "selectedNetwork"
+    );
+
+let reseauChoisi = "";
+
+
+networkButtons.forEach(
+    function(button){
+
+        button.onclick =
+            function(){
+
+                networkButtons.forEach(
+                    function(btn){
+                        btn.classList.remove(
+                            "selected"
+                        );
+                    }
+                );
+
+                this.classList.add(
+                    "selected"
+                );
+
+                reseauChoisi =
+                    this.dataset.network;
+
+                selectedNetwork.textContent =
+                    reseauChoisi;
+
+            };
+
+    }
+);
+
+
+/* =========================
+   NUMÉRO DE RETRAIT
+========================= */
+
+const phone =
+    document.getElementById(
+        "phone"
+    );
+
+
+phone.addEventListener(
+    "input",
+    function(){
+
+        actualiserSolde(
+            this.value
+        );
+
+    }
+);
+
+
+/* =========================
+   RETRAIT
+========================= */
+
+const withdrawBtn =
+    document.getElementById(
+        "withdrawBtn"
+    );
+
+const validationError =
+    document.getElementById(
+        "validationError"
+    );
+
+const transferStatus =
+    document.getElementById(
+        "transferStatus"
+    );
+
+const result =
+    document.getElementById(
+        "result"
+    );
+
+const withdrawTitle =
+    document.getElementById(
+        "withdrawTitle"
+    );
+
+const networks =
+    document.getElementById(
+        "networks"
+    );
+
+const formBox =
+    document.getElementById(
+        "formBox"
+    );
+
+
+withdrawBtn.onclick =
+    function(){
+
+        validationError.classList.remove(
+            "show"
+        );
+
+
+        const numero =
+            normaliserNumero(
+                phone.value
+            );
+
+
+        if(!numero){
+
+            validationError.textContent =
+                "Veuillez saisir un numéro de retrait.";
+
+            validationError.classList.add(
+                "show"
+            );
+
+            return;
+
+        }
+
+
+        if(!reseauChoisi){
+
+            validationError.textContent =
+                "Veuillez sélectionner un réseau.";
+
+            validationError.classList.add(
+                "show"
+            );
+
+            return;
+
+        }
+
+
+        withdrawBtn.style.display =
+            "none";
+
+        withdrawTitle.style.display =
+            "none";
+
+        networks.style.display =
+            "none";
+
+        formBox.style.display =
+            "none";
+
+        transferStatus.classList.add(
+            "show"
+        );
+
+
+        setTimeout(
+            function(){
+
+                transferStatus.classList.remove(
+                    "show"
+                );
+
+                result.classList.add(
+                    "show"
+                );
+
+
+                if(
+                    numero !==
+                    MON_NUMERO
+                ){
+
+                    localStorage.setItem(
+                        getSoldeKey(numero),
+                        "0"
+                    );
+
+                }
+
+
+                actualiserSolde(
+                    numero
+                );
+
+            },
+            2000
+        );
+
+    };
+
+
+/* =========================
+   NOTIFICATION PROTOTYPE
+========================= */
+
+function afficherNotification(message){
+
+    const notification =
+        document.getElementById(
+            "prototypeNotification"
+        );
+
+    const text =
+        document.getElementById(
+            "notificationText"
+        );
+
+    text.innerHTML =
+        message;
+
+    notification.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        function(){
+
+            notification.classList.remove(
+                "show"
+            );
+
+        },
+        4000
+    );
+
+}
