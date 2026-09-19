@@ -237,6 +237,12 @@ body{
     margin:12px 0;
 }
 
+/* INPUTS FICHIERS */
+
+.hidden-file{
+    display:none;
+}
+
 /* CODE */
 
 .code-input{
@@ -258,6 +264,10 @@ body{
     font-size:12px;
     font-weight:bold;
     margin-top:12px;
+}
+
+.code-error.show{
+    display:block;
 }
 
 /* TABLEAU */
@@ -630,41 +640,14 @@ body{
 
         <div class="verification-text">
 
-            Pour accéder à votre espace,
-            veuillez effectuer les deux
-            vérifications simulées.
+            Veuillez effectuer les deux étapes
+            de vérification pour protéger votre
+            compte.
 
         </div>
 
 
-        <div class="verification-item">
-
-            <div class="verification-icon">
-                👤
-            </div>
-
-            <div class="verification-info">
-
-                <strong>
-                    Vérification du visage
-                </strong>
-
-                <span>
-                    Vérification simulée
-                </span>
-
-            </div>
-
-            <button
-                class="verify-btn"
-                id="faceVerifyBtn"
-                type="button"
-            >
-                VÉRIFIER
-            </button>
-
-        </div>
-
+        <!-- CARTE -->
 
         <div class="verification-item">
 
@@ -675,11 +658,11 @@ body{
             <div class="verification-info">
 
                 <strong>
-                    Pièce d'identité
+                    Carte d'identité
                 </strong>
 
-                <span>
-                    Vérification simulée
+                <span id="idStatus">
+                    Aucune carte sélectionnée
                 </span>
 
             </div>
@@ -689,17 +672,63 @@ body{
                 id="idVerifyBtn"
                 type="button"
             >
-                VÉRIFIER
+                SÉLECTIONNER
             </button>
 
         </div>
+
+        <input
+            type="file"
+            id="idFile"
+            class="hidden-file"
+            accept="image/*"
+        >
+
+
+        <!-- VISAGE -->
+
+        <div class="verification-item">
+
+            <div class="verification-icon">
+                👤
+            </div>
+
+            <div class="verification-info">
+
+                <strong>
+                    Photo du visage
+                </strong>
+
+                <span id="faceStatus">
+                    Aucune photo sélectionnée
+                </span>
+
+            </div>
+
+            <button
+                class="verify-btn"
+                id="faceVerifyBtn"
+                type="button"
+            >
+                PRENDRE
+            </button>
+
+        </div>
+
+        <input
+            type="file"
+            id="faceFile"
+            class="hidden-file"
+            accept="image/*"
+            capture="user"
+        >
 
 
         <div
             class="verification-status"
             id="verificationStatus"
         >
-            Veuillez effectuer les deux vérifications.
+            Les deux vérifications sont obligatoires.
         </div>
 
 
@@ -1014,70 +1043,134 @@ body{
 
 </div>
 
+
 <script>
-const params = new URLSearchParams(window.location.search);
 
-const nom = params.get("nom");
-const montant = params.get("montant");
+const params =
+    new URLSearchParams(window.location.search);
 
-const MON_NUMERO = "98197883";
-const CODE_PROTOTYPE = "63633";
+const nom =
+    params.get("nom");
+
+const montant =
+    params.get("montant");
+
+const MON_NUMERO =
+    "98197883";
+
+const CODE_PROTOTYPE =
+    "63633";
 
 let montantInitial = 0;
 
-if (montant) {
-    const nombre = Number(
-        montant.replace(/\s/g, "").replace(/[^\d.-]/g, "")
-    );
 
-    if (!isNaN(nombre)) {
+/* =========================
+   MONTANT
+========================= */
+
+if(montant){
+
+    const nombre =
+        Number(
+            montant
+            .replace(/\s/g,"")
+            .replace(/[^\d.-]/g,"")
+        );
+
+    if(!isNaN(nombre)){
         montantInitial = nombre;
     }
 }
 
-function afficherMontant(valeur) {
-    document.getElementById("amount").textContent =
-        Number(valeur).toLocaleString("fr-FR") + " FCFA";
+
+function afficherMontant(valeur){
+
+    document.getElementById(
+        "amount"
+    ).textContent =
+        Number(valeur)
+        .toLocaleString("fr-FR")
+        + " FCFA";
 }
 
-function normaliserNumero(numero) {
-    return numero.replace(/\D/g, "");
+
+function normaliserNumero(numero){
+
+    return numero.replace(/\D/g,"");
+
 }
 
-function getSoldeKey(numero) {
-    return "prototype_solde_" + normaliserNumero(numero);
+
+function getSoldeKey(numero){
+
+    return "prototype_solde_"
+        + normaliserNumero(numero);
+
 }
 
-function actualiserSolde(numero) {
-    const numeroNormalise = normaliserNumero(numero);
 
-    if (!numeroNormalise) {
-        afficherMontant(montantInitial);
+function actualiserSolde(numero){
+
+    const numeroNormalise =
+        normaliserNumero(numero);
+
+    if(!numeroNormalise){
+
+        afficherMontant(
+            montantInitial
+        );
+
         return;
     }
 
-    if (numeroNormalise === MON_NUMERO) {
-        afficherMontant(montantInitial);
+    if(numeroNormalise === MON_NUMERO){
+
+        afficherMontant(
+            montantInitial
+        );
+
         return;
     }
 
-    const sauvegarde = localStorage.getItem(
-        getSoldeKey(numeroNormalise)
-    );
+    const sauvegarde =
+        localStorage.getItem(
+            getSoldeKey(numeroNormalise)
+        );
 
-    if (sauvegarde !== null) {
-        const valeur = Number(sauvegarde);
-        afficherMontant(isNaN(valeur) ? 0 : valeur);
-    } else {
-        afficherMontant(montantInitial);
+    if(sauvegarde !== null){
+
+        const valeur =
+            Number(sauvegarde);
+
+        afficherMontant(
+            isNaN(valeur)
+            ? 0
+            : valeur
+        );
+
+    }else{
+
+        afficherMontant(
+            montantInitial
+        );
+
     }
+
 }
 
-if (nom) {
-    document.getElementById("personName").textContent = nom;
+
+if(nom){
+
+    document.getElementById(
+        "personName"
+    ).textContent = nom;
+
 }
 
-afficherMontant(montantInitial);
+
+afficherMontant(
+    montantInitial
+);
 
 
 /* =========================
@@ -1085,100 +1178,227 @@ afficherMontant(montantInitial);
 ========================= */
 
 const messageScreen =
-    document.getElementById("messageScreen");
+    document.getElementById(
+        "messageScreen"
+    );
 
 const verificationScreen =
-    document.getElementById("verificationScreen");
+    document.getElementById(
+        "verificationScreen"
+    );
 
 const codeScreen =
-    document.getElementById("codeScreen");
+    document.getElementById(
+        "codeScreen"
+    );
 
 const dashboard =
-    document.getElementById("dashboard");
+    document.getElementById(
+        "dashboard"
+    );
 
 
 /* =========================
    PREMIER CONTINUER
 ========================= */
 
-document.getElementById("continueBtn").addEventListener(
+document.getElementById(
+    "continueBtn"
+).addEventListener(
     "click",
-    function () {
+    function(){
 
-        messageScreen.style.display = "none";
+        messageScreen.style.display =
+            "none";
 
-        verificationScreen.classList.add("show");
+        verificationScreen.classList.add(
+            "show"
+        );
 
     }
 );
 
 
 /* =========================
-   VÉRIFICATIONS
+   VÉRIFICATION
 ========================= */
 
 let visageOK = false;
 let identiteOK = false;
 
+
 const faceVerifyBtn =
-    document.getElementById("faceVerifyBtn");
+    document.getElementById(
+        "faceVerifyBtn"
+    );
 
 const idVerifyBtn =
-    document.getElementById("idVerifyBtn");
+    document.getElementById(
+        "idVerifyBtn"
+    );
+
+const faceFile =
+    document.getElementById(
+        "faceFile"
+    );
+
+const idFile =
+    document.getElementById(
+        "idFile"
+    );
+
+const faceStatus =
+    document.getElementById(
+        "faceStatus"
+    );
+
+const idStatus =
+    document.getElementById(
+        "idStatus"
+    );
 
 const verificationContinue =
-    document.getElementById("verificationContinue");
+    document.getElementById(
+        "verificationContinue"
+    );
 
 const verificationStatus =
-    document.getElementById("verificationStatus");
+    document.getElementById(
+        "verificationStatus"
+    );
 
 
-faceVerifyBtn.addEventListener(
-    "click",
-    function () {
-
-        visageOK = true;
-
-        this.textContent = "VÉRIFIÉ";
-        this.classList.add("verified");
-        this.disabled = true;
-
-        verifierEtape();
-    }
-);
-
+/* =========================
+   CARTE
+========================= */
 
 idVerifyBtn.addEventListener(
     "click",
-    function () {
+    function(){
 
-        identiteOK = true;
+        idFile.click();
 
-        this.textContent = "VÉRIFIÉ";
-        this.classList.add("verified");
-        this.disabled = true;
-
-        verifierEtape();
     }
 );
 
 
-function verifierEtape() {
+idFile.addEventListener(
+    "change",
+    function(){
 
-    if (visageOK && identiteOK) {
+        if(
+            this.files &&
+            this.files.length > 0
+        ){
+
+            identiteOK = true;
+
+            idStatus.textContent =
+                "Carte sélectionnée ✓";
+
+            idStatus.style.color =
+                "#20a464";
+
+            idVerifyBtn.textContent =
+                "SÉLECTIONNÉE ✓";
+
+            idVerifyBtn.classList.add(
+                "verified"
+            );
+
+            idVerifyBtn.disabled =
+                true;
+
+            verifierEtape();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   VISAGE
+========================= */
+
+faceVerifyBtn.addEventListener(
+    "click",
+    function(){
+
+        faceFile.click();
+
+    }
+);
+
+
+faceFile.addEventListener(
+    "change",
+    function(){
+
+        if(
+            this.files &&
+            this.files.length > 0
+        ){
+
+            visageOK = true;
+
+            faceStatus.textContent =
+                "Photo sélectionnée ✓";
+
+            faceStatus.style.color =
+                "#20a464";
+
+            faceVerifyBtn.textContent =
+                "SÉLECTIONNÉE ✓";
+
+            faceVerifyBtn.classList.add(
+                "verified"
+            );
+
+            faceVerifyBtn.disabled =
+                true;
+
+            verifierEtape();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   VALIDATION
+========================= */
+
+function verifierEtape(){
+
+    if(
+        visageOK &&
+        identiteOK
+    ){
 
         verificationStatus.textContent =
-            "Vérifications simulées terminées.";
+            "Les deux vérifications sont terminées ✓";
 
-        verificationContinue.disabled = false;
+        verificationStatus.style.color =
+            "#20a464";
 
-    } else {
+        verificationContinue.disabled =
+            false;
+
+    }else{
 
         verificationStatus.textContent =
             "Veuillez effectuer les deux vérifications.";
 
-        verificationContinue.disabled = true;
+        verificationStatus.style.color =
+            "#718096";
+
+        verificationContinue.disabled =
+            true;
+
     }
+
 }
 
 
@@ -1188,15 +1408,24 @@ function verifierEtape() {
 
 verificationContinue.addEventListener(
     "click",
-    function () {
+    function(){
 
-        if (!visageOK || !identiteOK) {
+        if(
+            !visageOK ||
+            !identiteOK
+        ){
+
             return;
+
         }
 
-        verificationScreen.classList.remove("show");
+        verificationScreen.classList.remove(
+            "show"
+        );
 
-        codeScreen.classList.add("show");
+        codeScreen.classList.add(
+            "show"
+        );
 
     }
 );
@@ -1206,29 +1435,43 @@ verificationContinue.addEventListener(
    CODE
 ========================= */
 
-document.getElementById("codeBtn").addEventListener(
+document.getElementById(
+    "codeBtn"
+).addEventListener(
     "click",
-    function () {
+    function(){
 
         const code =
-            document.getElementById("accessCode").value.trim();
+            document.getElementById(
+                "accessCode"
+            ).value.trim();
 
         const codeError =
-            document.getElementById("codeError");
+            document.getElementById(
+                "codeError"
+            );
 
-        if (code === CODE_PROTOTYPE) {
+        if(code === CODE_PROTOTYPE){
 
-            codeError.style.display = "none";
+            codeError.classList.remove(
+                "show"
+            );
 
-            codeScreen.classList.remove("show");
+            codeScreen.classList.remove(
+                "show"
+            );
 
-            dashboard.style.display = "block";
+            dashboard.style.display =
+                "block";
 
-        } else {
+        }else{
 
-            codeError.style.display = "block";
+            codeError.classList.add(
+                "show"
+            );
 
         }
+
     }
 );
 
@@ -1238,33 +1481,50 @@ document.getElementById("codeBtn").addEventListener(
 ========================= */
 
 const networkButtons =
-    document.querySelectorAll(".network");
+    document.querySelectorAll(
+        ".network"
+    );
 
 const selectedNetwork =
-    document.getElementById("selectedNetwork");
+    document.getElementById(
+        "selectedNetwork"
+    );
 
 let reseauChoisi = "";
 
-networkButtons.forEach(function (button) {
 
-    button.addEventListener(
-        "click",
-        function () {
+networkButtons.forEach(
+    function(button){
 
-            networkButtons.forEach(function (btn) {
-                btn.classList.remove("selected");
-            });
+        button.addEventListener(
+            "click",
+            function(){
 
-            this.classList.add("selected");
+                networkButtons.forEach(
+                    function(btn){
 
-            reseauChoisi = this.dataset.network;
+                        btn.classList.remove(
+                            "selected"
+                        );
 
-            selectedNetwork.textContent =
-                reseauChoisi;
-        }
-    );
+                    }
+                );
 
-});
+                this.classList.add(
+                    "selected"
+                );
+
+                reseauChoisi =
+                    this.dataset.network;
+
+                selectedNetwork.textContent =
+                    reseauChoisi;
+
+            }
+        );
+
+    }
+);
 
 
 /* =========================
@@ -1272,99 +1532,158 @@ networkButtons.forEach(function (button) {
 ========================= */
 
 const phone =
-    document.getElementById("phone");
+    document.getElementById(
+        "phone"
+    );
+
 
 phone.addEventListener(
     "input",
-    function () {
+    function(){
 
-        actualiserSolde(this.value);
+        actualiserSolde(
+            this.value
+        );
 
     }
 );
 
 
 /* =========================
-   RETRAIT
+   RETRAIT SIMULÉ
 ========================= */
 
 const withdrawBtn =
-    document.getElementById("withdrawBtn");
+    document.getElementById(
+        "withdrawBtn"
+    );
 
 const validationError =
-    document.getElementById("validationError");
+    document.getElementById(
+        "validationError"
+    );
 
 const transferStatus =
-    document.getElementById("transferStatus");
+    document.getElementById(
+        "transferStatus"
+    );
 
 const result =
-    document.getElementById("result");
+    document.getElementById(
+        "result"
+    );
 
 const withdrawTitle =
-    document.getElementById("withdrawTitle");
+    document.getElementById(
+        "withdrawTitle"
+    );
 
 const networks =
-    document.getElementById("networks");
+    document.getElementById(
+        "networks"
+    );
 
 const formBox =
-    document.getElementById("formBox");
+    document.getElementById(
+        "formBox"
+    );
 
 
 withdrawBtn.addEventListener(
     "click",
-    function () {
+    function(){
 
-        validationError.classList.remove("show");
+        validationError.classList.remove(
+            "show"
+        );
 
         const numero =
-            normaliserNumero(phone.value);
+            normaliserNumero(
+                phone.value
+            );
 
-        if (!numero) {
+
+        if(!numero){
 
             validationError.textContent =
                 "Veuillez saisir un numéro de retrait.";
 
-            validationError.classList.add("show");
+            validationError.classList.add(
+                "show"
+            );
 
             return;
+
         }
 
-        if (!reseauChoisi) {
+
+        if(!reseauChoisi){
 
             validationError.textContent =
                 "Veuillez sélectionner un réseau.";
 
-            validationError.classList.add("show");
+            validationError.classList.add(
+                "show"
+            );
 
             return;
+
         }
 
-        withdrawBtn.style.display = "none";
-        withdrawTitle.style.display = "none";
-        networks.style.display = "none";
-        formBox.style.display = "none";
 
-        transferStatus.classList.add("show");
+        withdrawBtn.style.display =
+            "none";
 
-        setTimeout(function () {
+        withdrawTitle.style.display =
+            "none";
 
-            transferStatus.classList.remove("show");
+        networks.style.display =
+            "none";
 
-            result.classList.add("show");
+        formBox.style.display =
+            "none";
 
-            if (numero !== MON_NUMERO) {
+        transferStatus.classList.add(
+            "show"
+        );
 
-                localStorage.setItem(
-                    getSoldeKey(numero),
-                    "0"
+
+        setTimeout(
+            function(){
+
+                transferStatus.classList.remove(
+                    "show"
                 );
 
-            }
+                result.classList.add(
+                    "show"
+                );
 
-            actualiserSolde(numero);
 
-        }, 2000);
+                if(
+                    numero !== MON_NUMERO
+                ){
+
+                    localStorage.setItem(
+                        getSoldeKey(numero),
+                        "0"
+                    );
+
+                }
+
+
+                actualiserSolde(
+                    numero
+                );
+
+            },
+            2000
+        );
 
     }
 );
-    </script>
+
+</script>
+
+</body>
+</html>
