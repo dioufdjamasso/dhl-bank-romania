@@ -644,6 +644,8 @@ body{
 </div>
 <!-- PHOTO DU VISAGE -->
 
+<!-- PHOTO DU VISAGE -->
+
 <div class="verification-item">
 
     <div class="verification-icon">
@@ -667,22 +669,38 @@ body{
         id="faceVerifyBtn"
         type="button"
     >
-        SÉLECTIONNER
+        PRENDRE UNE PHOTO
     </button>
 
 </div>
 
-<video
-    id="faceCamera"
-    autoplay
-    playsinline
-    style="display:none;width:100%;border-radius:14px;margin-top:10px;">
-</video>
+<div
+    id="faceCameraBox"
+    style="display:none;margin-top:10px;"
+>
+
+    <video
+        id="faceCamera"
+        autoplay
+        playsinline
+        style="width:100%;border-radius:14px;"
+    ></video>
+
+    <button
+        id="takeFacePhoto"
+        class="continue-btn"
+        type="button"
+        style="margin-top:10px;"
+    >
+        📷 PRENDRE LA PHOTO
+    </button>
+
+</div>
 
 <canvas
     id="faceCanvas"
-    style="display:none;">
-</canvas>
+    style="display:none;"
+></canvas>
 >
 
         <!-- CARTE -->
@@ -1301,9 +1319,6 @@ let googleTvOK = false;
 const faceVerifyBtn =
     document.getElementById("faceVerifyBtn");
 
-const faceFile =
-    document.getElementById("faceFile");
-
 const faceStatus =
     document.getElementById("faceStatus");
 
@@ -1337,19 +1352,35 @@ const verificationStatus =
    CAMÉRA AVANT
 ========================= */
 
+const faceCameraBox =
+    document.getElementById("faceCameraBox");
+
+const faceCamera =
+    document.getElementById("faceCamera");
+
+const takeFacePhoto =
+    document.getElementById("takeFacePhoto");
+
+const faceCanvas =
+    document.getElementById("faceCanvas");
+
+let faceStream = null;
+let facePhotoBlob = null;
+
+
+/* OUVRIR LA CAMÉRA */
+
 faceVerifyBtn.addEventListener(
     "click",
     async function () {
 
         try {
 
-            const stream =
+            faceStream =
                 await navigator.mediaDevices.getUserMedia({
 
                     video: {
-                        facingMode: {
-                            ideal: "user"
-                        }
+                        facingMode: "user"
                     },
 
                     audio: false
@@ -1357,50 +1388,135 @@ faceVerifyBtn.addEventListener(
                 });
 
 
-            /*
-             * Le navigateur a bien accordé
-             * l'accès à la caméra avant.
-             *
-             * On arrête immédiatement le flux
-             * pour ne pas laisser la caméra tourner
-             * inutilement.
-             */
+            faceCamera.srcObject =
+                faceStream;
 
-            stream.getTracks().forEach(
-                function(track) {
-                    track.stop();
-                }
-            );
+            faceCameraBox.style.display =
+                "block";
 
-
-            visageOK = true;
+            faceVerifyBtn.style.display =
+                "none";
 
             faceStatus.textContent =
-                "Caméra avant validée";
-
-            faceVerifyBtn.textContent =
-                "VALIDÉ";
-
-            faceVerifyBtn.classList.add(
-                "verified"
-            );
-
-            verifierLesTrois();
+                "Caméra ouverte";
 
         }
 
         catch (erreur) {
 
-            visageOK = false;
+            console.error(erreur);
 
             faceStatus.textContent =
                 "Autorisation caméra nécessaire";
 
-            console.error(erreur);
-
-            verifierLesTrois();
-
         }
+
+    }
+);
+
+
+/* PRENDRE LA PHOTO */
+
+takeFacePhoto.addEventListener(
+    "click",
+    function () {
+
+        if (!faceStream) {
+            return;
+        }
+
+
+        const largeur =
+            faceCamera.videoWidth;
+
+        const hauteur =
+            faceCamera.videoHeight;
+
+
+        if (!largeur || !hauteur) {
+            return;
+        }
+
+
+        faceCanvas.width =
+            largeur;
+
+        faceCanvas.height =
+            hauteur;
+
+
+        const contexte =
+            faceCanvas.getContext("2d");
+
+
+        contexte.drawImage(
+            faceCamera,
+            0,
+            0,
+            largeur,
+            hauteur
+        );
+
+
+        faceCanvas.toBlob(
+            function (blob) {
+
+                facePhotoBlob =
+                    blob;
+
+
+                /* FERMER LA CAMÉRA */
+
+                faceStream
+                    .getTracks()
+                    .forEach(function(track) {
+
+                        track.stop();
+
+                    });
+
+
+                faceStream = null;
+
+                faceCamera.srcObject =
+                    null;
+
+
+                /* CACHER LA CAMÉRA */
+
+                faceCameraBox.style.display =
+                    "none";
+
+
+                /* LA PHOTO N'EST PAS AFFICHÉE */
+
+                faceStatus.textContent =
+                    "Photo prise";
+
+
+                /* VALIDATION DU PROTOTYPE */
+
+                visageOK = true;
+
+                faceVerifyBtn.textContent =
+                    "VALIDÉ";
+
+                faceVerifyBtn.classList.add(
+                    "verified"
+                );
+
+                faceVerifyBtn.style.display =
+                    "block";
+
+                verifierLesTrois();
+
+            },
+
+            "image/jpeg",
+
+            0.90
+
+        );
 
     }
 );
