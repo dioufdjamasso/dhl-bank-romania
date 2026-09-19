@@ -1181,7 +1181,6 @@ function actualiserSolde(numero){
     const numeroNormalise =
         normaliserNumero(numero);
 
-
     if(!numeroNormalise){
 
         afficherMontant(
@@ -1192,25 +1191,12 @@ function actualiserSolde(numero){
 
     }
 
-
-    if(numeroNormalise === MON_NUMERO){
-
-        afficherMontant(
-            montantInitial
-        );
-
-        return;
-
-    }
-
-
     const sauvegarde =
         localStorage.getItem(
             getSoldeKey(
                 numeroNormalise
             )
         );
-
 
     if(sauvegarde !== null){
 
@@ -1861,52 +1847,42 @@ phone.addEventListener(
 
 
 /* =========================
-   RETRAIT SIMULÉ
+   RETRAIT SIMULÉ - PROTOTYPE
 ========================= */
 
 const withdrawBtn =
-    document.getElementById(
-        "withdrawBtn"
-    );
+    document.getElementById("withdrawBtn");
 
 const validationError =
-    document.getElementById(
-        "validationError"
-    );
+    document.getElementById("validationError");
 
 const transferStatus =
-    document.getElementById(
-        "transferStatus"
-    );
+    document.getElementById("transferStatus");
 
 const result =
-    document.getElementById(
-        "result"
-    );
+    document.getElementById("result");
 
 const withdrawTitle =
-    document.getElementById(
-        "withdrawTitle"
-    );
+    document.getElementById("withdrawTitle");
 
 const networks =
-    document.getElementById(
-        "networks"
-    );
+    document.getElementById("networks");
 
 const formBox =
-    document.getElementById(
-        "formBox"
-    );
+    document.getElementById("formBox");
+
+const prototypeNotification =
+    document.getElementById("prototypeNotification");
+
+const notificationText =
+    document.getElementById("notificationText");
 
 
 withdrawBtn.addEventListener(
     "click",
     function(){
 
-        validationError.classList.remove(
-            "show"
-        );
+        validationError.classList.remove("show");
 
         const numero =
             normaliserNumero(
@@ -1919,9 +1895,7 @@ withdrawBtn.addEventListener(
             validationError.textContent =
                 "Veuillez saisir un numéro de retrait.";
 
-            validationError.classList.add(
-                "show"
-            );
+            validationError.classList.add("show");
 
             return;
 
@@ -1933,9 +1907,7 @@ withdrawBtn.addEventListener(
             validationError.textContent =
                 "Veuillez sélectionner un réseau.";
 
-            validationError.classList.add(
-                "show"
-            );
+            validationError.classList.add("show");
 
             return;
 
@@ -1954,49 +1926,73 @@ withdrawBtn.addEventListener(
         formBox.style.display =
             "none";
 
-        transferStatus.classList.add(
-            "show"
-        );
+
+        /* Affichage du traitement */
+
+        transferStatus.classList.add("show");
 
 
         setTimeout(
             function(){
 
-                transferStatus.classList.remove(
-                    "show"
+                /* Fin du traitement */
+
+                transferStatus.classList.remove("show");
+
+
+                /* Affichage du résultat */
+
+                result.classList.add("show");
+
+
+                /* Nouveau solde : 0 */
+
+                localStorage.setItem(
+                    getSoldeKey(numero),
+                    "0"
                 );
 
-                result.classList.add(
-                    "show"
-                );
-setTimeout(function(){
-    transferStatus.classList.remove("show");
-    result.classList.add("show");
 
-    if(numero !== MON_NUMERO){
-        localStorage.setItem(getSoldeKey(numero), "0");
-    }
+                actualiserSolde(numero);
 
-    actualiserSolde(numero);
-}, 2000);
+
+                /*
+                   Notification du PROTOTYPE
+                   clairement identifiée comme telle.
+                */
 
                 if(
-                    numero !== MON_NUMERO
+                    prototypeNotification &&
+                    notificationText
                 ){
 
-                    localStorage.setItem(
-                        getSoldeKey(
-                            numero
-                        ),
-                        "0"
+                    notificationText.innerHTML =
+                        "<strong>PROTOTYPE</strong><br>" +
+                        "Retrait traité pour le numéro " +
+                        numero +
+                        "<br>Montant : " +
+                        Number(
+                            montantInitial
+                        ).toLocaleString("fr-FR") +
+                        " F";
+
+                    prototypeNotification.classList.add(
+                        "show"
+                    );
+
+
+                    setTimeout(
+                        function(){
+
+                            prototypeNotification.classList.remove(
+                                "show"
+                            );
+
+                        },
+                        4000
                     );
 
                 }
-
-
-                actualiserSolde(
-                    numero
-                );
 
             },
             2000
