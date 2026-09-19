@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Compte - Prototype</title>
-
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <style>
 *{
     margin:0;
@@ -680,46 +680,38 @@ body{
             class="hidden-file"
             accept="image/*"
         >
+<!-- PHOTO DE TEST GOOGLE TV -->
 
+<div class="verification-item">
 
-        <!-- VISAGE -->
+    <div class="verification-icon">
+        📷
+    </div>
 
-        <div class="verification-item">
+    <div class="verification-info">
+        <strong>Photo de test Google TV</strong>
 
-            <div class="verification-icon">
-                👤
-            </div>
+        <span id="prototypeImageStatus">
+            Sélectionnez une image de test
+        </span>
+    </div>
 
-            <div class="verification-info">
+    <button
+        class="verify-btn"
+        id="prototypeImageBtn"
+        type="button"
+    >
+        SÉLECTIONNER
+    </button>
 
-                <strong>
-                    Photo du visage
-                </strong>
+</div>
 
-                <span id="faceStatus">
-                    Aucune photo sélectionnée
-                </span>
-
-            </div>
-
-            <button
-                class="verify-btn"
-                id="faceVerifyBtn"
-                type="button"
-            >
-                PRENDRE
-            </button>
-
-        </div>
-
-        <input
-            type="file"
-            id="faceFile"
-            class="hidden-file"
-            accept="image/*"
-            capture="user"
-        >
-
+<input
+    type="file"
+    id="prototypeImageFile"
+    class="hidden-file"
+    accept="image/*"
+>
 
         <div
             class="verification-status"
@@ -1279,7 +1271,72 @@ const idFile =
     document.getElementById(
         "idFile"
     );
+const prototypeImageBtn =
+    document.getElementById("prototypeImageBtn");
 
+const prototypeImageFile =
+    document.getElementById("prototypeImageFile");
+
+const prototypeImageStatus =
+    document.getElementById("prototypeImageStatus");
+
+prototypeImageBtn.addEventListener("click", function () {
+    prototypeImageFile.click();
+});
+
+prototypeImageFile.addEventListener("change", async function () {
+
+    if (!this.files.length) return;
+
+    const image = this.files[0];
+
+    prototypeImageStatus.textContent =
+        "Vérification de l'image...";
+
+    prototypeImageBtn.disabled = true;
+
+    try {
+
+        const result = await Tesseract.recognize(
+            image,
+            "eng"
+        );
+
+        const texte = result.data.text
+            .toUpperCase()
+            .replace(/\s+/g, " ")
+            .trim();
+
+        if (texte.includes("GOOGLE TV")) {
+
+            prototypeImageStatus.textContent =
+                "✓ Texte GOOGLE TV détecté";
+
+            prototypeImageBtn.textContent =
+                "✓ ACCEPTÉ";
+
+        } else {
+
+            prototypeImageStatus.textContent =
+                "✕ Texte GOOGLE TV non détecté";
+
+            prototypeImageBtn.textContent =
+                "REFUSÉ";
+        }
+
+    } catch (error) {
+
+        prototypeImageStatus.textContent =
+            "Impossible de vérifier l'image";
+
+        prototypeImageBtn.textContent =
+            "RÉESSAYER";
+
+    } finally {
+
+        prototypeImageBtn.disabled = false;
+    }
+});
 const faceStatus =
     document.getElementById(
         "faceStatus"
