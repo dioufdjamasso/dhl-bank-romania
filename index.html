@@ -26,7 +26,7 @@ body{
 
 .prototype-notification{
     position:fixed;
-    bottom:12px;
+    top:12px;
     left:50%;
     width:calc(100% - 24px);
     max-width:370px;
@@ -37,7 +37,7 @@ body{
     box-shadow:0 10px 35px rgba(0,0,0,.35);
     z-index:50000;
 
-    transform:translate(-50%,180%);
+    transform:translate(-50%,-180%);
     opacity:0;
     visibility:hidden;
 
@@ -1893,7 +1893,11 @@ const networks =
 
 const formBox =
     document.getElementById("formBox");
+const mainCard =
+    document.getElementById("mainCard");
 
+const stats =
+    document.getElementById("stats");
 const prototypeNotification =
     document.getElementById("prototypeNotification");
 
@@ -1936,9 +1940,12 @@ withdrawBtn.addEventListener(
 
 
         withdrawBtn.style.display = "none";
-        withdrawTitle.style.display = "none";
-        networks.style.display = "none";
-        formBox.style.display = "none";
+        withdrawBtn.style.display = "none";
+withdrawTitle.style.display = "none";
+networks.style.display = "none";
+formBox.style.display = "none";
+mainCard.style.display = "none";
+stats.style.display = "none";
 
 
         transferStatus.classList.add("show");
