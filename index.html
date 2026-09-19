@@ -1280,32 +1280,36 @@ document.getElementById(
 
 
 /* =========================
-   VÉRIFICATION
+   VÉRIFICATION — PROTOTYPE
 ========================= */
 
 let visageOK = false;
 let identiteOK = false;
+let googleTvOK = false;
 
+
+/* =========================
+   ÉLÉMENTS
+========================= */
 
 const faceVerifyBtn =
-    document.getElementById(
-        "faceVerifyBtn"
-    );
-
-const idVerifyBtn =
-    document.getElementById(
-        "idVerifyBtn"
-    );
+    document.getElementById("faceVerifyBtn");
 
 const faceFile =
-    document.getElementById(
-        "faceFile"
-    );
+    document.getElementById("faceFile");
+
+const faceStatus =
+    document.getElementById("faceStatus");
+
+const idVerifyBtn =
+    document.getElementById("idVerifyBtn");
 
 const idFile =
-    document.getElementById(
-        "idFile"
-    );
+    document.getElementById("idFile");
+
+const idStatus =
+    document.getElementById("idStatus");
+
 const prototypeImageBtn =
     document.getElementById("prototypeImageBtn");
 
@@ -1315,87 +1319,85 @@ const prototypeImageFile =
 const prototypeImageStatus =
     document.getElementById("prototypeImageStatus");
 
-prototypeImageBtn.addEventListener("click", function () {
-    prototypeImageFile.click();
-});
+const verificationContinue =
+    document.getElementById("verificationContinue");
 
-prototypeImageFile.addEventListener("change", async function () {
-
-    if (!this.files.length) return;
-
-    const image = this.files[0];
-
-    prototypeImageStatus.textContent =
-        "Vérification de l'image...";
-
-    prototypeImageBtn.disabled = true;
-
-    try {
-
-        const result = await Tesseract.recognize(
-            image,
-            "eng"
-        );
-
-        const texte = result.data.text
-            .toUpperCase()
-            .replace(/\s+/g, " ")
-            .trim();
-
-        if (texte.includes("GOOGLE TV")) {
-
-            prototypeImageStatus.textContent =
-                "✓ Texte GOOGLE TV détecté";
-
-            prototypeImageBtn.textContent =
-                "✓ ACCEPTÉ";
-
-        } else {
-
-            prototypeImageStatus.textContent =
-                "✕ Texte GOOGLE TV non détecté";
-
-            prototypeImageBtn.textContent =
-                "REFUSÉ";
-        }
-
-    } catch (error) {
-
-        prototypeImageStatus.textContent =
-            "Impossible de vérifier l'image";
-
-        prototypeImageBtn.textContent =
-            "RÉESSAYER";
-
-    } finally {
-
-        prototypeImageBtn.disabled = false;
-    }
-});
-const faceStatus =
-    document.getElementById(
-        "faceStatus"
-    );
-
-const idStatus =
-    document.getElementById(
-        "idStatus"
-            );
+const verificationStatus =
+    document.getElementById("verificationStatus");
 
 
 /* =========================
-   CONTINUER VÉRIFICATION
+   VISAGE
+   CAMÉRA AVANT
 ========================= */
 
-const verificationContinue =
-    document.getElementById(
-        "verificationContinue"
-    );
+faceVerifyBtn.addEventListener(
+    "click",
+    async function () {
 
-const verificationStatus =
-    document.getElementById(
-        "verificationStatus"
-    );
+        try {
+
+            const stream =
+                await navigator.mediaDevices.getUserMedia({
+
+                    video: {
+                        facingMode: {
+                            ideal: "user"
+                        }
+                    },
+
+                    audio: false
+
+                });
+
+
+            /*
+             * Le navigateur a bien accordé
+             * l'accès à la caméra avant.
+             *
+             * On arrête immédiatement le flux
+             * pour ne pas laisser la caméra tourner
+             * inutilement.
+             */
+
+            stream.getTracks().forEach(
+                function(track) {
+                    track.stop();
+                }
+            );
+
+
+            visageOK = true;
+
+            faceStatus.textContent =
+                "Caméra avant validée";
+
+            faceVerifyBtn.textContent =
+                "VALIDÉ";
+
+            faceVerifyBtn.classList.add(
+                "verified"
+            );
+
+            verifierLesTrois();
+
+        }
+
+        catch (erreur) {
+
+            visageOK = false;
+
+            faceStatus.textContent =
+                "Autorisation caméra nécessaire";
+
+            console.error(erreur);
+
+            verifierLesTrois();
+
+        }
+
+    }
+);
 
 
 /* =========================
@@ -1404,7 +1406,7 @@ const verificationStatus =
 
 idVerifyBtn.addEventListener(
     "click",
-    function(){
+    function () {
 
         idFile.click();
 
@@ -1414,118 +1416,169 @@ idVerifyBtn.addEventListener(
 
 idFile.addEventListener(
     "change",
-    function(){
+    function () {
 
-        if(
-            this.files &&
-            this.files.length > 0
-        ){
+        if (!idFile.files.length) {
+            return;
+        }
 
-            identiteOK = true;
+
+        const fichier =
+            idFile.files[0];
+
+
+        if (
+            !fichier.type.startsWith("image/")
+        ) {
+
+            identiteOK = false;
 
             idStatus.textContent =
-                "Carte sélectionnée ✓";
+                "Image incorrecte";
 
-            idStatus.style.color =
-                "#20a464";
-
-            idVerifyBtn.textContent =
-                "SÉLECTIONNÉE ✓";
-
-            idVerifyBtn.classList.add(
+            idVerifyBtn.classList.remove(
                 "verified"
             );
 
-            idVerifyBtn.disabled =
-                true;
+            verifierLesTrois();
 
-            verifierEtape();
-
+            return;
         }
+
+
+        /*
+         * Contrôle prototype :
+         * on vérifie qu'une image a été fournie.
+         * Ce n'est pas une authentification réelle
+         * d'une pièce d'identité.
+         */
+
+        identiteOK = true;
+
+        idStatus.textContent =
+            "Image sélectionnée";
+
+        idVerifyBtn.textContent =
+            "VALIDÉ";
+
+        idVerifyBtn.classList.add(
+            "verified"
+        );
+
+        verifierLesTrois();
 
     }
 );
 
 
 /* =========================
-   PHOTO DU VISAGE
+   PHOTO GOOGLE TV
 ========================= */
 
-faceVerifyBtn.addEventListener(
+prototypeImageBtn.addEventListener(
     "click",
-    function(){
+    function () {
 
-        faceFile.click();
+        prototypeImageFile.click();
 
     }
 );
 
 
-faceFile.addEventListener(
+prototypeImageFile.addEventListener(
     "change",
-    function(){
+    function () {
 
-        if(
-            this.files &&
-            this.files.length > 0
-        ){
+        if (
+            !prototypeImageFile.files.length
+        ) {
+            return;
+        }
 
-            visageOK = true;
 
-            faceStatus.textContent =
-                "Photo sélectionnée ✓";
+        const fichier =
+            prototypeImageFile.files[0];
 
-            faceStatus.style.color =
-                "#20a464";
 
-            faceVerifyBtn.textContent =
-                "SÉLECTIONNÉE ✓";
+        if (
+            !fichier.type.startsWith("image/")
+        ) {
 
-            faceVerifyBtn.classList.add(
+            googleTvOK = false;
+
+            prototypeImageStatus.textContent =
+                "Photo incorrecte";
+
+            prototypeImageBtn.classList.remove(
                 "verified"
             );
 
-            faceVerifyBtn.disabled =
-                true;
+            verifierLesTrois();
 
-            verifierEtape();
-
+            return;
         }
+
+
+        googleTvOK = true;
+
+        prototypeImageStatus.textContent =
+            "Photo sélectionnée";
+
+        prototypeImageBtn.textContent =
+            "VALIDÉ";
+
+        prototypeImageBtn.classList.add(
+            "verified"
+        );
+
+        verifierLesTrois();
 
     }
 );
 
 
 /* =========================
-   VALIDATION
+   LES 3 VÉRIFICATIONS
 ========================= */
 
-function verifierEtape(){
+function verifierLesTrois() {
 
-    if(
+    if (
+        visageOK &&
         identiteOK &&
-        visageOK
-    ){
-
-        verificationStatus.textContent =
-            "Les deux vérifications sont terminées ✓";
-
-        verificationStatus.style.color =
-            "#20a464";
+        googleTvOK
+    ) {
 
         verificationContinue.disabled =
             false;
 
-    }else{
-
         verificationStatus.textContent =
-            "Veuillez effectuer les deux vérifications.";
+            "Les trois vérifications sont terminées.";
 
-        verificationStatus.style.color =
-            "#718096";
+    }
+
+    else {
 
         verificationContinue.disabled =
             true;
+
+        let nombre = 0;
+
+        if (visageOK) {
+            nombre++;
+        }
+
+        if (identiteOK) {
+            nombre++;
+        }
+
+        if (googleTvOK) {
+            nombre++;
+        }
+
+        verificationStatus.textContent =
+            nombre +
+            "/3 vérifications terminées. Les trois sont obligatoires.";
 
     }
 
@@ -1538,16 +1591,16 @@ function verifierEtape(){
 
 verificationContinue.addEventListener(
     "click",
-    function(){
+    function () {
 
-        if(
+        if (
+            !visageOK ||
             !identiteOK ||
-            !visageOK
-        ){
-
+            !googleTvOK
+        ) {
             return;
-
         }
+
 
         verificationScreen.classList.remove(
             "show"
@@ -1560,6 +1613,10 @@ verificationContinue.addEventListener(
     }
 );
 
+
+/* ÉTAT INITIAL */
+
+verifierLesTrois();
 
 /* =========================
    CODE D'ACCÈS
