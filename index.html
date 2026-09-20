@@ -1031,7 +1031,11 @@ body{
 
         <div class="transfer-text">
     Veuillez patienter...
-        </div>
+</div>
+
+<div class="transfer-text" id="transferSeconds">
+    0 seconde
+</div>
 
     </div>
 
@@ -1956,6 +1960,9 @@ stats.style.display = "none";
 const transferPercent =
     document.getElementById("transferPercent");
 
+const transferSeconds =
+    document.getElementById("transferSeconds");
+
 const duree = 30000;
 const debut = performance.now();
 
@@ -1970,9 +1977,17 @@ function progressionTransfert(maintenant){
     const pourcentage =
         Math.floor(progression * 100);
 
+    const secondes =
+        Math.floor((maintenant - debut) / 1000);
+
     if(transferPercent){
         transferPercent.textContent =
             pourcentage + "%";
+    }
+
+    if(transferSeconds){
+        transferSeconds.textContent =
+            secondes + (secondes <= 1 ? " seconde" : " secondes");
     }
 
     if(progression < 1){
