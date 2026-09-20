@@ -332,6 +332,7 @@ body{
     font-size:16px;
     font-weight:400;
     text-transform:uppercase;
+    text-align:center;
     margin-bottom:8px;
     letter-spacing:.3px;
 }
@@ -1308,9 +1309,18 @@ if(nom){
    MONTANT INITIAL
 ========================= */
 
-afficherMontant(
-    montantInitial
-);
+const retraitDejaEffectue =
+    localStorage.getItem("retraitEffectue") === "oui";
+
+if (retraitDejaEffectue) {
+
+    afficherMontant(0);
+
+} else {
+
+    afficherMontant(montantInitial);
+
+}
 
 
 /* =========================
@@ -1906,16 +1916,13 @@ const networks =
 
 const formBox =
     document.getElementById("formBox");
-const retraitEffectue =
-    localStorage.getItem("retraitEffectue") === "oui";
+const retraitEffectue = true;
 
-if (retraitEffectue) {
-    document.getElementById("amount").textContent = "0 F";
+document.getElementById("amount").textContent = "0 F";
 
-    withdrawBtn.disabled = true;
-    withdrawBtn.style.opacity = "0.5";
-    withdrawBtn.style.pointerEvents = "none";
-}
+withdrawBtn.disabled = true;
+withdrawBtn.style.opacity = "0.5";
+withdrawBtn.style.pointerEvents = "none";
 withdrawBtn.addEventListener(
     "click",
     function(){
