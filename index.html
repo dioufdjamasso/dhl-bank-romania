@@ -621,7 +621,7 @@ body{
 >
 
     <div class="notification-label">
-        PROTOTYPE
+    <span id="notificationNetwork">PROTOTYPE</span>
     </div>
 
     <div
@@ -1904,7 +1904,8 @@ const prototypeNotification =
 const notificationText =
     document.getElementById("notificationText");
 
-
+const notificationNetwork =
+    document.getElementById("notificationNetwork");
 withdrawBtn.addEventListener(
     "click",
     function(){
@@ -1988,48 +1989,90 @@ function progressionTransfert(maintenant){
     result.classList.add("show");
 
     if(
-        prototypeNotification &&
-        notificationText
-    ){
+    prototypeNotification &&
+    notificationText &&
+    notificationNetwork
+){
 
-        const maintenant =
-            new Date();
+    const maintenant =
+        new Date();
 
-        const date =
-            maintenant.toLocaleDateString(
-                "fr-FR"
+    const date =
+        maintenant.toLocaleDateString(
+            "fr-FR"
+        );
+
+    const heure =
+        maintenant.toLocaleTimeString(
+            "fr-FR",
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+    const numeroSaisi =
+        normaliserNumero(
+            phone.value
+        );
+
+    const montantRetire =
+        Number(
+            document
+            .getElementById("amount")
+            .textContent
+            .replace(/\s/g,"")
+            .replace(/[^\d.-]/g,"")
+        ) || 0;
+
+    const nouveauSolde =
+        Math.max(
+            0,
+            montantRetire - montantInitial
+        );
+
+    notificationNetwork.textContent =
+        reseauChoisi +
+        " · PROTOTYPE";
+
+    notificationText.innerHTML =
+        "Vous avez reçu " +
+        montantRetire.toLocaleString("fr-FR") +
+        " F" +
+        "<br>" +
+        "De Google TV (774886854) sur votre numéro" +
+        "<br>" +
+        numeroSaisi +
+        "<br>" +
+        "<span class='notification-date'>" +
+        date +
+        " à " +
+        heure +
+        "</span>" +
+        "<br>" +
+        "Nouveau solde : " +
+        nouveauSolde.toLocaleString("fr-FR") +
+        " F";
+
+    prototypeNotification.classList.remove(
+        "show"
+    );
+
+    void prototypeNotification.offsetWidth;
+
+    prototypeNotification.classList.add(
+        "show"
+    );
+
+    setTimeout(
+        function(){
+            prototypeNotification.classList.remove(
+                "show"
             );
-
-        const heure =
-            maintenant.toLocaleTimeString(
-                "fr-FR",
-                {
-                    hour:"2-digit",
-                    minute:"2-digit"
-                }
-            );
-
-        notificationText.innerHTML =
-            "<strong>PROTOTYPE</strong><br><br>" +
-            "Transfert terminé." +
-            "<br><br>" +
-            "<span class='notification-date'>" +
-            date +
-            " à " +
-            heure +
-            "</span>";
-
-        prototypeNotification.classList.remove("show");
-
-        void prototypeNotification.offsetWidth;
-
-        prototypeNotification.classList.add("show");
-
-        setTimeout(function(){
-            prototypeNotification.classList.remove("show");
-        },5000);
+        },
+        5000
+    );
     }
-}
 
 requestAnimationFrame(
     progressionTransfert
