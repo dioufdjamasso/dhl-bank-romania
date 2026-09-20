@@ -1990,11 +1990,12 @@ if(progression < 1){
     requestAnimationFrame(progressionTransfert);
     return;
 }
-    }
 
-    transferStatus.classList.remove("show");
+}
 
-    result.classList.add("show");
+requestAnimationFrame(progressionTransfert);
+
+transferStatus.classList.remove("show");
 
     if(
     prototypeNotification &&
