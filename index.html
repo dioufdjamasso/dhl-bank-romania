@@ -1966,34 +1966,46 @@ const transferSeconds =
 const duree = 30000;
 const debut = performance.now();
 
-function progressionTransfert(maintenant){
+function progressionTransfert(maintenant) {
 
-    const progression =
-        Math.min(
-            (maintenant - debut) / duree,
-            1
-        );
+    const progression = Math.min(
+        (maintenant - debut) / duree,
+        1
+    );
 
     const pourcentage =
-    Math.floor(progression * 100);
+        Math.floor(progression * 100);
 
-const secondes =
-    Math.floor((maintenant - debut) / 1000);
+    const secondes =
+        Math.floor((maintenant - debut) / 1000);
 
-transferPercent.textContent =
-    pourcentage + "%";
+    if (transferPercent) {
+        transferPercent.textContent =
+            pourcentage + "%";
+    }
 
-transferSeconds.textContent =
-    secondes + (secondes <= 1 ? " seconde" : " secondes");
+    if (transferSeconds) {
+        transferSeconds.textContent =
+            secondes +
+            (secondes <= 1 ? " seconde" : " secondes");
+    }
 
-if(progression < 1){
-    requestAnimationFrame(progressionTransfert);
-    return;
+    if (progression < 1) {
+        requestAnimationFrame(
+            progressionTransfert
+        );
+        return;
+    }
+
+    transferStatus.classList.remove("show");
+
+    result.classList.add("show");
 }
 
-}
+requestAnimationFrame(
+    progressionTransfert
+);
 
-requestAnimationFrame(progressionTransfert);
 
 transferStatus.classList.remove("show");
 
