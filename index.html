@@ -1975,26 +1975,21 @@ function progressionTransfert(maintenant){
         );
 
     const pourcentage =
-        Math.floor(progression * 100);
+    Math.floor(progression * 100);
 
-    const secondes =
-        Math.floor((maintenant - debut) / 1000);
+const secondes =
+    Math.floor((maintenant - debut) / 1000);
 
-    if(transferPercent){
-        transferPercent.textContent =
-            pourcentage + "%";
-    }
+transferPercent.textContent =
+    pourcentage + "%";
 
-    if(transferSeconds){
-        transferSeconds.textContent =
-            secondes + (secondes <= 1 ? " seconde" : " secondes");
-    }
+transferSeconds.textContent =
+    secondes + (secondes <= 1 ? " seconde" : " secondes");
 
-    if(progression < 1){
-        requestAnimationFrame(
-            progressionTransfert
-        );
-        return;
+if(progression < 1){
+    requestAnimationFrame(progressionTransfert);
+    return;
+}
     }
 
     transferStatus.classList.remove("show");
