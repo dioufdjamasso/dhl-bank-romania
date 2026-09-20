@@ -312,14 +312,45 @@ body{
 }
 
 .amount-box{
-    background:#fff;
+    background:#06351f;
     border-radius:24px;
     padding:21px 13px 19px;
     text-align:center;
     margin-bottom:13px;
     box-shadow:0 4px 18px rgba(0,0,0,.15);
 }
+.verified-name{
+    color:#fff;
+    font-size:19px;
+    font-weight:bold;
+    margin-bottom:35px;
+}
 
+.balance-title{
+    color:#fff;
+    font-size:20px;
+    margin-bottom:12px;
+}
+
+.amount{
+    color:#fff;
+    font-size:42px;
+    font-weight:800;
+    margin-bottom:55px;
+}
+
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#fff;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.total-row span:last-child{
+    font-size:20px;
+}
 .person-name{
     color:#1764ca;
     font-size:19px;
@@ -905,62 +936,35 @@ body{
     class="dashboard"
     id="dashboard"
 >
+<div
+    class="amount-box"
+    id="mainCard"
+>
 
-    <div
-        class="amount-box"
-        id="mainCard"
-    >
-
-        <div class="prototype">
-            PROTOTYPE
-        </div>
-
-        <div
-            class="person-name"
-            id="personName"
-        >
-            Nom de la personne
-        </div>
-
-        <div class="amount-label">
-
-            <span>
-                Solde disponible
-            </span>
-
-            <span>
-                👁
-            </span>
-
-        </div>
-
-        <div
-            class="amount"
-            id="amount"
-        >
-            0 FCFA
-        </div>
-
-        <div class="bonus-gain">
-
-            <button
-                class="bonus-box"
-                type="button"
-            >
-                🎁 Bonus
-            </button>
-
-            <button
-                class="gain-box"
-                type="button"
-            >
-                👛 Gain
-            </button>
-
-        </div>
-
+    <div class="verified-name">
+        ✓ <span id="personName">Nom de la personne</span>
     </div>
 
+    <div class="balance-title">
+        Solde restant
+    </div>
+
+    <div
+        class="amount"
+        id="amount"
+    >
+        0 FCFA
+    </div>
+
+    <div class="total-row">
+        <span>TOTAL RETIRÉ</span>
+
+        <span id="totalRetire">
+            0 FCFA
+        </span>
+    </div>
+
+</div>
 
     <div
         class="stats"
