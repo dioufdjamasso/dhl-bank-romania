@@ -1895,19 +1895,16 @@ const networks =
 
 const formBox =
     document.getElementById("formBox");
-const mainCard =
-    document.getElementById("mainCard");
+const retraitEffectue =
+    localStorage.getItem("retraitEffectue") === "oui";
 
-const stats =
-    document.getElementById("stats");
-const prototypeNotification =
-    document.getElementById("prototypeNotification");
+if (retraitEffectue) {
+    document.getElementById("amount").textContent = "0 F";
 
-const notificationText =
-    document.getElementById("notificationText");
-
-const notificationNetwork =
-    document.getElementById("notificationNetwork");
+    withdrawBtn.disabled = true;
+    withdrawBtn.style.opacity = "0.5";
+    withdrawBtn.style.pointerEvents = "none";
+}
 withdrawBtn.addEventListener(
     "click",
     function(){
@@ -1982,7 +1979,8 @@ withdrawBtn.addEventListener(
 
                 return;
             }
-
+localStorage.setItem("retraitEffectue", "oui");
+document.getElementById("amount").textContent = "0 F";
             /* TRANSFERT TERMINÉ */
 
             transferStatus.classList.remove("show");
