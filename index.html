@@ -1327,18 +1327,16 @@ const dashboard =
    PREMIER CONTINUER
 ========================= */
 
-document.getElementById(
-    "continueBtn"
-).addEventListener(
+const continueBtn =
+    document.getElementById("continueBtn");
+
+continueBtn.addEventListener(
     "click",
     function(){
 
-        messageScreen.style.display =
-            "none";
+        messageScreen.style.display = "none";
 
-        verificationScreen.classList.add(
-            "show"
-        );
+        verificationScreen.style.display = "flex";
 
     }
 );
