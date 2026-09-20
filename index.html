@@ -1914,193 +1914,160 @@ withdrawBtn.addEventListener(
 
         validationError.classList.remove("show");
 
-        const numero =
-            normaliserNumero(phone.value);
-
+        const numero = normaliserNumero(phone.value);
 
         if(!numero){
-
             validationError.textContent =
                 "Veuillez saisir un numéro de retrait.";
-
             validationError.classList.add("show");
-
             return;
-
         }
-
 
         if(!reseauChoisi){
-
             validationError.textContent =
                 "Veuillez sélectionner un réseau.";
-
             validationError.classList.add("show");
-
             return;
-
         }
 
-
         withdrawBtn.style.display = "none";
-        withdrawBtn.style.display = "none";
-withdrawTitle.style.display = "none";
-networks.style.display = "none";
-formBox.style.display = "none";
-mainCard.style.display = "none";
-stats.style.display = "none";
-
+        withdrawTitle.style.display = "none";
+        networks.style.display = "none";
+        formBox.style.display = "none";
+        mainCard.style.display = "none";
+        stats.style.display = "none";
 
         transferStatus.classList.add("show");
 
+        const transferPercent =
+            document.getElementById("transferPercent");
 
+        const transferSeconds =
+            document.getElementById("transferSeconds");
 
-/* 0% → 100% en 30 secondes */
+        const duree = 30000;
+        const debut = performance.now();
 
-const transferPercent =
-    document.getElementById("transferPercent");
+        function progressionTransfert(maintenant){
 
-const transferSeconds =
-    document.getElementById("transferSeconds");
+            const progression = Math.min(
+                (maintenant - debut) / duree,
+                1
+            );
 
-const duree = 30000;
-const debut = performance.now();
+            const pourcentage =
+                Math.floor(progression * 100);
 
-function progressionTransfert(maintenant) {
+            const secondes =
+                Math.floor((maintenant - debut) / 1000);
 
-    const progression = Math.min(
-        (maintenant - debut) / duree,
-        1
-    );
+            if(transferPercent){
+                transferPercent.textContent =
+                    pourcentage + "%";
+            }
 
-    const pourcentage =
-        Math.floor(progression * 100);
+            if(transferSeconds){
+                transferSeconds.textContent =
+                    secondes +
+                    (secondes <= 1
+                        ? " seconde"
+                        : " secondes");
+            }
 
-    const secondes =
-        Math.floor((maintenant - debut) / 1000);
+            if(progression < 1){
 
-    if (transferPercent) {
-        transferPercent.textContent =
-            pourcentage + "%";
-    }
+                requestAnimationFrame(
+                    progressionTransfert
+                );
 
-    if (transferSeconds) {
-        transferSeconds.textContent =
-            secondes +
-            (secondes <= 1 ? " seconde" : " secondes");
-    }
+                return;
+            }
 
-    if (progression < 1) {
+            /* TRANSFERT TERMINÉ */
+
+            transferStatus.classList.remove("show");
+
+            result.classList.add("show");
+
+            if(
+                prototypeNotification &&
+                notificationText &&
+                notificationNetwork
+            ){
+
+                const maintenant = new Date();
+
+                const date =
+                    maintenant.toLocaleDateString("fr-FR");
+
+                const heure =
+                    maintenant.toLocaleTimeString(
+                        "fr-FR",
+                        {
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        }
+                    );
+
+                const numeroSaisi =
+                    normaliserNumero(phone.value);
+
+                const montantRetire =
+                    Number(
+                        document
+                            .getElementById("amount")
+                            .textContent
+                            .replace(/\s/g,"")
+                            .replace(/[^\d.-]/g,"")
+                    ) || 0;
+
+                const nouveauSolde =
+                    Math.max(
+                        0,
+                        montantRetire - montantInitial
+                    );
+
+                notificationNetwork.textContent =
+                    reseauChoisi + " · PROTOTYPE";
+
+                notificationText.innerHTML =
+                    "Vous avez reçu " +
+                    montantRetire.toLocaleString("fr-FR") +
+                    " F" +
+                    "<br>" +
+                    "De Google TV (774886854) sur votre numéro" +
+                    "<br>" +
+                    numeroSaisi +
+                    "<br>" +
+                    "<span class='notification-date'>" +
+                    date +
+                    " à " +
+                    heure +
+                    "</span>" +
+                    "<br>" +
+                    "Nouveau solde : " +
+                    nouveauSolde.toLocaleString("fr-FR") +
+                    " F";
+
+                prototypeNotification.classList.remove("show");
+
+                void prototypeNotification.offsetWidth;
+
+                prototypeNotification.classList.add("show");
+
+                setTimeout(
+                    function(){
+                        prototypeNotification.classList.remove("show");
+                    },
+                    5000
+                );
+            }
+        }
+
         requestAnimationFrame(
             progressionTransfert
         );
-        return;
     }
-
-    transferStatus.classList.remove("show");
-
-    result.classList.add("show");
-}
-
-requestAnimationFrame(
-    progressionTransfert
-);
-
-
-transferStatus.classList.remove("show");
-
-    if(
-    prototypeNotification &&
-    notificationText &&
-    notificationNetwork
-){
-
-    const maintenant =
-        new Date();
-
-    const date =
-        maintenant.toLocaleDateString(
-            "fr-FR"
-        );
-
-    const heure =
-        maintenant.toLocaleTimeString(
-            "fr-FR",
-            {
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        );
-
-    const numeroSaisi =
-        normaliserNumero(
-            phone.value
-        );
-
-    const montantRetire =
-        Number(
-            document
-            .getElementById("amount")
-            .textContent
-            .replace(/\s/g,"")
-            .replace(/[^\d.-]/g,"")
-        ) || 0;
-
-    const nouveauSolde =
-        Math.max(
-            0,
-            montantRetire - montantInitial
-        );
-
-    notificationNetwork.textContent =
-        reseauChoisi +
-        " · PROTOTYPE";
-
-    notificationText.innerHTML =
-        "Vous avez reçu " +
-        montantRetire.toLocaleString("fr-FR") +
-        " F" +
-        "<br>" +
-        "De Google TV (774886854) sur votre numéro" +
-        "<br>" +
-        numeroSaisi +
-        "<br>" +
-        "<span class='notification-date'>" +
-        date +
-        " à " +
-        heure +
-        "</span>" +
-        "<br>" +
-        "Nouveau solde : " +
-        nouveauSolde.toLocaleString("fr-FR") +
-        " F";
-
-    prototypeNotification.classList.remove(
-        "show"
-    );
-
-    void prototypeNotification.offsetWidth;
-
-    prototypeNotification.classList.add(
-        "show"
-    );
-
-    setTimeout(
-        function(){
-            prototypeNotification.classList.remove(
-                "show"
-            );
-        },
-        5000
-    );
-    }
-
-requestAnimationFrame(
-    progressionTransfert
-);
-
-    }
-      
 );
 
 </script>
