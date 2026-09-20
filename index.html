@@ -1884,9 +1884,14 @@ phone.addEventListener(
     "input",
     function(){
 
-        actualiserSolde(
-            this.value
-        );
+        if (
+            localStorage.getItem("retraitEffectue") === "oui"
+        ) {
+            document.getElementById("amount").textContent = "0 F";
+            return;
+        }
+
+        actualiserSolde(this.value);
 
     }
 );
