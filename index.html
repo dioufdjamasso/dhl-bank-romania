@@ -1921,13 +1921,16 @@ const networks =
 
 const formBox =
     document.getElementById("formBox");
-const retraitEffectue = true;
+const retraitEffectue =
+    localStorage.getItem("retraitEffectue") === "oui";
 
-document.getElementById("amount").textContent = "0 F";
+if (retraitEffectue) {
+    document.getElementById("amount").textContent = "0 F";
 
-withdrawBtn.disabled = true;
-withdrawBtn.style.opacity = "0.5";
-withdrawBtn.style.pointerEvents = "none";
+    withdrawBtn.disabled = true;
+    withdrawBtn.style.opacity = "0.5";
+    withdrawBtn.style.pointerEvents = "none";
+}
 withdrawBtn.addEventListener(
     "click",
     function(){
