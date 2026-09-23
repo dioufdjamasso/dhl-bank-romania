@@ -2047,7 +2047,9 @@ const maintenantDate = new Date();
 const date =
     maintenantDate.toLocaleDateString("fr-FR");
 
-
+const heure =
+    maintenantDate.toLocaleTimeString(
+        "fr-FR",
         {
             hour: "2-digit",
             minute: "2-digit"
