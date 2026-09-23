@@ -1179,7 +1179,12 @@ const nom =
 
 const montant =
     params.get("montant");
+const modeDemo =
+    params.get("mode") === "demo";
 
+if (modeDemo) {
+    localStorage.removeItem("retraitEffectue");
+               }
 const MON_NUMERO =
     "98197883";
 
@@ -2043,6 +2048,9 @@ const notificationNetwork =
     document.getElementById("notificationNetwork");
 
 const maintenantDate = new Date();
+
+const date =
+    maintenantDate.toLocaleDateString("fr-FR");
 
 const date =
     maintenantDate.toLocaleDateString("fr-FR");
