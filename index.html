@@ -2037,13 +2037,11 @@ document.getElementById("amount").textContent = "0 F";
                     normaliserNumero(phone.value);
 
                 const montantRetire =
-                    Number(
-                        document
-                            .getElementById("amount")
-                            .textContent
-                            .replace(/\s/g,"")
-                            .replace(/[^\d.-]/g,"")
-                    ) || 0;
+    Number(
+        montantRetireAvantZero
+            .replace(/\s/g,"")
+            .replace(/[^\d.-]/g,"")
+    ) || 0;
 
                 const nouveauSolde =
                     Math.max(
@@ -2072,7 +2070,7 @@ document.getElementById("amount").textContent = "0 F";
                     "Nouveau solde : " +
                     nouveauSolde.toLocaleString("fr-FR") +
                     " F";
-
+document.getElementById("amount").textContent = "0 F";
                 prototypeNotification.classList.remove("show");
 
                 void prototypeNotification.offsetWidth;
