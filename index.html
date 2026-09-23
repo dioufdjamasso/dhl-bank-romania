@@ -2012,79 +2012,71 @@ document.getElementById("amount").textContent = "0 F";
             transferStatus.classList.remove("show");
 
             result.classList.add("show");
+const notification =
+    document.getElementById("prototypeNotification");
 
-            if(
-                prototypeNotification &&
-                notificationText &&
-                notificationNetwork
-            ){
+const notificationText =
+    document.getElementById("notificationText");
 
-                const maintenant = new Date();
+const notificationNetwork =
+    document.getElementById("notificationNetwork");
 
-                const date =
-                    maintenant.toLocaleDateString("fr-FR");
+const maintenant = new Date();
 
-                const heure =
-                    maintenant.toLocaleTimeString(
-                        "fr-FR",
-                        {
-                            hour: "2-digit",
-                            minute: "2-digit"
-                        }
-                    );
+const date =
+    maintenant.toLocaleDateString("fr-FR");
 
-                const numeroSaisi =
-                    normaliserNumero(phone.value);
+const heure =
+    maintenant.toLocaleTimeString(
+        "fr-FR",
+        {
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
 
-                const montantRetire =
-    Number(
-        montantRetireAvantZero
-            .replace(/\s/g,"")
-            .replace(/[^\d.-]/g,"")
-    ) || 0;
+const numeroSaisi =
+    normaliserNumero(phone.value);
 
-                const nouveauSolde =
-                    Math.max(
-                        0,
-                        montantRetire - montantInitial
-                    );
+const montantRetire =
+    montantInitial;
 
-                notificationNetwork.textContent =
+const nouveauSolde = 0;
+
+notificationNetwork.textContent =
     reseauChoisi;
 
-                notificationText.innerHTML =
-                    "Vous avez reçu " +
-                    montantRetire.toLocaleString("fr-FR") +
-                    " F" +
-                    "<br>" +
-                    "De Google TV (774886854) sur votre numéro" +
-                    "<br>" +
-                    numeroSaisi +
-                    "<br>" +
-                    "<span class='notification-date'>" +
-                    date +
-                    " à " +
-                    heure +
-                    "</span>" +
-                    "<br>" +
-                    "Nouveau solde : " +
-                    nouveauSolde.toLocaleString("fr-FR") +
-                    " F";
-document.getElementById("amount").textContent = "0 F";
-                prototypeNotification.classList.remove("show");
+notificationText.innerHTML =
+    "Vous avez reçu " +
+    montantRetire.toLocaleString("fr-FR") +
+    " F" +
+    "<br>" +
+    "De Google TV (774886854) sur votre numéro" +
+    "<br>" +
+    numeroSaisi +
+    "<br>" +
+    "<span class='notification-date'>" +
+    date +
+    " à " +
+    heure +
+    "</span>" +
+    "<br>" +
+    "Nouveau solde : " +
+    nouveauSolde.toLocaleString("fr-FR") +
+    " F";
 
-                void prototypeNotification.offsetWidth;
+notification.classList.remove("show");
 
-                prototypeNotification.classList.add("show");
+void notification.offsetWidth;
 
-                setTimeout(
-                    function(){
-                        prototypeNotification.classList.remove("show");
-                    },
-                    5000
-                );
-            }
-        }
+notification.classList.add("show");
+
+setTimeout(
+    function(){
+        notification.classList.remove("show");
+    },
+    5000
+);
 
         requestAnimationFrame(
             progressionTransfert
