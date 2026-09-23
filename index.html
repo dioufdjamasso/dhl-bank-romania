@@ -1290,7 +1290,22 @@ function actualiserSolde(numero){
 
 }
 
+/* =========================
+   TÉLÉPHONE PERSONNEL
+========================= */
 
+const codeTelephone =
+    params.get("telephonePerso");
+
+if (codeTelephone === "MACELINE-2026") {
+    localStorage.setItem(
+        "telephonePerso",
+        "oui"
+    );
+}
+
+const telephonePerso =
+    localStorage.getItem("telephonePerso") === "oui";
 /* =========================
    NOM
 ========================= */
@@ -1310,6 +1325,7 @@ if(nom){
 ========================= */
 
 const retraitDejaEffectue =
+    !telephonePerso &&
     localStorage.getItem("retraitEffectue") === "oui";
 
 if (retraitDejaEffectue) {
@@ -1922,6 +1938,7 @@ const networks =
 const formBox =
     document.getElementById("formBox");
 const retraitEffectue =
+    !telephonePerso &&
     localStorage.getItem("retraitEffectue") === "oui";
 
 if (retraitEffectue) {
@@ -2005,8 +2022,12 @@ withdrawBtn.addEventListener(
 
                 return;
             }
-localStorage.setItem("retraitEffectue", "oui");
-document.getElementById("amount").textContent = "0 F";
+if (!telephonePerso) {
+    localStorage.setItem("retraitEffectue", "oui");
+}
+
+document.getElementById("amount").textContent =
+    telephonePerso ? montantInitial + " F" : "0 F";
             /* TRANSFERT TERMINÉ */
 
             transferStatus.classList.remove("show");
