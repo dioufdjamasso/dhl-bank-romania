@@ -986,7 +986,7 @@ body{
             </div>
 
             <div class="stat-value">
-                162 vues
+    <span id="viewsCount">162</span> vues
             </div>
 
         </div>
@@ -1175,6 +1175,12 @@ const nom =
 
 const montant =
     params.get("montant");
+    const vues =
+    params.get("vues");
+
+if (vues) {
+    document.getElementById("viewsCount").textContent = vues;
+}
 const modeDemo =
     params.get("mode") === "demo";
 
