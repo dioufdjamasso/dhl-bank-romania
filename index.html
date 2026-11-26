@@ -587,7 +587,46 @@ button, label {
 </head>
 
 <body>
+<div id="activationGate" style="position:fixed;inset:0;background:#061a33;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:white;color:#222;padding:25px;border-radius:12px;width:100%;max-width:350px;text-align:center;">
 
+    <h2>Activation requise</h2>
+
+    <p>Veuillez saisir votre code d'activation pour accéder à la plateforme.</p>
+
+    <input
+      id="demoCode"
+      type="password"
+      inputmode="numeric"
+      maxlength="6"
+      placeholder="Code d'activation"
+      style="padding:12px;width:100%;margin:15px 0;">
+
+    <button
+      onclick="checkDemoCode()"
+      style="padding:12px;width:100%;background:#1769aa;color:white;border:0;border-radius:6px;">
+      Continuer
+    </button>
+
+    <p id="demoError" style="color:red;"></p>
+
+    <small>Accès de test uniquement.</small>
+  </div>
+</div>
+
+<script>
+function checkDemoCode() {
+  const code = document.getElementById("demoCode").value;
+
+  if (code === "919191") {
+    document.getElementById("activationGate").style.display = "none";
+    document.getElementById("demoApp").style.display = "block";
+  } else {
+    document.getElementById("demoError").textContent =
+      "Code incorrect. Veuillez réessayer.";
+  }
+}
+</script>
 <div class="app">
 
 <div class="prototype">ПРОТОТИП</div>
