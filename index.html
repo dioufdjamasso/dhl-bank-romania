@@ -598,7 +598,7 @@ button, label {
       Retrait
     </button>
 
-    <button onclick="showInfo('Aide','Bienvenue dans le centre d’assistance du prototype TCL.')">
+    <button onclick="openSettings()">
       <span class="menu-icon">ⓘ</span>
       Aide
     </button>
@@ -665,7 +665,53 @@ button, label {
 </section>
 
 <!-- PAGE RETRAIT -->
+<!-- PAGE PARAMÈTRES -->
 
+<section id="settingsPage" style="display:none;">
+
+  <button class="back-button"
+    onclick="goHome()"
+    style="color:#092b59;border-color:#ddd;">
+    ← Retour à l'accueil
+  </button>
+
+  <h2 style="margin:20px 0;">Paramètres</h2>
+
+  <div class="info-list">
+
+    <div style="padding:18px 0;border-bottom:1px solid #eee;">
+      <strong>Nom du client</strong>
+      <p id="settingsName" style="margin-top:8px;"></p>
+    </div>
+
+    <div style="padding:18px 0;border-bottom:1px solid #eee;">
+      <strong>Numéro de téléphone</strong>
+      <p id="settingsPhone" style="margin-top:8px;"></p>
+    </div>
+
+    <div style="padding:18px 0;">
+      <strong>Montant du solde</strong>
+      <p id="settingsBalance" style="margin-top:8px;"></p>
+    </div>
+
+  </div>
+
+  <div class="info-list" style="margin-top:20px;text-align:center;padding:22px;">
+
+    <h3>Service client</h3>
+
+    <p style="margin:15px 0;line-height:1.6;">
+      Pour plus d'informations, veuillez contacter le service client.
+    </p>
+
+    <a href="tel:+3737672862"
+       style="display:block;background:#075bf5;color:white;padding:15px;border-radius:12px;text-decoration:none;">
+       ☎ +373 7672862
+    </a>
+
+  </div>
+
+</section>
 <section id="withdrawPage">
 
   <button class="back-button" onclick="goHome()">← Retour</button>
@@ -860,8 +906,22 @@ function updateBalance() {
    NAVIGATION
 ===================================== */
 
-function openWithdraw() {
+function openSettings() {
 
+  document.getElementById("homePage").style.display = "none";
+
+  document.getElementById("withdrawPage").style.display = "none";
+
+  document.getElementById("settingsPage").style.display = "block";
+
+  document.getElementById("settingsName").textContent = CONFIG.name;
+
+  document.getElementById("settingsPhone").textContent = CONFIG.phone;
+
+  document.getElementById("settingsBalance").textContent =
+    formatMoney(balance) + " " + CONFIG.currency;
+
+  }
   document.getElementById("homePage").style.display = "none";
 
   document.getElementById("withdrawPage").style.display = "block";
@@ -869,10 +929,41 @@ function openWithdraw() {
   updateBalance();
 
 }
+function openWithdraw() {
+  function openWithdraw() {
 
+  document.getElementById("homePage").style.display = "none";
+
+  document.getElementById("settingsPage").style.display = "none";
+
+  document.getElementById("withdrawPage").style.display = "block";
+
+  const status = document.getElementById("withdrawStatus");
+
+  if (balance <= 0) {
+
+    status.style.color = "#ff3333";
+
+    status.textContent = "Aucun gain gagné. Retrait impossible.";
+
+    setTimeout(() => {
+      status.textContent = "";
+    }, 3000);
+
+  } else {
+
+    status.textContent = "";
+
+  }
+
+  updateBalance();
+
+  }
 function goHome() {
 
   document.getElementById("withdrawPage").style.display = "none";
+
+  document.getElementById("settingsPage").style.display = "none";
 
   document.getElementById("homePage").style.display = "block";
 
