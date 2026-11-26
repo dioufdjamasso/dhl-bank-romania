@@ -1,2116 +1,977 @@
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCL - Prototype</title>
 
-<title>Compte - Prototype</title>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    background:#061a33;
-    color:#fff;
-    max-width:390px;
-    margin:0 auto;
-    padding:14px;
+body {
+  background: #f4f6fb;
+  color: #092b59;
+  font-family: Arial, sans-serif;
 }
 
-/* NOTIFICATION */
-
-.prototype-notification{
-    position:fixed;
-    top:12px;
-    left:50%;
-    width:calc(100% - 24px);
-    max-width:370px;
-    background:#ffffff;
-    color:#17243a;
-    border-radius:18px;
-    padding:16px 17px;
-    box-shadow:0 10px 35px rgba(0,0,0,.35);
-    z-index:50000;
-
-    transform:translate(-50%,-180%);
-    opacity:0;
-    visibility:hidden;
-
-    transition:
-        transform .55s cubic-bezier(.22,1,.36,1),
-        opacity .35s ease,
-        visibility .35s ease;
-}
-
-.prototype-notification.show{
-    transform:translate(-50%,0);
-    opacity:1;
-    visibility:visible;
-}
-
-.notification-label{
-    display:flex;
-    align-items:center;
-    gap:7px;
-
-    color:#1764ca;
-    font-size:10px;
-    font-weight:800;
-    letter-spacing:1px;
-
-    margin-bottom:10px;
-}
-
-.notification-label::before{
-    content:"";
-    width:9px;
-    height:9px;
-    background:#20df8a;
-    border-radius:50%;
-    box-shadow:0 0 0 4px #e4faef;
-}
-
-.notification-text{
-    font-size:13px;
-    line-height:1.55;
-}
-
-.notification-text strong{
-    font-size:16px;
-    color:#10213d;
+.app {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  margin: auto;
+  padding: 20px 16px;
+  background: #f8f9fd;
 }
 
-.notification-id{
-    color:#1764ca;
-    font-weight:800;
+.prototype {
+  text-align: center;
+  font-size: 10px;
+  color: #6b7890;
+  margin-bottom: 12px;
 }
 
-.notification-date{
-    color:#718096;
-    font-size:11px;
-
-}
-
-/* VALIDATION */
-
-.validation-error{
-    display:none;
-    background:#ffe8e8;
-    color:#c62828;
-    border:1px solid #ffcaca;
-    border-radius:12px;
-    padding:10px;
-    margin-bottom:13px;
-    font-size:13px;
-    font-weight:bold;
-    text-align:center;
+button {
+  cursor: pointer;
+  font-family: inherit;
 }
 
-.validation-error.show{
-    display:block;
+button:active {
+  transform: scale(.98);
 }
 
-/* ÉCRANS */
+/* ACCUEIL */
 
-.access-message,
-.verification-screen,
-.code-screen{
-    position:fixed;
-    inset:0;
-    background:#061a33;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
-.access-message{
-    display:flex;
-    z-index:9999;
+.header h1 {
+  font-size: 30px;
+  font-weight: 800;
 }
 
-.verification-screen{
-    display:none;
-    z-index:9998;
+.logout {
+  border: none;
+  background: transparent;
+  color: #092b59;
+  font-size: 25px;
 }
 
-.verification-screen.show{
-    display:flex;
+.balance-card {
+  background: #00c66a;
+  color: white;
+  border-radius: 30px;
+  padding: 25px 23px;
+  margin-bottom: 20px;
 }
 
-.code-screen{
-    display:none;
-    z-index:9997;
+.account {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
 }
 
-.code-screen.show{
-    display:flex;
+.logo {
+  width: 75px;
+  height: 75px;
+  background: white;
+  color: #00b968;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 27px;
+  font-weight: 900;
 }
 
-.message-box,
-.verification-box,
-.code-box{
-    width:100%;
-    max-width:360px;
-    background:#fff;
-    color:#10213d;
-    border-radius:24px;
-    padding:27px 20px;
-    text-align:center;
-    box-shadow:0 8px 30px rgba(0,0,0,.25);
+.account-info {
+  font-size: 23px;
+  font-weight: bold;
 }
 
-.prototype{
-    color:#1764ca;
-    font-size:10px;
-    font-weight:bold;
-    letter-spacing:.6px;
-    margin-bottom:14px;
+.currency-tag {
+  display: inline-block;
+  background: white;
+  color: #00b968;
+  padding: 7px 15px;
+  border-radius: 14px;
+  margin-top: 8px;
+  font-size: 19px;
 }
 
-.message-title,
-.verification-title,
-.code-title{
-    color:#1764ca;
-    font-size:20px;
-    font-weight:bold;
-    margin-bottom:13px;
+.balance-amount {
+  font-size: clamp(30px, 9vw, 43px);
+  font-weight: 900;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
 }
 
-.message-text,
-.verification-text,
-.code-text{
-    color:#4d5d73;
-    font-size:14px;
-    line-height:1.5;
-    margin-bottom:22px;
+.balance-label {
+  font-size: 27px;
+  font-weight: bold;
 }
 
-.continue-btn,
-.code-btn{
-    width:100%;
-    height:48px;
-    border:0;
-    border-radius:14px;
-    background:#1764ca;
-    color:#fff;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
+.menu {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: white;
+  border-radius: 25px;
+  padding: 15px 3px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 10px #00000008;
 }
 
-.continue-btn:disabled{
-    opacity:.45;
-    cursor:not-allowed;
+.menu button {
+  background: white;
+  border: none;
+  border-right: 1px solid #ddd;
+  color: #092b59;
+  min-width: 0;
+  padding: 8px 2px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-/* VÉRIFICATION */
-
-.verification-item{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    text-align:left;
-    background:#f3f7fc;
-    border:1px solid #dce7f4;
-    border-radius:14px;
-    padding:12px;
-    margin-bottom:10px;
-}
-
-.verification-icon{
-    width:38px;
-    height:38px;
-    border-radius:10px;
-    background:#e5f0ff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
+.menu button:last-child {
+  border: none;
 }
 
-.verification-info{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    gap:4px;
+.menu-icon {
+  display: block;
+  font-size: 29px;
+  margin-bottom: 8px;
 }
 
-.verification-info strong{
-    font-size:12px;
-    color:#10213d;
+.message-card {
+  background: #082b59;
+  color: white;
+  border-radius: 25px;
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  border: none;
+  width: 100%;
+  text-align: left;
 }
 
-.verification-info span{
-    font-size:10px;
-    color:#718096;
+.message-card h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
 }
 
-.verify-btn{
-    border:0;
-    border-radius:9px;
-    padding:8px 10px;
-    background:#1764ca;
-    color:#fff;
-    font-size:10px;
-    font-weight:bold;
-    cursor:pointer;
+.message-card p {
+  font-size: 16px;
+  line-height: 1.4;
 }
 
-.verify-btn.verified{
-    background:#20df8a;
-    color:#061a33;
+.message-arrow {
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
+  border-radius: 50%;
+  background: #00c66a;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 36px;
 }
 
-.verification-status{
-    color:#718096;
-    font-size:11px;
-    margin:12px 0;
+.info-list {
+  background: white;
+  border-radius: 25px;
+  padding: 10px 20px;
 }
-
-/* INPUTS FICHIERS */
 
-.hidden-file{
-    display:none;
+.info-list button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border: none;
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+  color: #092b59;
+  font-size: 18px;
+  text-align: left;
 }
 
-/* CODE */
-
-.code-input{
-    width:100%;
-    height:48px;
-    border:1px solid #c9d7e8;
-    border-radius:13px;
-    outline:none;
-    text-align:center;
-    font-size:20px;
-    letter-spacing:5px;
-    color:#10213d;
-    margin-bottom:12px;
+.info-list button:last-child {
+  border-bottom: none;
 }
 
-.code-error{
-    display:none;
-    color:#e53935;
-    font-size:12px;
-    font-weight:bold;
-    margin-top:12px;
+.info-left {
+  display: flex;
+  align-items: center;
+  gap: 17px;
 }
 
-.code-error.show{
-    display:block;
+.info-icon {
+  font-size: 25px;
 }
 
-/* TABLEAU */
+/* PAGE RETRAIT */
 
-.dashboard{
-    display:none;
+#withdrawPage {
+  display: none;
+  background: #03142f;
+  color: white;
+  margin: -20px -16px;
+  padding: 20px 16px 30px;
+  min-height: 100vh;
 }
 
-.amount-box{
-    background:#fff;
-    border-radius:18px;
-    padding:22px 20px;
-    margin-bottom:12px;
-    color:#000;
-    box-shadow:0 5px 16px rgba(0,0,0,.15);
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-bottom: 20px;
 }
 
-.verified-name{
-    color:#000;
-    font-size:15px;
-    font-weight:700;
-    margin-bottom:25px;
+.tabs button {
+  background: #10254b;
+  color: white;
+  border: 1px solid #27436e;
+  border-radius: 15px;
+  padding: 18px 2px;
+  font-size: 17px;
 }
 
-.balance-title{
-    color:#666;
-    font-size:16px;
-    font-weight:400;
-    text-transform:uppercase;
-    text-align:center;
-    margin-bottom:8px;
-    letter-spacing:.3px;
+.tabs button.active {
+  background: #075bf5;
+  border-color: #075bf5;
 }
 
-.amount{
-    color:#000;
-    font-size:42px;
-    font-weight:900;
-    margin:0 0 35px;
-    line-height:1.05;
+.field-label {
+  display: block;
+  font-size: 19px;
+  margin: 18px 3px 10px;
 }
 
-.total-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    color:#fff;
-    font-size:14px;
-    font-weight:600;
+.input-box {
+  width: 100%;
+  background: #071630;
+  color: white;
+  border: 1px solid #315184;
+  border-radius: 15px;
+  min-height: 58px;
+  padding: 13px 17px;
+  font-size: 19px;
+  outline: none;
 }
 
-.total-row span:last-child{
-    font-size:16px;
-    font-weight:700;
-}
-.person-name{
-    color:#1764ca;
-    font-size:19px;
-    font-weight:bold;
-    margin-bottom:14px;
+.input-box:focus {
+  border-color: #1687ff;
 }
 
-.amount-label{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    background:#e5f0ff;
-    color:#1764ca;
-    border-radius:25px;
-    padding:8px 18px;
-    font-size:15px;
-    font-weight:bold;
+.currency-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.amount{
-    color:#000;
-    font-size:42px;
-    font-weight:900;
-    margin-top:8px;
-    margin-bottom:23px;
-    line-height:1.05;
+.currency-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.bonus-gain{
-    display:flex;
-    gap:9px;
+.currency-circle {
+  width: 43px;
+  height: 43px;
+  background: #00c66a;
+  color: white;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+  font-size: 13px;
 }
 
-.bonus-box,
-.gain-box{
-    flex:1;
-    height:61px;
-    border:2px solid #b8d5fb;
-    border-radius:31px;
-    background:#e5f0ff;
-    color:#1764ca;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:9px;
-    font-size:17px;
-    font-weight:bold;
+.saldo {
+  color: #ffe21c;
+  font-weight: bold;
 }
 
-/* STATISTIQUES */
-
-.stats{
-    display:flex;
-    gap:9px;
-    margin-bottom:13px;
+select.input-box {
+  appearance: auto;
 }
 
-.stat{
-    flex:1;
-    background:#102852;
-    border-radius:17px;
-    padding:14px 6px;
-    text-align:center;
-    border:1px solid #193867;
+select option {
+  background: #071630;
+  color: white;
 }
 
-.stat-title{
-    color:#b9c7dc;
-    font-size:11px;
-    font-weight:bold;
-    margin-bottom:7px;
+.methods {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
 }
 
-.stat-value{
-    color:#fff;
-    font-size:15px;
-    font-weight:bold;
+.method {
+  background: #10264d;
+  border: 2px solid #203e70;
+  border-radius: 15px;
+  padding: 12px 3px;
+  color: white;
+  min-width: 0;
+  font-size: 13px;
 }
-
-/* RETRAIT */
 
-.withdraw{
-    width:100%;
-    height:53px;
-    border:0;
-    border-radius:17px;
-    background:#20df8a;
-    color:#061a33;
-    font-size:17px;
-    font-weight:bold;
-    cursor:pointer;
-    margin-bottom:13px;
+.method.selected {
+  border: 3px solid #00e83e;
+  color: #00e83e;
 }
 
-/* TRANSFERT */
-
-.transfer-status{
-    display:none;
-    background:#102852;
-    border-radius:24px;
-    padding:35px 20px;
-    text-align:center;
-    margin-bottom:15px;
-    border:1px solid #193867;
+.method-icon {
+  width: 55px;
+  height: 55px;
+  margin: auto auto 7px;
+  border-radius: 50%;
+  background: #0879e8;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
 }
 
-.transfer-status.show{
-    display:block;
+.method:nth-child(2) .method-icon {
+  background: #f2c600;
+  color: #06417c;
 }
 
-.transfer-spinner-wrap{
-    position:relative;
-    width:82px;
-    height:82px;
-    margin:0 auto 18px;
+.method:nth-child(3) .method-icon {
+  background: #080808;
 }
 
-.transfer-spinner{
-    width:82px;
-    height:82px;
-    margin:0;
-    border:6px solid #365277;
-    border-top:6px solid #20df8a;
-    border-radius:50%;
-    animation:rotation 1s linear infinite;
+.method:nth-child(4) .method-icon {
+  background: #0675cc;
 }
 
-.transfer-percent{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    font-size:18px;
-    font-weight:600;
+.method.selected .method-icon {
+  background: #0879e8;
 }
 
-.transfer-title{
-    color:#fff;
-    font-size:19px;
-    font-weight:bold;
-    margin-bottom:7px;
+.phone-input,
+.amount-input {
+  font-size: 22px;
+  font-weight: bold;
 }
 
-.transfer-text{
-    color:#b9c7dc;
-    font-size:13px;
+.notice {
+  margin-top: 12px;
+  padding: 14px;
+  background: #092758;
+  border: 1px solid #1762ad;
+  border-radius: 15px;
+  font-size: 14px;
+  line-height: 1.5;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
-
-/* RÉSULTAT */
 
-.result{
-    display:none;
-    text-align:center;
+.notice-icon {
+  font-size: 32px;
 }
 
-.result.show{
-    display:block;
+.amount-area {
+  display: flex;
+  align-items: center;
+  background: #10254b;
+  border: 1px solid #315184;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
-.result-prototype{
-    color:#20df8a;
-    font-size:11px;
-    font-weight:bold;
-    letter-spacing:.7px;
-    margin-bottom:14px;
+.amount-area input {
+  width: 100%;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffe21c;
+  font-size: 23px;
+  font-weight: bold;
+  padding: 15px;
 }
 
-.success-card{
-    background:#fff;
-    color:#111;
-    padding:45px 18px 38px;
-    text-align:center;
-    box-shadow:0 4px 18px rgba(0,0,0,.18);
+.percent-buttons {
+  display: flex;
+  gap: 4px;
+  padding-right: 5px;
 }
 
-.success-icon{
-    width:190px;
-    height:190px;
-    border:8px solid #22c55e;
-    border-radius:50%;
-    margin:0 auto 28px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+.percent-buttons button {
+  background: #071b3b;
+  color: white;
+  border: 2px solid #269cff;
+  border-radius: 8px;
+  padding: 9px 8px;
+  font-weight: bold;
+  font-size: 12px;
 }
 
-.success-icon span{
-    color:#22c55e;
-    font-size:125px;
-    font-weight:bold;
+.availability {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 17px 2px;
+  font-size: 15px;
 }
 
-.success-title{
-    color:#111;
-    font-size:27px;
-    font-weight:800;
+.available {
+  color: #00ed37;
 }
 
-/* RÉSEAUX */
-
-.title{
-    color:#fff;
-    font-size:15px;
-    font-weight:bold;
-    margin-bottom:10px;
+.unavailable {
+  color: #299bff;
+  text-decoration: underline;
 }
 
-.networks{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:6px;
-    margin-bottom:13px;
+.withdraw-button {
+  background: #00d66c;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  width: 100%;
+  padding: 19px 10px;
+  font-size: 19px;
+  font-weight: bold;
 }
 
-.network{
-    min-height:42px;
-    border:1px solid #193867;
-    border-radius:13px;
-    background:#102852;
-    color:#fff;
-    font-size:12px;
-    font-weight:bold;
-    cursor:pointer;
+.back-button {
+  background: transparent;
+  color: white;
+  border: 1px solid #315184;
+  padding: 10px 16px;
+  border-radius: 10px;
+  margin-bottom: 15px;
 }
 
-.network.selected{
-    background:#20df8a;
-    color:#061a33;
-    border-color:#20df8a;
+.status {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-/* FORMULAIRE */
+/* FENÊTRE D'INFORMATION */
 
-.form-box{
-    background:#102852;
-    border-radius:17px;
-    padding:17px;
-    border:1px solid #193867;
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #0009;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 10;
 }
 
-.form-title{
-    color:#fff;
-    font-size:14px;
-    font-weight:bold;
-    margin-bottom:9px;
+.modal-content {
+  background: white;
+  color: #092b59;
+  padding: 25px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
 }
 
-.phone-input{
-    width:100%;
-    height:45px;
-    border:1px solid #28466f;
-    outline:0;
-    border-radius:13px;
-    background:#1a3563;
-    color:#fff;
-    padding:0 14px;
-    font-size:14px;
-    margin-bottom:15px;
+.modal-content h2 {
+  margin-bottom: 15px;
 }
 
-.phone-input::placeholder{
-    color:#aebbd0;
+.modal-content p {
+  line-height: 1.6;
+  margin-bottom: 18px;
 }
 
-.reseau-title{
-    color:#b9c7dc;
-    font-size:13px;
-    font-weight:bold;
-    margin-bottom:6px;
+.close-modal {
+  background: #075bf5;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 25px;
+  font-size: 16px;
 }
 
-.reseau{
-    color:#20df8a;
-    font-size:13px;
-    font-weight:bold;
-}
+@media(max-width:350px) {
+  .method-icon {
+    width: 43px;
+    height: 43px;
+  }
 
-@keyframes rotation{
-    from{
-        transform:rotate(0deg);
-    }
+  .method {
+    font-size: 11px;
+  }
 
-    to{
-        transform:rotate(360deg);
-    }
+  .percent-buttons button {
+    padding: 8px 5px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- NOTIFICATION -->
+<div class="app">
 
-<div
-    class="prototype-notification"
-    id="prototypeNotification"
->
+<div class="prototype">PROTOTYPE • DONNÉES DE DÉMONSTRATION</div>
 
-    <div class="notification-label">
-    <span id="notificationNetwork">PROTOTYPE</span>
+<!-- PAGE ACCUEIL -->
+
+<section id="homePage">
+
+  <div class="header">
+    <h1>Bienvenue sur TCL</h1>
+    <button class="logout" onclick="showInfo('Déconnexion','Cette fonction est disponible dans la version de démonstration.')">⇥</button>
+  </div>
+
+  <div class="balance-card">
+
+    <div class="account">
+      <div class="logo">TCL</div>
+      <div class="account-info">
+        <div id="homePhone"></div>
+        <span class="currency-tag">FCFA</span>
+      </div>
     </div>
 
-    <div
-        class="notification-text"
-        id="notificationText"
-    ></div>
+    <div class="balance-amount" id="homeBalance"></div>
+    <div class="balance-label">Mon solde</div>
 
-</div>
+  </div>
 
+  <div class="menu">
 
-<!-- MESSAGE INITIAL -->
-
-<div
-    class="access-message"
-    id="messageScreen"
->
-
-    <div class="message-box">
-
-        <div class="prototype">
-            PROTOTYPE
-        </div>
-
-        <div class="message-title">
-            Confirmation de retrait
-        </div>
-
-        <div class="message-text">
-
-            Vous souhaitez réellement retirer
-            l'argent de votre compte sur votre
-            numéro Mobile Money ?
-
-            <br><br>
-
-            Veuillez confirmer pour continuer.
-
-        </div>
-
-        <button
-            class="continue-btn"
-            id="continueBtn"
-            type="button"
-        >
-            CONTINUER
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- VÉRIFICATION -->
-
-<div
-    class="verification-screen"
-    id="verificationScreen"
->
-
-    <div class="verification-box">
-
-        <div class="prototype">
-            PROTOTYPE
-        </div>
-
-        <div class="verification-title">
-    Vérification demandée
-</div>
-
-<div class="verification-text">
-    Une vérification est demandée pour la protection
-    de votre compte Google TV.
-</div>
-
-<!-- PHOTO DU VISAGE -->
-
-<div class="verification-item">
-
-    <div class="verification-icon">
-        👤
-    </div>
-
-    <div class="verification-info">
-
-        <strong>
-            Photo du visage
-        </strong>
-
-        <span id="faceStatus">
-            Aucune photo sélectionnée
-        </span>
-
-    </div>
-
-    <button
-        class="verify-btn"
-        id="faceVerifyBtn"
-        type="button"
-    >
-        PRENDRE UNE PHOTO
+    <button onclick="showInfo('Dépôt','Fonction de dépôt simulée. Aucun paiement réel ne sera effectué.')">
+      <span class="menu-icon">▣</span>
+      Dépôt
     </button>
 
-</div>
-
-<div
-    id="faceCameraBox"
-    style="display:none;margin-top:10px;"
->
-
-    <video
-        id="faceCamera"
-        autoplay
-        playsinline
-        style="width:100%;border-radius:14px;"
-    ></video>
-
-    <button
-        id="takeFacePhoto"
-        class="continue-btn"
-        type="button"
-        style="margin-top:10px;"
-    >
-        📷 PRENDRE LA PHOTO
+    <button onclick="openWithdraw()">
+      <span class="menu-icon">＄</span>
+      Retrait
     </button>
 
-</div>
-
-<canvas
-    id="faceCanvas"
-    style="display:none;"
-></canvas>
->
-
-<!-- CARTE -->
-
-<div class="verification-item">
-
-    <div class="verification-icon">
-        🪪
-    </div>
-
-    <div class="verification-info">
-
-        <strong>
-            Carte d'identité
-        </strong>
-
-        <span id="idStatus">
-            Aucune carte sélectionnée
-        </span>
-
-    </div>
-
-    <button
-        class="verify-btn"
-        id="idVerifyBtn"
-        type="button"
-    >
-        SÉLECTIONNER
+    <button onclick="showInfo('Aide','Bienvenue dans le centre d’assistance du prototype TCL.')">
+      <span class="menu-icon">ⓘ</span>
+      Aide
     </button>
 
-</div>
-
-<input
-    type="file"
-    id="idFile"
-    class="hidden-file"
-    accept="image/*"
->
-
-<!-- PHOTO DE TEST GOOGLE TV -->
-
-<div class="verification-item">
-
-    <div class="verification-icon">
-        📷
-    </div>
-
-    <div class="verification-info">
-        <strong>Photo carte Google TV</strong>
-
-        <span id="prototypeImageStatus">
-            Aucune photo sélectionnée
-        </span>
-    </div>
-
-    <button
-        class="verify-btn"
-        id="prototypeImageBtn"
-        type="button"
-    >
-        SÉLECTIONNER
+    <button onclick="showInfo('Paramètres','Les paramètres du prototype sont modifiables dans le code.')">
+      <span class="menu-icon">⚙</span>
+      Paramètres
     </button>
 
-</div>
+  </div>
 
-<input
-    type="file"
-    id="prototypeImageFile"
-    class="hidden-file"
-    accept="image/*"
->
-
-<div
-    class="verification-status"
-    id="verificationStatus"
->
-    Les deux vérifications sont obligatoires.
-</div>
-
-<button
-    class="continue-btn"
-    id="verificationContinue"
-    type="button"
-    disabled
->
-    CONTINUER
-</button>
-
-</div>
-
-</div>
-
-
-<!-- CODE -->
-
-<div
-    class="code-screen"
-    id="codeScreen"
->
-
-    <div class="code-box">
-
-        <div class="prototype">
-            PROTOTYPE
-        </div>
-
-        <div class="code-title">
-            Accès sécurisé
-        </div>
-
-        <div class="code-text">
-
-            Veuillez saisir le code d'accès
-            du prototype pour continuer.
-
-        </div>
-
-        <input
-            id="accessCode"
-            class="code-input"
-            type="password"
-            inputmode="numeric"
-            maxlength="6"
-            placeholder="•••••"
-        >
-
-        <button
-            class="code-btn"
-            id="codeBtn"
-            type="button"
-        >
-            ACCÉDER
-        </button>
-
-        <div
-            class="code-error"
-            id="codeError"
-        >
-            Code incorrect. Veuillez réessayer.
-        </div>
-
+  <button class="message-card" onclick="showInfo('Centre de messages','Aucun nouveau message dans cette démonstration.')">
+    <div>
+      <h2>CENTRE DE MESSAGES</h2>
+      <p>Découvrez vos informations et actualités</p>
     </div>
+    <div class="message-arrow">›</div>
+  </button>
 
-</div>
+  <div class="info-list">
 
-
-<!-- TABLEAU -->
-
-<div
-    class="dashboard"
-    id="dashboard"
->
-<div
-    class="amount-box"
-    id="mainCard"
->
-
-    <div class="verified-name">
-        ✓ <span id="personName">Nom de la personne</span>
-    </div>
-
-    <div class="balance-title">
-        Solde restant
-    </div>
-
-    <div
-        class="amount"
-        id="amount"
-    >
-        0 FCFA
-    </div>
-
-    <div class="total-row">
-        <span>TOTAL RETIRÉ</span>
-
-        <span id="totalRetire">
-            0 FCFA
-        </span>
-    </div>
-
-</div>
-
-    <div
-        class="stats"
-        id="stats"
-    >
-
-        <div class="stat">
-
-            <div class="stat-title">
-                Vues comptées
-            </div>
-
-            <div class="stat-value">
-    <span id="viewsCount">162</span> vues
-            </div>
-
-        </div>
-
-        <div class="stat">
-
-            <div class="stat-title">
-                Retrait
-            </div>
-
-            <div class="stat-value">
-                Disponible
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div
-        class="validation-error"
-        id="validationError"
-    ></div>
-
-
-    <button
-        class="withdraw"
-        id="withdrawBtn"
-        type="button"
-    >
-        💸 RETIRER
+    <button onclick="showInfo('À propos de nous','TCL est une interface de démonstration.')">
+      <span class="info-left">
+        <span class="info-icon">ⓘ</span>
+        À propos de nous
+      </span>
+      <span>❯</span>
     </button>
 
+    <button onclick="showInfo('Client de service','Centre d’assistance de démonstration.')">
+      <span class="info-left">
+        <span class="info-icon">♧</span>
+        Client de service
+      </span>
+      <span>❯</span>
+    </button>
 
-    <!-- TRANSFERT -->
+    <button onclick="showInfo('Détails du solde','Consultez le solde de démonstration affiché sur votre compte.')">
+      <span class="info-left">
+        <span class="info-icon">▣</span>
+        Détails du solde
+      </span>
+      <span>❯</span>
+    </button>
 
-    <div
-        class="transfer-status"
-        id="transferStatus"
+    <button onclick="showInfo('Règlement','Conditions d’utilisation du prototype.')">
+      <span class="info-left">
+        <span class="info-icon">▤</span>
+        Règlement
+      </span>
+      <span>❯</span>
+    </button>
+
+    <button onclick="showInfo('Carte bancaire','La liaison bancaire réelle n’est pas disponible dans ce prototype.')">
+      <span class="info-left">
+        <span class="info-icon">▣</span>
+        Lier une carte bancaire
+      </span>
+      <span>❯</span>
+    </button>
+
+  </div>
+
+</section>
+
+<!-- PAGE RETRAIT -->
+
+<section id="withdrawPage">
+
+  <button class="back-button" onclick="goHome()">← Retour</button>
+
+  <div class="tabs">
+    <button onclick="showInfo('Dépôt','Dépôt simulé.')">Dépôt</button>
+    <button onclick="showInfo('Échanger','Échange simulé.')">Échanger</button>
+    <button class="active">Retirer</button>
+  </div>
+
+  <label class="field-label">Devise :</label>
+
+  <div class="input-box currency-box">
+    <div class="currency-name">
+      <div class="currency-circle">CFA</div>
+      <span>FCFA</span>
+    </div>
+    <div>
+      Solde :
+      <span class="saldo" id="withdrawBalance"></span>
+      ⌄
+    </div>
+  </div>
+
+  <label class="field-label">Sélectionner le Mode de Retrait :</label>
+
+  <select class="input-box" id="withdrawMode">
+    <option>M-pesa</option>
+    <option>Mobile Money</option>
+  </select>
+
+  <label class="field-label">Méthode</label>
+
+  <div class="methods">
+
+    <button class="method selected" data-method="Wave" onclick="selectMethod(this)">
+      <div class="method-icon">W</div>
+      Wave
+    </button>
+
+    <button class="method" data-method="MTN MoMo" onclick="selectMethod(this)">
+      <div class="method-icon">MTN</div>
+      Momo
+    </button>
+
+    <button class="method" data-method="Orange Money" onclick="selectMethod(this)">
+      <div class="method-icon">OM</div>
+      Orange
+    </button>
+
+    <button class="method" data-method="Moov Money" onclick="selectMethod(this)">
+      <div class="method-icon">Moov</div>
+      Moov
+    </button>
+
+  </div>
+
+  <label class="field-label">Numéro de Téléphone</label>
+
+  <input
+    type="tel"
+    id="phoneNumber"
+    class="input-box phone-input"
+    placeholder="Votre numéro de téléphone"
+  >
+
+  <div class="notice">
+    <span class="notice-icon">ⓘ</span>
+    <span>
+      Utilisez un numéro de téléphone de démonstration.
+      Vérifiez les informations avant de tester le formulaire.
+      Aucun retrait réel ne sera effectué.
+    </span>
+  </div>
+
+  <label class="field-label">Montant de Retrait :</label>
+
+  <div class="amount-area">
+
+    <input
+      type="number"
+      id="withdrawAmount"
+      min="0"
+      placeholder="Montant"
     >
 
-        <div class="prototype">
-            PROTOTYPE
-        </div>
+    <div class="percent-buttons">
+      <button onclick="setPercent(0)">Min</button>
+      <button onclick="setPercent(25)">25%</button>
+      <button onclick="setPercent(50)">50%</button>
+      <button onclick="setPercent(100)">Max</button>
+    </div>
 
-        <div class="transfer-spinner-wrap">
-    <div class="transfer-spinner"></div>
-    <div class="transfer-percent" id="transferPercent">0%</div>
-        </div>
+  </div>
 
-        <div class="transfer-title">
-            Transfert en cours...
-        </div>
+  <div class="availability">
+    <span>
+      Disponible :
+      <strong class="available" id="availableBalance"></strong>
+    </span>
 
-        <div class="transfer-text">
-    Veuillez patienter...
+    <span class="unavailable">
+      Indisponible : 0
+    </span>
+  </div>
+
+  <button class="withdraw-button" onclick="simulateWithdrawal()">
+    Retirer maintenant
+  </button>
+
+  <div class="status" id="withdrawStatus" aria-live="polite"></div>
+
+</section>
+
 </div>
 
-<div class="transfer-text" id="transferSeconds">
-    0 seconde
+<!-- MODALE -->
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h2 id="modalTitle"></h2>
+    <p id="modalText"></p>
+    <button class="close-modal" onclick="closeModal()">Fermer</button>
+  </div>
 </div>
-
-    </div>
-
-
-    <!-- RÉSULTAT -->
-
-    <div
-        class="result"
-        id="result"
-    >
-
-        <div class="success-card">
-
-            <div class="success-icon">
-                <span>✓</span>
-            </div>
-
-            <div class="success-title">
-                Transfert réussi !
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- RÉSEAUX -->
-
-    <div
-        class="title"
-        id="withdrawTitle"
-    >
-        Choisir votre mode de retrait
-    </div>
-
-
-    <div
-        class="networks"
-        id="networks"
-    >
-
-        <button
-            class="network"
-            type="button"
-            data-network="Wave"
-        >
-            Wave
-        </button>
-
-        <button
-            class="network"
-            type="button"
-            data-network="MTN"
-        >
-            MTN
-        </button>
-
-        <button
-            class="network"
-            type="button"
-            data-network="Moov"
-        >
-            Moov
-        </button>
-
-        <button
-            class="network"
-            type="button"
-            data-network="Orange"
-        >
-            Orange
-        </button>
-
-    </div>
-
-
-    <!-- FORMULAIRE -->
-
-    <div
-        class="form-box"
-        id="formBox"
-    >
-
-        <div class="form-title">
-            Numéro de retrait
-        </div>
-
-        <input
-            id="phone"
-            class="phone-input"
-            type="tel"
-            inputmode="numeric"
-            placeholder="Numéro de retrait"
-        >
-
-        <div class="reseau-title">
-            Réseau :
-        </div>
-
-        <div
-            class="reseau"
-            id="selectedNetwork"
-        >
-            Aucun réseau sélectionné
-        </div>
-
-    </div>
-
-</div>
-
 
 <script>
 
-/* =========================
-   PARAMÈTRES
-========================= */
+/* =====================================
+   PARAMÈTRES MODIFIABLES PAR TOI
+===================================== */
 
-const params =
-    new URLSearchParams(
-        window.location.search
-    );
+const CONFIG = {
 
-const nom =
-    params.get("nom");
+  // Nom affiché
+  brand: "TCL",
 
-const montant =
-    params.get("montant");
-    const vues =
-    params.get("vues");
+  // Numéro du client
+  phone: "+226 54997099",
 
-if (vues) {
-    document.getElementById("viewsCount").textContent = vues;
+  // Solde initial
+  balance: 12960.99,
+
+  // Devise
+  currency: "FCFA",
+
+  // Montant minimum
+  minWithdrawal: 3000,
+
+  // Montant maximum
+  maxWithdrawal: 1000000
+
+};
+
+/* =====================================
+   AFFICHAGE DES MONTANTS
+===================================== */
+
+let balance = CONFIG.balance;
+
+function formatMoney(value) {
+  return Number(value).toLocaleString("fr-FR", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+  });
 }
-const modeDemo =
-    params.get("mode") === "demo";
 
-if (modeDemo) {
-    localStorage.removeItem("retraitEffectue");
-               }
-const MON_NUMERO =
-    "98197883";
+function updateBalance() {
 
-const CODE_PROTOTYPE =
-    "693217";
+  document.getElementById("homeBalance").textContent =
+    formatMoney(balance) + " " + CONFIG.currency;
 
-let montantInitial = 0;
+  document.getElementById("withdrawBalance").textContent =
+    formatMoney(balance);
 
+  document.getElementById("availableBalance").textContent =
+    formatMoney(balance) + " " + CONFIG.currency;
 
-/* =========================
-   MONTANT
-========================= */
-
-if(montant){
-
-    const nombre =
-        Number(
-            montant
-            .replace(/\s/g,"")
-            .replace(/[^\d.-]/g,"")
-        );
-
-    if(!isNaN(nombre)){
-
-        montantInitial =
-            nombre;
-
-    }
+  document.getElementById("homePhone").textContent =
+    CONFIG.phone;
 
 }
 
+/* =====================================
+   NAVIGATION
+===================================== */
 
-function afficherMontant(valeur){
+function openWithdraw() {
 
-    const element =
-        document.getElementById(
-            "amount"
-        );
+  document.getElementById("homePage").style.display = "none";
 
-    if(!element){
-        return;
-    }
+  document.getElementById("withdrawPage").style.display = "block";
 
-    element.textContent =
-        Number(valeur)
-        .toLocaleString("fr-FR")
-        + " FCFA";
+  updateBalance();
 
 }
 
+function goHome() {
 
-function normaliserNumero(numero){
+  document.getElementById("withdrawPage").style.display = "none";
 
-    return String(numero || "")
-        .replace(/\D/g,"");
+  document.getElementById("homePage").style.display = "block";
 
-}
-
-
-function getSoldeKey(numero){
-
-    return "prototype_solde_"
-        + normaliserNumero(numero);
+  updateBalance();
 
 }
 
+/* =====================================
+   CHOIX DE LA MÉTHODE
+===================================== */
 
-function actualiserSolde(numero){
+let selectedMethod = "Wave";
 
-    const numeroNormalise =
-        normaliserNumero(numero);
+function selectMethod(button) {
 
-    if(!numeroNormalise){
+  document.querySelectorAll(".method").forEach(item => {
+    item.classList.remove("selected");
+  });
 
-        afficherMontant(
-            montantInitial
-        );
+  button.classList.add("selected");
 
-        return;
-
-    }
-
-    const sauvegarde =
-        localStorage.getItem(
-            getSoldeKey(
-                numeroNormalise
-            )
-        );
-
-    if(sauvegarde !== null){
-
-        const valeur =
-            Number(sauvegarde);
-
-        afficherMontant(
-            isNaN(valeur)
-            ? 0
-            : valeur
-        );
-
-    }else{
-
-        afficherMontant(
-            montantInitial
-        );
-
-    }
+  selectedMethod = button.dataset.method;
 
 }
 
-/* =========================
-   TÉLÉPHONE PERSONNEL
-========================= */
+/* =====================================
+   BOUTONS DE POURCENTAGE
+===================================== */
 
-const codeTelephone =
-    params.get("telephonePerso");
+function setPercent(percent) {
 
-if (codeTelephone === "MACELINE-2026") {
-    localStorage.setItem(
-        "telephonePerso",
-        "oui"
-    );
-}
+  let amount = balance * percent / 100;
 
-const telephonePerso =
-    localStorage.getItem("telephonePerso") === "oui";
-/* =========================
-   NOM
-========================= */
+  if (percent === 0) {
+    amount = Math.min(CONFIG.minWithdrawal, balance);
+  }
 
-if(nom){
-
-    document.getElementById(
-        "personName"
-    ).textContent =
-        nom;
+  document.getElementById("withdrawAmount").value =
+    Math.floor(amount);
 
 }
 
+/* =====================================
+   SIMULATION DU RETRAIT
+===================================== */
 
-/* =========================
-   MONTANT INITIAL
-========================= */
+function simulateWithdrawal() {
 
-const retraitDejaEffectue =
-    !telephonePerso &&
-    localStorage.getItem("retraitEffectue") === "oui";
+  const phone =
+    document.getElementById("phoneNumber").value.trim();
 
-if (retraitDejaEffectue) {
+  const amount =
+    Number(document.getElementById("withdrawAmount").value);
 
-    afficherMontant(0);
+  const status =
+    document.getElementById("withdrawStatus");
 
-} else {
+  if (!phone) {
+    status.textContent = "Veuillez saisir un numéro de téléphone.";
+    return;
+  }
 
-    afficherMontant(montantInitial);
+  if (!Number.isFinite(amount) || amount <= 0) {
+    status.textContent = "Veuillez saisir un montant valide.";
+    return;
+  }
+
+  if (amount < CONFIG.minWithdrawal) {
+    status.textContent = "Le montant est inférieur au minimum autorisé.";
+    return;
+  }
+
+  if (amount > CONFIG.maxWithdrawal) {
+    status.textContent = "Le montant dépasse la limite autorisée.";
+    return;
+  }
+
+  if (amount > balance) {
+    status.textContent = "Solde de démonstration insuffisant.";
+    return;
+  }
+
+  const confirmation = confirm(
+    "Confirmer cette simulation ?\n\n" +
+    "Méthode : " + selectedMethod + "\n" +
+    "Téléphone : " + phone + "\n" +
+    "Montant : " + formatMoney(amount) + " " + CONFIG.currency +
+    "\n\nAucun transfert réel ne sera effectué."
+  );
+
+  if (!confirmation) return;
+
+  status.textContent = "Simulation en cours...";
+
+  setTimeout(() => {
+
+    balance -= amount;
+
+    updateBalance();
+
+    status.textContent =
+      "✓ Simulation terminée. Aucun transfert d'argent réel n'a été effectué.";
+
+    document.getElementById("withdrawAmount").value = "";
+
+  }, 1500);
 
 }
 
+/* =====================================
+   FENÊTRES D'INFORMATION
+===================================== */
 
-/* =========================
-   ÉCRANS
-========================= */
+function showInfo(title, message) {
 
-const messageScreen =
-    document.getElementById(
-        "messageScreen"
-    );
+  document.getElementById("modalTitle").textContent = title;
 
-const verificationScreen =
-    document.getElementById(
-        "verificationScreen"
-    );
+  document.getElementById("modalText").textContent = message;
 
-const codeScreen =
-    document.getElementById(
-        "codeScreen"
-    );
-
-const dashboard =
-    document.getElementById(
-        "dashboard"
-    );
-
-
-/* =========================
-   PREMIER CONTINUER
-========================= */
-
-const continueBtn =
-    document.getElementById("continueBtn");
-
-continueBtn.addEventListener(
-    "click",
-    function(){
-
-        messageScreen.style.display = "none";
-
-        verificationScreen.classList.add("show");
-
-    }
-);
-
-
-/* =========================
-   VÉRIFICATION — PROTOTYPE
-========================= */
-
-let visageOK = false;
-let identiteOK = false;
-let googleTvOK = false;
-
-
-/* =========================
-   ÉLÉMENTS
-========================= */
-
-const faceVerifyBtn =
-    
-    document.getElementById("faceVerifyBtn");
-
-const faceStatus =
-    document.getElementById("faceStatus");
-
-const idVerifyBtn =
-    document.getElementById("idVerifyBtn");
-
-const idFile =
-    document.getElementById("idFile");
-
-const idStatus =
-    document.getElementById("idStatus");
-
-const prototypeImageBtn =
-    document.getElementById("prototypeImageBtn");
-
-const prototypeImageFile =
-    document.getElementById("prototypeImageFile");
-
-const prototypeImageStatus =
-    document.getElementById("prototypeImageStatus");
-
-const verificationContinue =
-    document.getElementById("verificationContinue");
-
-const verificationStatus =
-    document.getElementById("verificationStatus");
-
-
-/* =========================
-   VISAGE
-   CAMÉRA AVANT
-========================= */
-
-const faceCameraBox =
-    document.getElementById("faceCameraBox");
-
-const faceCamera =
-    document.getElementById("faceCamera");
-
-const takeFacePhoto =
-    document.getElementById("takeFacePhoto");
-
-const faceCanvas =
-    document.getElementById("faceCanvas");
-
-let faceStream = null;
-let facePhotoBlob = null;
-
-
-/* OUVRIR LA CAMÉRA */
-
-faceVerifyBtn.addEventListener(
-    "click",
-    async function () {
-
-        try {
-
-            faceStream =
-                await navigator.mediaDevices.getUserMedia({
-
-                    video: {
-                        facingMode: "user"
-                    },
-
-                    audio: false
-
-                });
-
-            faceCamera.srcObject =
-                faceStream;
-
-            faceCameraBox.style.display =
-                "block";
-
-            faceVerifyBtn.style.display =
-                "none";
-
-            faceStatus.textContent =
-                "Caméra ouverte";
-
-        }
-
-        catch (erreur) {
-
-            console.error(erreur);
-
-            faceStatus.textContent =
-                "Autorisation caméra nécessaire";
-
-        }
-
-    }
-);
-
-
-/* PRENDRE LA PHOTO */
-
-takeFacePhoto.addEventListener(
-    "click",
-    function () {
-
-        if (!faceStream) {
-            return;
-        }
-
-        const largeur =
-            faceCamera.videoWidth;
-
-        const hauteur =
-            faceCamera.videoHeight;
-
-        if (!largeur || !hauteur) {
-            return;
-        }
-
-        faceCanvas.width =
-            largeur;
-
-        faceCanvas.height =
-            hauteur;
-
-        const contexte =
-            faceCanvas.getContext("2d");
-
-        contexte.drawImage(
-            faceCamera,
-            0,
-            0,
-            largeur,
-            hauteur
-        );
-
-        faceCanvas.toBlob(
-            function (blob) {
-
-                facePhotoBlob =
-                    blob;
-
-                faceStream
-                    .getTracks()
-                    .forEach(function(track) {
-
-                        track.stop();
-
-                    });
-
-                faceStream = null;
-
-                faceCamera.srcObject =
-                    null;
-
-                faceCameraBox.style.display =
-                    "none";
-
-                faceStatus.textContent =
-                    "Photo prise";
-
-                visageOK = true;
-
-                faceVerifyBtn.textContent =
-                    "VALIDÉ";
-
-                faceVerifyBtn.classList.add(
-                    "verified"
-                );
-
-                faceVerifyBtn.style.display =
-                    "block";
-
-                verifierLesTrois();
-
-            },
-
-            "image/jpeg",
-
-            0.90
-
-        );
-
-    }
-);
-
-
-/* =========================
-   CARTE D'IDENTITÉ
-========================= */
-
-idVerifyBtn.addEventListener(
-    "click",
-    function () {
-
-        idFile.click();
-
-    }
-);
-
-
-idFile.addEventListener(
-    "change",
-    function () {
-
-        if (!idFile.files.length) {
-            return;
-        }
-
-        const fichier =
-            idFile.files[0];
-
-        if (
-            !fichier.type.startsWith("image/")
-        ) {
-
-            identiteOK = false;
-
-            idStatus.textContent =
-                "Image incorrecte";
-
-            idVerifyBtn.classList.remove(
-                "verified"
-            );
-
-            verifierLesTrois();
-
-            return;
-        }
-
-        identiteOK = true;
-
-        idStatus.textContent =
-            "Image sélectionnée";
-
-        idVerifyBtn.textContent =
-            "VALIDÉ";
-
-        idVerifyBtn.classList.add(
-            "verified"
-        );
-
-        verifierLesTrois();
-
-    }
-);
-
-
-/* =========================
-   PHOTO GOOGLE TV
-========================= */
-
-prototypeImageBtn.addEventListener(
-    "click",
-    function () {
-
-        prototypeImageFile.click();
-
-    }
-);
-
-
-prototypeImageFile.addEventListener(
-    "change",
-    function () {
-
-        if (
-            !prototypeImageFile.files.length
-        ) {
-            return;
-        }
-
-        const fichier =
-            prototypeImageFile.files[0];
-
-        if (
-            !fichier.type.startsWith("image/")
-        ) {
-
-            googleTvOK = false;
-
-            prototypeImageStatus.textContent =
-                "Photo incorrecte";
-
-            prototypeImageBtn.classList.remove(
-                "verified"
-            );
-
-            verifierLesTrois();
-
-            return;
-        }
-
-        googleTvOK = true;
-
-        prototypeImageStatus.textContent =
-            "Photo sélectionnée";
-
-        prototypeImageBtn.textContent =
-            "VALIDÉ";
-
-        prototypeImageBtn.classList.add(
-            "verified"
-        );
-
-        verifierLesTrois();
-
-    }
-);
-
-
-/* =========================
-   LES 3 VÉRIFICATIONS
-========================= */
-
-function verifierLesTrois() {
-
-    if (
-        visageOK &&
-        identiteOK &&
-        googleTvOK
-    ) {
-
-        verificationContinue.disabled =
-            false;
-
-        verificationStatus.textContent =
-            "Les trois vérifications sont terminées.";
-
-    }
-
-    else {
-
-        verificationContinue.disabled =
-            true;
-
-        let nombre = 0;
-
-        if (visageOK) {
-            nombre++;
-        }
-
-        if (identiteOK) {
-            nombre++;
-        }
-
-        if (googleTvOK) {
-            nombre++;
-        }
-
-        verificationStatus.textContent =
-            nombre +
-            "/3 vérifications terminées. Les trois sont obligatoires.";
-
-    }
+  document.getElementById("modal").style.display = "flex";
 
 }
 
+function closeModal() {
 
-/* =========================
-   CONTINUER
-========================= */
+  document.getElementById("modal").style.display = "none";
 
-verificationContinue.addEventListener(
-    "click",
-    function () {
-
-        if (
-            !visageOK ||
-            !identiteOK ||
-            !googleTvOK
-        ) {
-            return;
-        }
-
-        verificationScreen.classList.remove(
-            "show"
-        );
-
-        codeScreen.classList.add(
-            "show"
-        );
-
-    }
-);
-
-
-/* ÉTAT INITIAL */
-
-verifierLesTrois();
-
-
-/* =========================
-   CODE D'ACCÈS
-========================= */
-
-document.getElementById(
-    "codeBtn"
-).addEventListener(
-    "click",
-    function(){
-
-        const code =
-            document.getElementById(
-                "accessCode"
-            ).value.trim();
-
-        const codeError =
-            document.getElementById(
-                "codeError"
-            );
-
-        if(
-            code === CODE_PROTOTYPE
-        ){
-
-            codeError.classList.remove(
-                "show"
-            );
-
-            codeScreen.classList.remove(
-                "show"
-            );
-
-            dashboard.style.display =
-                "block";
-
-        }else{
-
-            codeError.classList.add(
-                "show"
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================
-   RÉSEAUX
-========================= */
-
-const networkButtons =
-    document.querySelectorAll(
-        ".network"
-    );
-
-const selectedNetwork =
-    document.getElementById(
-        "selectedNetwork"
-    );
-
-let reseauChoisi = "";
-
-
-networkButtons.forEach(
-    function(button){
-
-        button.addEventListener(
-            "click",
-            function(){
-
-                networkButtons.forEach(
-                    function(btn){
-
-                        btn.classList.remove(
-                            "selected"
-                        );
-
-                    }
-                );
-
-                this.classList.add(
-                    "selected"
-                );
-
-                reseauChoisi =
-                    this.dataset.network;
-
-                selectedNetwork.textContent =
-                    reseauChoisi;
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================
-   NUMÉRO
-========================= */
-
-const phone =
-    document.getElementById(
-        "phone"
-    );
-
-
-phone.addEventListener(
-    "input",
-    function(){
-
-        if (
-            localStorage.getItem("retraitEffectue") === "oui"
-        ) {
-            document.getElementById("amount").textContent = "0 F";
-            return;
-        }
-
-        actualiserSolde(this.value);
-
-    }
-);
-
-
-/* =========================
-   RETRAIT - PROTOTYPE
-========================= */
-
-const withdrawBtn =
-    document.getElementById("withdrawBtn");
-
-const validationError =
-    document.getElementById("validationError");
-
-const transferStatus =
-    document.getElementById("transferStatus");
-
-const result =
-    document.getElementById("result");
-
-const withdrawTitle =
-    document.getElementById("withdrawTitle");
-
-const networks =
-    document.getElementById("networks");
-
-const formBox =
-    document.getElementById("formBox");
-const retraitEffectue =
-    !telephonePerso &&
-    localStorage.getItem("retraitEffectue") === "oui";
-
-if (retraitEffectue) {
-    document.getElementById("amount").textContent = "0 F";
-
-    withdrawBtn.disabled = true;
-    withdrawBtn.style.opacity = "0.5";
-    withdrawBtn.style.pointerEvents = "none";
-}
-withdrawBtn.addEventListener(
-    "click",
-    function(){
-
-        validationError.classList.remove("show");
-
-        const numero = normaliserNumero(phone.value);
-
-        if(!numero){
-            validationError.textContent =
-                "Veuillez saisir un numéro de retrait.";
-            validationError.classList.add("show");
-            return;
-        }
-
-        if(!reseauChoisi){
-            validationError.textContent =
-                "Veuillez sélectionner un réseau.";
-            validationError.classList.add("show");
-            return;
-        }
-
-        withdrawBtn.style.display = "none";
-        withdrawTitle.style.display = "none";
-        networks.style.display = "none";
-        formBox.style.display = "none";
-        mainCard.style.display = "none";
-        stats.style.display = "none";
-
-        transferStatus.classList.add("show");
-
-        const transferPercent =
-            document.getElementById("transferPercent");
-
-        const transferSeconds =
-            document.getElementById("transferSeconds");
-
-        const duree = 30000;
-        const debut = performance.now();
-
-        function progressionTransfert(maintenant){
-
-            const progression = Math.min(
-                (maintenant - debut) / duree,
-                1
-            );
-
-            const pourcentage =
-                Math.floor(progression * 100);
-
-            const secondes =
-                Math.floor((maintenant - debut) / 1000);
-
-            if(transferPercent){
-                transferPercent.textContent =
-                    pourcentage + "%";
-            }
-
-            if(transferSeconds){
-                transferSeconds.textContent =
-                    secondes +
-                    (secondes <= 1
-                        ? " seconde"
-                        : " secondes");
-            }
-
-            if(progression < 1){
-
-                requestAnimationFrame(
-                    progressionTransfert
-                );
-
-                return;
-            }
-if (!telephonePerso) {
-    localStorage.setItem("retraitEffectue", "oui");
 }
 
-document.getElementById("amount").textContent =
-    telephonePerso ? montantInitial + " F" : "0 F";
-            /* TRANSFERT TERMINÉ */
+/* =====================================
+   INITIALISATION
+===================================== */
 
-            transferStatus.classList.remove("show");
-
-            result.classList.add("show");
-const notification =
-    document.getElementById("prototypeNotification");
-
-const notificationText =
-    document.getElementById("notificationText");
-
-const notificationNetwork =
-    document.getElementById("notificationNetwork");
-
-const maintenantDate = new Date();
-
-const date =
-    maintenantDate.toLocaleDateString("fr-FR");
-
-const heure =
-    maintenantDate.toLocaleTimeString(
-        "fr-FR",
-        {
-            hour: "2-digit",
-            minute: "2-digit"
-        }
-    );
-
-const numeroSaisi =
-    normaliserNumero(phone.value);
-
-const montantRetire =
-    montantInitial;
-
-const nouveauSolde = 0;
-
-notificationNetwork.textContent =
-    reseauChoisi;
-
-notificationText.innerHTML =
-    "Vous avez reçu " +
-    montantRetire.toLocaleString("fr-FR") +
-    " F" +
-    "<br>" +
-    "De Google TV (774886854) sur votre numéro" +
-    "<br>" +
-    numeroSaisi +
-    "<br>" +
-    "<span class='notification-date'>" +
-    date +
-    " à " +
-    heure +
-    "</span>" +
-    "<br>" +
-    "Nouveau solde : " +
-    nouveauSolde.toLocaleString("fr-FR") +
-    " F";
-
-notification.classList.remove("show");
-
-void notification.offsetWidth;
-
-notification.classList.add("show");
-
-setTimeout(
-    function(){
-        notification.classList.remove("show");
-    },
-    5000
-);
-        }
-        requestAnimationFrame(
-            progressionTransfert
-        );
-    }
-);
+updateBalance();
 
 </script>
 
