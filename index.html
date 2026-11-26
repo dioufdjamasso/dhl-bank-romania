@@ -1054,7 +1054,12 @@ function setPercent(percent) {
 ===================================== */
 
 function simulateWithdrawal() {
+showInfo(
+    "⚠️ Retrait indisponible",
+    "Cette opération n'est pas disponible actuellement. Aucun transfert n'a été effectué. Veuillez contacter le service d'assistance pour obtenir de l'aide."
+);
 
+return;
   const phone =
     document.getElementById("phoneNumber").value.trim();
 
