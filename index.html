@@ -141,7 +141,37 @@ button:active {
   font-size: 14px;
   font-weight: bold;
 }
+.demo-badge-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 2px;
+    text-align: center;
+}
 
+.demo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 9px;
+    border-radius: 999px;
+    background: #1877F2;
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.demo-check {
+    background: white;
+    color: #1877F2;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: inline-grid;
+    place-items: center;
+  }
 .menu button:last-child {
   border: none;
 }
@@ -588,10 +618,12 @@ button, label {
 
   <div class="menu">
 
-    <button onclick="showInfo('Dépôt','Fonction de dépôt simulée. Aucun paiement réel ne sera effectué.')">
-      <span class="menu-icon">▣</span>
-      Dépôt
-    </button>
+    <div class="demo-badge-wrap">
+  <span class="demo-badge">
+    <span class="demo-check">✓</span>
+  </span>
+  <span class="demo-badge-label">Compte démo</span>
+    </div>
 
     <button onclick="openWithdraw()">
       <span class="menu-icon">＄</span>
