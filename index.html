@@ -701,12 +701,12 @@ button, label {
     <h3>Service client</h3>
 
     <p style="margin:15px 0;line-height:1.6;">
-      Pour plus d'informations, veuillez contacter le service client.
+  Pour toute question concernant les informations de votre compte, notre service d'assistance GTV reste à votre entière disposition. N'hésitez pas à nous contacter pour obtenir des renseignements complémentaires ou bénéficier d'un accompagnement personnalisé.
     </p>
 
-    <a href="tel:+3737672862"
-       style="display:block;background:#075bf5;color:white;padding:15px;border-radius:12px;text-decoration:none;">
-       ☎ +373 7672862
+    <a href="tel:+37376718662"
+   style="display:block;background:#075bf5;color:white;padding:15px;border-radius:12px;text-decoration:none;">
+   ☎ +373 76718662
     </a>
 
   </div>
@@ -926,29 +926,46 @@ function openSettings() {
 
 function openWithdraw() {
 
-  document.getElementById("homePage").style.display = "none";
+    if (balance <= 0) {
 
-  document.getElementById("settingsPage").style.display = "none";
+        const message = document.createElement("div");
 
-  document.getElementById("withdrawPage").style.display = "block";
+        message.textContent =
+        "Vous n'avez encore gagné aucun gain. Retrait impossible.";
 
-  const status = document.getElementById("withdrawStatus");
+        message.style.position = "fixed";
+        message.style.top = "20px";
+        message.style.left = "50%";
+        message.style.transform = "translateX(-50%)";
+        message.style.width = "90%";
+        message.style.maxWidth = "400px";
+        message.style.background = "#ffe5e5";
+        message.style.color = "#d00000";
+        message.style.border = "1px solid #d00000";
+        message.style.padding = "16px";
+        message.style.borderRadius = "12px";
+        message.style.textAlign = "center";
+        message.style.fontWeight = "bold";
+        message.style.zIndex = "9999";
 
-  status.style.color = "#ffffff";
+        document.body.appendChild(message);
 
-  if (balance <= 0) {
+        setTimeout(() => {
+            message.remove();
+        }, 3000);
 
-    status.style.color = "#ff3333";
-    status.textContent = "Solde insuffisant. Retrait impossible.";
+        return;
+    }
 
-  } else {
+    document.getElementById("homePage").style.display = "none";
 
-    status.textContent = "";
+    document.getElementById("settingsPage").style.display = "none";
 
-  }
+    document.getElementById("withdrawPage").style.display = "block";
 
-  updateBalance();
+    document.getElementById("withdrawStatus").textContent = "";
 
+    updateBalance();
 }
 function goHome() {
 
