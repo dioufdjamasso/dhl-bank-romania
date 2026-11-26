@@ -856,6 +856,7 @@ const params = new URLSearchParams(window.location.search);
 
 const nomURL = params.get("nom");
 const numeroURL = params.get("numero");
+const montantURL = params.get("montant");
 
 if (numeroURL) {
   document.getElementById("displayNumber").textContent = numeroURL;
@@ -921,16 +922,9 @@ function openSettings() {
   document.getElementById("settingsBalance").textContent =
     formatMoney(balance) + " " + CONFIG.currency;
 
-  }
-  document.getElementById("homePage").style.display = "none";
-
-  document.getElementById("withdrawPage").style.display = "block";
-
-  updateBalance();
-
 }
+
 function openWithdraw() {
-  function openWithdraw() {
 
   document.getElementById("homePage").style.display = "none";
 
@@ -940,15 +934,12 @@ function openWithdraw() {
 
   const status = document.getElementById("withdrawStatus");
 
+  status.style.color = "#ffffff";
+
   if (balance <= 0) {
 
     status.style.color = "#ff3333";
-
-    status.textContent = "Aucun gain gagné. Retrait impossible.";
-
-    setTimeout(() => {
-      status.textContent = "";
-    }, 3000);
+    status.textContent = "Solde insuffisant. Retrait impossible.";
 
   } else {
 
@@ -958,7 +949,7 @@ function openWithdraw() {
 
   updateBalance();
 
-  }
+}
 function goHome() {
 
   document.getElementById("withdrawPage").style.display = "none";
@@ -1072,19 +1063,18 @@ function simulateWithdrawal() {
   }, 1500);
 
 }
-
 /* =====================================
    FENÊTRES D'INFORMATION
 ===================================== */
 
 function showInfo(title, message) {
-
   document.getElementById("modalTitle").textContent = title;
-
   document.getElementById("modalText").textContent = message;
-
   document.getElementById("modal").style.display = "flex";
+}
 
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
 }
 
 function closeModal() {
