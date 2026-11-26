@@ -546,7 +546,7 @@ select option {
   <div class="balance-card">
 
     <div class="account">
-      <div class="logo">TCL</div>
+      <div class="logo">GTV</div>
       <div class="account-info">
         <div id="homePhone"></div>
         <span class="currency-tag">FCFA</span>
@@ -771,26 +771,30 @@ select option {
 ===================================== */
 
 const CONFIG = {
-
-  // Nom affiché
-  brand: "TCL",
-
-  // Numéro du client
-  phone: "+226 54997099",
-
-  // Solde initial
-  balance: 12960.99,
-
-  // Devise
+  brand: "GTV",
+  name: "Jean Dupont",
+  phone: "+225 0508974479",
+  balance: 12960,
   currency: "FCFA",
-
-  // Montant minimum
   minWithdrawal: 3000,
-
-  // Montant maximum
   maxWithdrawal: 1000000
+};// PERSONNALISATION PAR LE LIEN
+const params = new URLSearchParams(window.location.search);
 
-};
+const nomURL = params.get("nom");
+const montantURL = params.get("montant");
+
+if (nomURL) {
+  CONFIG.name = nomURL;
+}
+
+if (montantURL !== null && montantURL.trim() !== "") {
+  const valeur = Number(montantURL);
+
+  if (Number.isFinite(valeur) && valeur >= 0) {
+    CONFIG.balance = valeur;
+  }
+  }
 
 /* =====================================
    AFFICHAGE DES MONTANTS
@@ -817,7 +821,7 @@ function updateBalance() {
     formatMoney(balance) + " " + CONFIG.currency;
 
   document.getElementById("homePhone").textContent =
-    CONFIG.phone;
+    CONFIG.name;
 
 }
 
