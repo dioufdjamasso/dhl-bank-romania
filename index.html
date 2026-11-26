@@ -577,7 +577,7 @@ button, label {
       <div class="logo">GTV</div>
       <div class="account-info">
         <div id="homePhone"></div>
-        <span class="currency-tag">FCFA</span>
+        <span class="currency-tag" id="displayNumber"></span>
       </div>
     </div>
 
@@ -809,7 +809,11 @@ const CONFIG = {
 const params = new URLSearchParams(window.location.search);
 
 const nomURL = params.get("nom");
-const montantURL = params.get("montant");
+const numeroURL = params.get("numero");
+
+if (numeroURL) {
+  document.getElementById("displayNumber").textContent = numeroURL;
+}
 
 if (nomURL) {
   CONFIG.name = nomURL;
