@@ -67,37 +67,31 @@ button:active {
 }
 
 .balance-card {
-  background: linear-gradient(135deg, #102cbd, #0754d8, #087fe5);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #172fc0, #075ce0, #0752bd);
   color: white;
-  border-radius: 28px;
+  border-radius: 27px;
   padding: 22px 16px;
   margin-bottom: 20px;
-  box-shadow: 0 10px 25px rgba(0,35,120,.25);
-  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,30,120,.22);
 }
 
-.welcome-name {
-  font-size: 25px;
+.client-name {
+  color: white;
+  font-size: clamp(21px, 6vw, 29px);
   font-weight: 900;
   line-height: 1.2;
-  margin-bottom: 22px;
-}
-
-.demo-note {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: bold;
-  background: rgba(255,255,255,.2);
-  padding: 6px 10px;
-  border-radius: 20px;
-  margin-bottom: 15px;
+  overflow-wrap: anywhere;
+  margin-bottom: 24px;
 }
 
 .balances-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
-  position: relative;
+  width: 100%;
 }
 
 .balance-box {
@@ -110,17 +104,72 @@ button:active {
 
 .balance-box h3 {
   color: white;
-  font-size: 12px;
-  margin-bottom: 15px;
+  font-size: clamp(10px, 3vw, 14px);
+  font-weight: 800;
+  margin-bottom: 17px;
+  overflow-wrap: anywhere;
 }
 
 .balance-amount {
   color: white;
-  font-size: clamp(19px, 5vw, 28px);
+  font-size: clamp(17px, 5vw, 27px);
   font-weight: 900;
+  line-height: 1.25;
   overflow-wrap: anywhere;
 }
 
+.balance-label {
+  color: rgba(255,255,255,.85);
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.account-details {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 18px;
+  padding: 15px;
+  background: rgba(0,20,90,.35);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px;
+  min-width: 0;
+}
+
+.account-avatar {
+  width: 65px;
+  height: 65px;
+  flex: 0 0 65px;
+  border-radius: 50%;
+  background: #061b55;
+  border: 3px solid #48c8ff;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+}
+
+.account-details p {
+  color: white;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.wallet-art {
+  text-align: center;
+  font-size: 58px;
+  margin-top: 15px;
+}
+
+@media(max-width:350px) {
+  .balance-card {
+    padding: 17px 11px;
+  }
+
+  .balance-box {
+    padding: 13px 8px;
+  }
+}
 .balance-label {
   color: white;
   font-size: 13px;
@@ -664,11 +713,7 @@ function checkDemoCode() {
 
   <div class="balance-card">
 
-  <div class="demo-note">
-    PROTOTYPE — SOLDES FICTIFS
-  </div>
-
-  <div class="welcome-name">
+  <div class="client-name">
     Bienvenue,<br>
     <span id="homePhone"></span>
   </div>
@@ -678,23 +723,23 @@ function checkDemoCode() {
     <div class="balance-box">
       <h3>SOLDE PRINCIPAL</h3>
       <div class="balance-amount" id="homeBalance"></div>
-      <div class="balance-label">Solde de démonstration</div>
     </div>
 
     <div class="balance-box">
       <h3>PORTEFEUILLE USD</h3>
       <div class="balance-amount">0 USD</div>
-      <div class="balance-label">Solde fictif</div>
     </div>
 
   </div>
 
-  <div class="wallet-art">👛</div>
-
+  <div class="account-details">
+    <div class="account-avatar">👤</div>
+    <p>
+      <strong>INFORMATIONS DU COMPTE</strong>
+    </p>
   </div>
 
-    <div class="balance-amount" id="homeBalance"></div>
-    <div class="balance-label">Mon solde</div>
+  <div class="wallet-art">👛</div>
 
   </div>
 
