@@ -1481,6 +1481,20 @@ list.appendChild(item);
 
 });
   }
+function openHistory() {
+
+  document.getElementById("homePage").style.display = "none";
+
+  document.getElementById("settingsPage").style.display = "none";
+
+  document.getElementById("withdrawPage").style.display = "none";
+
+  document.getElementById("historyPage").style.display = "block";
+
+  renderWithdrawalHistory();
+
+}
+  
 /* =====================================
    FENÊTRES D'INFORMATION
 updateBalance();
