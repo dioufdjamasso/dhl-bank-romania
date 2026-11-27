@@ -1475,34 +1475,6 @@ showInfo(
 }
 /* =====================================
    FENÊTRES D'INFORMATION
-===================================== */
-function openHistory() {
-  document.getElementById("homePage").style.display = "none";
-  document.getElementById("settingsPage").style.display = "none";
-  document.getElementById("withdrawPage").style.display = "none";
-  document.getElementById("historyPage").style.display = "block";
-}
-
-function backToSettings() {
-  document.getElementById("historyPage").style.display = "none";
-  document.getElementById("settingsPage").style.display = "block";
-  }
-function showInfo(title, message) {
-  document.getElementById("modalTitle").textContent = title;
-  document.getElementById("modalText").textContent = message;
-  document.getElementById("modal").style.display = "flex";
-}
-
-function closeModal() {
-
-  document.getElementById("modal").style.display = "none";
-
-}
-
-/* =====================================
-   INITIALISATION
-===================================== */
-
 updateBalance();
 
 </script>
