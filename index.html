@@ -67,98 +67,72 @@ button:active {
 }
 
 .balance-card {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background: linear-gradient(135deg, #073b83 0%, #0865c9 55%, #0788e8 100%);
-  color: #ffffff;
-  border: 1px solid rgba(255,255,255,.18);
-  border-radius: 28px;
-  padding: 25px 23px 27px;
-  margin-bottom: 20px;
-  box-shadow: 0 12px 28px rgba(4, 67, 143, .22),
-              inset 0 1px 0 rgba(255,255,255,.16);
-}
-
-.balance-card::before,
-.balance-card::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.balance-card::before {
-  width: 190px;
-  height: 190px;
-  right: -65px;
-  top: -92px;
-  background: rgba(255,255,255,.10);
-  border: 1px solid rgba(255,255,255,.12);
-}
-
-.balance-card::after {
-  width: 125px;
-  height: 125px;
-  right: 38px;
-  bottom: -86px;
-  background: rgba(3, 31, 86, .16);
-}
-
-.account {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 13px;
-}
-
-.logo {
-  width: 66px;
-  height: 66px;
-  flex: 0 0 66px;
-  background: white;
-  color: #0759b5;
-  border: 3px solid rgba(255,255,255,.38);
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 23px;
-  font-weight: 900;
-  box-shadow: 0 5px 14px rgba(0,25,75,.18);
-}
-
-.account-info {
-  font-size: 21px;
-  font-weight: 800;
-  line-height: 1.2;
-  overflow-wrap: anywhere;
-}
-
-.currency-tag {
-  display: inline-block;
-  background: rgba(255,255,255,.16);
+  background: linear-gradient(135deg, #102cbd, #0754d8, #087fe5);
   color: white;
-  border: 1px solid rgba(255,255,255,.34);
-  padding: 6px 13px;
-  border-radius: 999px;
-  margin-top: 9px;
-  font-size: 15px;
-  font-weight: 700;
+  border-radius: 28px;
+  padding: 22px 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 25px rgba(0,35,120,.25);
+  overflow: hidden;
+}
+
+.welcome-name {
+  font-size: 25px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 22px;
+}
+
+.demo-note {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  background: rgba(255,255,255,.2);
+  padding: 6px 10px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+}
+
+.balances-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  position: relative;
+}
+
+.balance-box {
+  min-width: 0;
+  padding: 17px 12px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 22px;
+  background: rgba(255,255,255,.12);
+}
+
+.balance-box h3 {
+  color: white;
+  font-size: 12px;
+  margin-bottom: 15px;
 }
 
 .balance-amount {
-  position: relative;
-  font-size: clamp(30px, 9vw, 43px);
+  color: white;
+  font-size: clamp(19px, 5vw, 28px);
   font-weight: 900;
-  letter-spacing: -.7px;
-  margin: 18px 0 7px;
   overflow-wrap: anywhere;
-  text-shadow: 0 2px 8px rgba(0,25,75,.16);
 }
 
+.balance-label {
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.wallet-art {
+  text-align: center;
+  font-size: 55px;
+  margin-top: 15px;
+}
 .balance-label {
   position: relative;
   font-size: 17px;
@@ -690,13 +664,34 @@ function checkDemoCode() {
 
   <div class="balance-card">
 
-    <div class="account">
-      <div class="logo">GTV</div>
-      <div class="account-info">
-        <div id="homePhone"></div>
-        <span class="currency-tag" id="displayNumber"></span>
-      </div>
+  <div class="demo-note">
+    PROTOTYPE — SOLDES FICTIFS
+  </div>
+
+  <div class="welcome-name">
+    Bienvenue,<br>
+    <span id="homePhone"></span>
+  </div>
+
+  <div class="balances-grid">
+
+    <div class="balance-box">
+      <h3>SOLDE PRINCIPAL</h3>
+      <div class="balance-amount" id="homeBalance"></div>
+      <div class="balance-label">Solde de démonstration</div>
     </div>
+
+    <div class="balance-box">
+      <h3>PORTEFEUILLE USD</h3>
+      <div class="balance-amount">0 USD</div>
+      <div class="balance-label">Solde fictif</div>
+    </div>
+
+  </div>
+
+  <div class="wallet-art">👛</div>
+
+  </div>
 
     <div class="balance-amount" id="homeBalance"></div>
     <div class="balance-label">Mon solde</div>
@@ -970,7 +965,7 @@ const CONFIG = {
   name: "Jean Dupont",
   phone: "+225 0508974479",
   balance: 12960,
-  currency: "FCFA",
+  currency: "XOF",
   minWithdrawal: 3000,
   maxWithdrawal: 1000000
 };// PERSONNALISATION PAR LE LIEN
@@ -1004,7 +999,7 @@ let balance = CONFIG.balance;
 
 function formatMoney(value) {
   return Number(value).toLocaleString("fr-FR", {
-    minimumFractionDigits: 0,
+    minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
 }
