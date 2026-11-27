@@ -67,55 +67,104 @@ button:active {
 }
 
 .balance-card {
-  background: #00c66a;
-  color: white;
-  border-radius: 30px;
-  padding: 25px 23px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(135deg, #073b83 0%, #0865c9 55%, #0788e8 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 28px;
+  padding: 25px 23px 27px;
   margin-bottom: 20px;
+  box-shadow: 0 12px 28px rgba(4, 67, 143, .22),
+              inset 0 1px 0 rgba(255,255,255,.16);
+}
+
+.balance-card::before,
+.balance-card::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.balance-card::before {
+  width: 190px;
+  height: 190px;
+  right: -65px;
+  top: -92px;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.balance-card::after {
+  width: 125px;
+  height: 125px;
+  right: 38px;
+  bottom: -86px;
+  background: rgba(3, 31, 86, .16);
 }
 
 .account {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 13px;
 }
 
 .logo {
-  width: 75px;
-  height: 75px;
+  width: 66px;
+  height: 66px;
+  flex: 0 0 66px;
   background: white;
-  color: #00b968;
-  border-radius: 50%;
+  color: #0759b5;
+  border: 3px solid rgba(255,255,255,.38);
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 27px;
+  font-size: 23px;
   font-weight: 900;
+  box-shadow: 0 5px 14px rgba(0,25,75,.18);
 }
 
 .account-info {
-  font-size: 23px;
-  font-weight: bold;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .currency-tag {
   display: inline-block;
-  background: white;
-  color: #00b968;
-  padding: 7px 15px;
-  border-radius: 14px;
-  margin-top: 8px;
-  font-size: 19px;
+  background: rgba(255,255,255,.16);
+  color: white;
+  border: 1px solid rgba(255,255,255,.34);
+  padding: 6px 13px;
+  border-radius: 999px;
+  margin-top: 9px;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .balance-amount {
+  position: relative;
   font-size: clamp(30px, 9vw, 43px);
   font-weight: 900;
-  margin: 12px 0;
+  letter-spacing: -.7px;
+  margin: 18px 0 7px;
   overflow-wrap: anywhere;
+  text-shadow: 0 2px 8px rgba(0,25,75,.16);
 }
 
+.balance-label {
+  position: relative;
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(255,255,255,.86);
+}
 .balance-label {
   font-size: 27px;
   font-weight: bold;
