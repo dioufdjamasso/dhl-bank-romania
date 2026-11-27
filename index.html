@@ -1512,7 +1512,21 @@ function openHistory() {
 /* =====================================
    FENÊTRES D'INFORMATION
 ===================================== */
+function showInfo(title, message) {
 
+  document.getElementById("modalTitle").textContent = title;
+
+  document.getElementById("modalText").textContent = message;
+
+  document.getElementById("modal").style.display = "flex";
+
+}
+
+function closeModal() {
+
+  document.getElementById("modal").style.display = "none";
+
+  }
 updateBalance();
 
 </script>
