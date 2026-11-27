@@ -135,7 +135,36 @@ button:active {
   border-radius: 20px;
   min-width: 0;
 }
+.account-info {
+  flex: 1;
+  text-align: left;
+  color: white;
+}
 
+.account-info p {
+  color: #a9c9ff;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 8px 0;
+  letter-spacing: 1px;
+}
+
+.account-info strong {
+  display: block;
+  color: white;
+  font-size: 21px;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.account-details button {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 16px;
+  padding: 15px;
+  color: white;
+  font-weight: bold;
+}
 .account-avatar {
   width: 65px;
   height: 65px;
@@ -727,20 +756,27 @@ function checkDemoCode() {
 
     <div class="balance-box">
       <h3>PORTEFEUILLE USD</h3>
-      <div class="balance-amount">0 USD</div>
+      <div class="account-details">
+    <div class="account-avatar">👤</div>
+    <div class="account-info">
+      <p id="homePhoneNumber"></p>
     </div>
-
-  </div>
+      </div>
 
   <div class="account-details">
-    <div class="account-avatar">👤</div>
-    <p>
-      <strong>INFORMATIONS DU COMPTE</strong>
-    </p>
+  <div class="account-avatar">👤</div>
+
+  <div class="account-info">
+    <p>TÉLÉPHONE</p>
+    <strong id="homePhoneNumber"></strong>
+
+    <p>FEUILLES</p>
+    <strong>46</strong>
   </div>
 
-  <div class="wallet-art">👛</div>
-
+  <button onclick="navigator.clipboard.writeText(CONFIG.phone)">
+    Copier
+  </button>
   </div>
 
   <div class="menu">
@@ -1062,7 +1098,8 @@ function updateBalance() {
 
   document.getElementById("homePhone").textContent =
     CONFIG.name;
-
+document.getElementById("homePhoneNumber").textContent =
+  CONFIG.phone;
 }
 
 /* =====================================
