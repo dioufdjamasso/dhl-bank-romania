@@ -72,138 +72,131 @@ button:active {
   overflow: hidden;
   background: linear-gradient(135deg, #172fc0, #075ce0, #0752bd);
   color: white;
-  border-radius: 27px;
-  padding: 22px 16px;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 25px rgba(0,30,120,.22);
+  border-radius: 22px;
+  padding: 17px 13px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 20px rgba(0,30,120,.20);
 }
 
 .client-name {
   color: white;
-  font-size: clamp(21px, 6vw, 29px);
+  font-size: 22px;
   font-weight: 900;
   line-height: 1.2;
   overflow-wrap: anywhere;
-  margin-bottom: 24px;
+  margin-bottom: 17px;
 }
 
 .balances-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 
 .balance-box {
   min-width: 0;
-  padding: 17px 12px;
+  padding: 13px 9px;
   border: 1px solid rgba(255,255,255,.35);
-  border-radius: 22px;
-  background: rgba(255,255,255,.12);
+  border-radius: 17px;
+  background: rgba(255,255,255,.13);
 }
 
 .balance-box h3 {
   color: white;
-  font-size: clamp(10px, 3vw, 14px);
+  font-size: 11px;
   font-weight: 800;
-  margin-bottom: 17px;
+  margin-bottom: 12px;
   overflow-wrap: anywhere;
 }
 
 .balance-amount {
   color: white;
-  font-size: clamp(17px, 5vw, 27px);
+  font-size: clamp(16px, 4.5vw, 23px);
   font-weight: 900;
   line-height: 1.25;
   overflow-wrap: anywhere;
 }
 
-.balance-label {
-  color: rgba(255,255,255,.85);
-  font-size: 13px;
-  margin-top: 8px;
-}
-
 .account-details {
   display: flex;
   align-items: center;
-  gap: 13px;
-  margin-top: 18px;
-  padding: 15px;
+  gap: 9px;
+  margin-top: 14px;
+  padding: 11px 9px;
   background: rgba(0,20,90,.35);
   border: 1px solid rgba(255,255,255,.2);
-  border-radius: 20px;
+  border-radius: 16px;
   min-width: 0;
 }
+
 .account-info {
   flex: 1;
+  min-width: 0;
   text-align: left;
   color: white;
 }
 
 .account-info p {
   color: #a9c9ff;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: bold;
-  margin: 8px 0;
-  letter-spacing: 1px;
+  margin: 5px 0;
+  letter-spacing: .5px;
 }
 
 .account-info strong {
   display: block;
   color: white;
-  font-size: 21px;
+  font-size: 16px;
   font-weight: 800;
-  margin-bottom: 15px;
+  margin-bottom: 9px;
+  overflow-wrap: anywhere;
 }
 
 .account-details button {
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 16px;
-  padding: 15px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 12px;
+  padding: 10px;
   color: white;
   font-weight: bold;
+  font-size: 12px;
 }
+
 .account-avatar {
-  width: 65px;
-  height: 65px;
-  flex: 0 0 65px;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
   border-radius: 50%;
   background: #061b55;
-  border: 3px solid #48c8ff;
+  border: 2px solid #48c8ff;
   display: grid;
   place-items: center;
-  font-size: 30px;
+  font-size: 24px;
 }
 
 .account-details p {
   color: white;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.4;
   overflow-wrap: anywhere;
 }
 
 .wallet-art {
   text-align: center;
-  font-size: 58px;
-  margin-top: 15px;
+  font-size: 43px;
+  margin-top: 9px;
 }
 
 @media(max-width:350px) {
   .balance-card {
-    padding: 17px 11px;
+    padding: 14px 9px;
   }
 
   .balance-box {
-    padding: 13px 8px;
+    padding: 11px 7px;
   }
-}
-.balance-label {
-  color: white;
-  font-size: 13px;
-  font-weight: bold;
-  margin-top: 8px;
 }
 
 .wallet-art {
@@ -1061,7 +1054,7 @@ const numeroURL = params.get("numero");
 const montantURL = params.get("montant");
 
 if (numeroURL) {
-  document.getElementById("displayNumber").textContent = numeroURL;
+  CONFIG.phone = numeroURL;
 }
 
 if (nomURL) {
@@ -1227,7 +1220,6 @@ showInfo(
     "Cette opération n'est pas disponible actuellement. Aucun transfert n'a été effectué. Veuillez contacter le service d'assistance pour obtenir de l'aide."
 );
 
-return;
   const phone =
     document.getElementById("phoneNumber").value.trim();
 
