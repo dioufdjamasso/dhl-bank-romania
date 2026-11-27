@@ -668,10 +668,29 @@ h1, h2, h3 {
     font-weight: 800;
 }
 
+.balance-box:first-child {
+    grid-column: 1 / -1;
+}
+
 .balance-amount {
-    color: #000000;
-    font-size: 30px;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    color: #ffffff;
+    font-size: clamp(27px, 8vw, 40px);
     font-weight: 900;
+    line-height: 1.2;
+    overflow: visible;
+}
+
+.balance-currency {
+    color: #79eaff;
+    font-size: clamp(21px, 6vw, 30px);
+    font-weight: 900;
+    flex: 0 0 auto;
 }
 
 button, label {
@@ -749,7 +768,10 @@ function checkDemoCode() {
 
     <div class="balance-box">
       <h3>PORTEFEUILLE USD</h3>
-      <div class="balance-amount">0 USD</div>
+      <div class="balance-amount" id="homeBalance">
+    <span id="homeBalanceValue"></span>
+    <span class="balance-currency">XOF</span>
+      </div>
     </div>
 
   </div>
@@ -1084,8 +1106,8 @@ function formatMoney(value) {
 
 function updateBalance() {
 
-  document.getElementById("homeBalance").textContent =
-    formatMoney(balance) + " " + CONFIG.currency;
+  document.getElementById("homeBalanceValue").textContent =
+    formatMoney(balance);
 
   document.getElementById("withdrawBalance").textContent =
     formatMoney(balance);
