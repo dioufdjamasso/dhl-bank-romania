@@ -790,6 +790,39 @@ button, label {
   margin-top:5px;
   font-size:11px;
   }
+  .bank-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 18px 0;
+}
+
+.bank-card {
+    min-height: 115px;
+    padding: 13px;
+    border-radius: 14px;
+    background: linear-gradient(135deg,#123d78,#071a38);
+    border: 1px solid #42618e;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+}
+
+.bank-card.selected {
+    border: 2px solid #00e676;
+}
+
+.bank-card strong {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.bank-logo {
+    font-size: 12px;
+    font-weight: 900;
+    color: #ffe21c;
+  }
 </style>
 </head>
 
@@ -1092,7 +1125,8 @@ style="width:100%;padding:15px;margin:15px 0;background:#075bf5;color:white;bord
     </button>
 
   </div>
-
+<label class="field-label">Cartes disponibles</label>
+<div id="bankCards" class="bank-cards-grid"></div>
   <label class="field-label">Numéro de Téléphone</label>
 
   <input
@@ -1299,7 +1333,37 @@ function goHome() {
   document.getElementById("settingsPage").style.display = "none";
 
   document.getElementById("homePage").style.display = "block";
+const paymentNetworks = [
+    "RÉSEAU A",
+    "RÉSEAU B",
+    "RÉSEAU C",
+    "RÉSEAU D",
+    "RÉSEAU E"
+];
 
+const bankCards = document.getElementById("bankCards");
+
+for (let i = 1; i <= 60; i++) {
+    const network = paymentNetworks[(i - 1) % 5];
+
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "bank-card";
+
+    card.innerHTML = `
+        <strong>CARTE ${String(i).padStart(2, "0")}</strong>
+        <span class="bank-logo">${network}</span>
+    `;
+
+    card.onclick = function() {
+        document.querySelectorAll(".bank-card")
+            .forEach(c => c.classList.remove("selected"));
+
+        card.classList.add("selected");
+    };
+
+    bankCards.appendChild(card);
+  }
   updateBalance();
 
 }
