@@ -1332,7 +1332,11 @@ function goHome() {
 
   document.getElementById("settingsPage").style.display = "none";
 
+  document.getElementById("historyPage").style.display = "none";
+
   document.getElementById("homePage").style.display = "block";
+
+}
 const paymentNetworks = [
     "RÉSEAU A",
     "RÉSEAU B",
@@ -1494,9 +1498,21 @@ function openHistory() {
   renderWithdrawalHistory();
 
 }
-  
+  function backToSettings() {
+
+  document.getElementById("historyPage").style.display = "none";
+
+  document.getElementById("homePage").style.display = "none";
+
+  document.getElementById("withdrawPage").style.display = "none";
+
+  document.getElementById("settingsPage").style.display = "block";
+
+  }
 /* =====================================
    FENÊTRES D'INFORMATION
+===================================== */
+
 updateBalance();
 
 </script>
