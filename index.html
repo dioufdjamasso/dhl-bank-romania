@@ -1408,71 +1408,79 @@ function setPercent(percent) {
 ===================================== */
 
 function simulateWithdrawal() {
-showInfo(
-    "⚠️ Retrait indisponible",
-    "Cette opération n'est pas disponible actuellement. Aucun transfert n'a été effectué. Veuillez contacter le service d'assistance pour obtenir de l'aide."
+
+const phone = document.getElementById("phoneNumber").value.trim();
+const amount = Number(document.getElementById("withdrawAmount").value);
+const status = document.getElementById("withdrawStatus");
+
+if (!phone) {
+status.textContent = "Veuillez saisir un numéro de téléphone.";
+return;
+}
+
+if (!Number.isFinite(amount) || amount <= 0) {
+status.textContent = "Veuillez saisir un montant valide.";
+return;
+}
+
+if (amount < CONFIG.minWithdrawal || amount > CONFIG.maxWithdrawal || amount > balance) {
+status.textContent = "Montant non valide ou solde insuffisant.";
+return;
+}
+
+const confirmation = confirm(
+"Confirmer la demande de retrait de " +
+formatMoney(amount) + " XOF ?"
 );
 
-  const phone =
-    document.getElementById("phoneNumber").value.trim();
+if (!confirmation) return;
 
-  const amount =
-    Number(document.getElementById("withdrawAmount").value);
+let requests = JSON.parse(localStorage.getItem("withdrawalRequests") || "[]");
 
-  const status =
-    document.getElementById("withdrawStatus");
+requests.unshift({
+amount: amount,
+currency: "XOF",
+date: new Date().toLocaleString(),
+status: "EN ATTENTE"
+});
 
-  if (!phone) {
-    status.textContent = "Veuillez saisir un numéro de téléphone.";
-    return;
-  }
+localStorage.setItem("withdrawalRequests", JSON.stringify(requests));
 
-  if (!Number.isFinite(amount) || amount <= 0) {
-    status.textContent = "Veuillez saisir un montant valide.";
-    return;
-  }
+status.textContent = "Demande enregistrée. Statut : EN ATTENTE.";
 
-  if (amount < CONFIG.minWithdrawal) {
-    status.textContent = "Le montant est inférieur au minimum autorisé.";
-    return;
-  }
+document.getElementById("withdrawAmount").value = "";
 
-  if (amount > CONFIG.maxWithdrawal) {
-    status.textContent = "Le montant dépasse la limite autorisée.";
-    return;
-  }
-
-  if (amount > balance) {
-    status.textContent = "Solde de démonstration insuffisant.";
-    return;
-  }
-
-  const confirmation = confirm(
-    "Confirmer cette simulation ?\n\n" +
-    "Méthode : " + selectedMethod + "\n" +
-    "Téléphone : " + phone + "\n" +
-    "Montant : " + formatMoney(amount) + " " + CONFIG.currency +
-    "\n\nAucun transfert réel ne sera effectué."
-  );
-
-  if (!confirmation) return;
-
-  status.textContent = "Simulation en cours...";
-
-  setTimeout(() => {
-
-    balance -= amount;
-
-    updateBalance();
-
-    status.textContent =
-      "✓ Simulation terminée. Aucun transfert d'argent réel n'a été effectué.";
-
-    document.getElementById("withdrawAmount").value = "";
-
-  }, 1500);
-
+renderWithdrawalHistory();
 }
+
+function renderWithdrawalHistory() {
+
+const list = document.getElementById("historyList");
+const requests = JSON.parse(localStorage.getItem("withdrawalRequests") || "[]");
+
+list.innerHTML = "";
+
+requests.forEach(request => {
+
+const item = document.createElement("div");
+item.className = "history-item";
+
+item.innerHTML = `
+  <div class="history-name">
+    <strong style="color:white;font-size:16px;">
+      ${Number(request.amount).toLocaleString("fr-FR")} XOF
+    </strong>
+    <small>${request.date}</small>
+    <span style="display:block;color:red;font-weight:bold;margin-top:6px;">
+      EN ATTENTE
+    </span>
+  </div>
+`;
+
+list.appendChild(item);
+
+});
+  }
 /* =====================================
    FENÊTRES D'INFORMATION
 updateBalance();
