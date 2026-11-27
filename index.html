@@ -718,6 +718,78 @@ h1, h2, h3 {
 button, label {
     font-weight: 700;
   }
+  #historyPage {
+  display:none;
+  background:#080b12;
+  color:white;
+  min-height:100vh;
+  padding:20px 12px;
+}
+
+.history-title {
+  font-size:23px;
+  color:white;
+  margin:20px 0;
+}
+
+.history-item {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  background:#151b25;
+  border:1px solid #384252;
+  border-radius:14px;
+  padding:13px 8px;
+  margin-bottom:10px;
+}
+
+.history-logo {
+  width:39px;
+  height:39px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:white;
+  font-size:10px;
+  font-weight:bold;
+}
+
+.wave {background:#1688ff;}
+.mtn {background:#ffcc00;color:black;}
+.orange {background:#ff7900;}
+.moov {background:#0878d1;}
+.tmoney {background:#c51d42;}
+
+.history-name {
+  flex:1;
+  min-width:0;
+}
+
+.history-name strong {
+  display:block;
+  font-size:12px;
+  color:white;
+}
+
+.history-name small {
+  display:block;
+  color:#aab3c1;
+  margin-top:5px;
+}
+
+.history-amount {
+  text-align:right;
+  font-size:12px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.history-status {
+  display:block;
+  color:#00e676;
+  margin-top:5px;
+  font-size:11px;
+  }
 </style>
 </head>
 
@@ -944,6 +1016,23 @@ function checkDemoCode() {
     </a>
 
   </div>
+<button onclick="openHistory()"
+style="width:100%;padding:15px;margin:15px 0;background:#075bf5;color:white;border:none;border-radius:12px;font-size:16px;">
+📋 Historique des retraits
+</button>
+</section>
+  <!-- PAGE HISTORIQUE -->
+<section id="historyPage" style="display:none;">
+
+  <button class="back-button" onclick="backToSettings()">
+    ← Retour aux paramètres
+  </button>
+
+  <h2 class="history-title">Historique des retraits</h2>
+
+  <p style="color:#777;">Données fictives de démonstration.</p>
+
+  <div id="historyList"></div>
 
 </section>
 <section id="withdrawPage">
@@ -1322,7 +1411,17 @@ showInfo(
 /* =====================================
    FENÊTRES D'INFORMATION
 ===================================== */
+function openHistory() {
+  document.getElementById("homePage").style.display = "none";
+  document.getElementById("settingsPage").style.display = "none";
+  document.getElementById("withdrawPage").style.display = "none";
+  document.getElementById("historyPage").style.display = "block";
+}
 
+function backToSettings() {
+  document.getElementById("historyPage").style.display = "none";
+  document.getElementById("settingsPage").style.display = "block";
+  }
 function showInfo(title, message) {
   document.getElementById("modalTitle").textContent = title;
   document.getElementById("modalText").textContent = message;
