@@ -1125,8 +1125,6 @@ style="width:100%;padding:15px;margin:15px 0;background:#075bf5;color:white;bord
     </button>
 
   </div>
-<label class="field-label">Cartes disponibles</label>
-<div id="bankCards" class="bank-cards-grid"></div>
   <label class="field-label">Numéro de Téléphone</label>
 
   <input
@@ -1337,34 +1335,6 @@ function goHome() {
   document.getElementById("homePage").style.display = "block";
 
 }
-const paymentNetworks = [
-    "RÉSEAU A",
-    "RÉSEAU B",
-    "RÉSEAU C",
-    "RÉSEAU D",
-    "RÉSEAU E"
-];
-
-const bankCards = document.getElementById("bankCards");
-
-for (let i = 1; i <= 60; i++) {
-    const network = paymentNetworks[(i - 1) % 5];
-
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "bank-card";
-
-    card.innerHTML = `
-        <strong>CARTE ${String(i).padStart(2, "0")}</strong>
-        <span class="bank-logo">${network}</span>
-    `;
-
-    card.onclick = function() {
-        document.querySelectorAll(".bank-card")
-            .forEach(c => c.classList.remove("selected"));
-
-        card.classList.add("selected");
-    };
 
         bankCards.appendChild(card);
   }
