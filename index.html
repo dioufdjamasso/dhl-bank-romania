@@ -1378,7 +1378,6 @@ function setPercent(percent) {
 ===================================== */
 
 function simulateWithdrawal() {
-
     const phone = document.getElementById("phoneNumber").value.trim();
     const amount = Number(document.getElementById("withdrawAmount").value);
     const status = document.getElementById("withdrawStatus");
@@ -1393,18 +1392,24 @@ function simulateWithdrawal() {
         return;
     }
 
-    if (
-        amount < CONFIG.minWithdrawal ||
-        amount > CONFIG.maxWithdrawal ||
-        amount > balance
-    ) {
-        status.textContent = "Montant non valide ou solde insuffisant.";
+    if (amount > balance) {
+        status.textContent = "Solde insuffisant.";
         return;
     }
 
-    let requests = JSON.parse(
-        localStorage.getItem("withdrawalRequests") || "[]"
-    );
+    let requests = [];
+
+    try {
+        requests = JSON.parse(
+            localStorage.getItem("withdrawalRequests") || "[]"
+        );
+
+        if (!Array.isArray(requests)) {
+            requests = [];
+        }
+    } catch (error) {
+        requests = [];
+    }
 
     requests.unshift({
         amount: amount,
@@ -1428,7 +1433,7 @@ function simulateWithdrawal() {
     document.getElementById("withdrawAmount").value = "";
 
     renderWithdrawalHistory();
-}
+  }
 
 function renderWithdrawalHistory() {
 
