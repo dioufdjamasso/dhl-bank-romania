@@ -152,7 +152,23 @@ button:active {
   margin-bottom: 9px;
   overflow-wrap: anywhere;
 }
+.phone-view-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  padding: 5px 12px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 8px;
+  background: rgba(255,255,255,.12);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
 
+.eye-icon {
+  font-size: 14px;
+    }
 .account-details button {
   background: rgba(255,255,255,.12);
   border: 1px solid rgba(255,255,255,.25);
@@ -913,8 +929,13 @@ function checkDemoCode() {
     <div class="account-avatar">👤</div>
 
     <div class="account-info">
-      <p>TÉLÉPHONE</p>
-      <strong id="homePhoneNumber"></strong>
+  <p>TÉLÉPHONE</p>
+  <strong id="homePhoneNumber"></strong>
+  <span class="phone-view-badge">
+    <span class="eye-icon">👁️</span>
+    <span>Vue</span>
+<span id="viewCount">0</span>
+  </span>
     </div>
 
     <button onclick="navigator.clipboard.writeText(CONFIG.phone)">
