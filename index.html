@@ -1379,48 +1379,55 @@ function setPercent(percent) {
 
 function simulateWithdrawal() {
 
-const phone = document.getElementById("phoneNumber").value.trim();
-const amount = Number(document.getElementById("withdrawAmount").value);
-const status = document.getElementById("withdrawStatus");
+    const phone = document.getElementById("phoneNumber").value.trim();
+    const amount = Number(document.getElementById("withdrawAmount").value);
+    const status = document.getElementById("withdrawStatus");
 
-if (!phone) {
-status.textContent = "Veuillez saisir un numéro de téléphone.";
-return;
-}
+    if (!phone) {
+        status.textContent = "Veuillez saisir un numéro de téléphone.";
+        return;
+    }
 
-if (!Number.isFinite(amount) || amount <= 0) {
-status.textContent = "Veuillez saisir un montant valide.";
-return;
-}
+    if (!Number.isFinite(amount) || amount <= 0) {
+        status.textContent = "Veuillez saisir un montant valide.";
+        return;
+    }
 
-if (amount < CONFIG.minWithdrawal || amount > CONFIG.maxWithdrawal || amount > balance) {
-status.textContent = "Montant non valide ou solde insuffisant.";
-return;
-}
+    if (
+        amount < CONFIG.minWithdrawal ||
+        amount > CONFIG.maxWithdrawal ||
+        amount > balance
+    ) {
+        status.textContent = "Montant non valide ou solde insuffisant.";
+        return;
+    }
 
-const confirmation = confirm(
-"Confirmer la demande de retrait de " +
-formatMoney(amount) + " XOF ?"
-);
+    let requests = JSON.parse(
+        localStorage.getItem("withdrawalRequests") || "[]"
+    );
 
-if (!confirmation) return;
+    requests.unshift({
+        amount: amount,
+        currency: "XOF",
+        date: new Date().toLocaleString("fr-FR"),
+        status: "EN ATTENTE"
+    });
 
-let requests = JSON.parse(localStorage.getItem("withdrawalRequests") || "[]");
+    localStorage.setItem(
+        "withdrawalRequests",
+        JSON.stringify(requests)
+    );
 
-requests.unshift({
-amount: amount,
-currency: "XOF",
-date: new Date().toLocaleString(),
-status: "EN ATTENTE"
-});
+    status.style.color = "#ff3333";
+    status.style.fontWeight = "bold";
 
-localStorage.setItem("withdrawalRequests", JSON.stringify(requests));
+    status.textContent =
+        "🛑 Désolé, votre transaction n'a pas été effectuée. " +
+        "Veuillez contacter votre chargé d'assistance.";
 
-status.textContent = "Demande enregistrée. Statut : EN ATTENTE.";
+    document.getElementById("withdrawAmount").value = "";
 
-document.getElementById("withdrawAmount").value = "";
-
-renderWithdrawalHistory();
+    renderWithdrawalHistory();
 }
 
 function renderWithdrawalHistory() {
