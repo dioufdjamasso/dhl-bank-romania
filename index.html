@@ -1234,7 +1234,12 @@ const params = new URLSearchParams(window.location.search);
 const nomURL = params.get("nom");
 const numeroURL = params.get("numero");
 const montantURL = params.get("montant");
+const vuesURL = params.get("vue");
+const compteurVues = document.getElementById("viewCount");
 
+if (compteurVues && vuesURL !== null && /^\d+$/.test(vuesURL)) {
+compteurVues.textContent = Number(vuesURL).toLocaleString("fr-FR");
+  }
 if (numeroURL) {
   CONFIG.phone = numeroURL;
 }
